@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:agro/model/model_order/model_order.dart';
 import 'package:agro/ui/text/read_text.dart';
 import 'package:flutter/material.dart';
@@ -10,12 +8,16 @@ import '../../../../ui/buttons/b_transparent_scalable_button.dart';
 class ContactScreen extends StatelessWidget {
   final ModelOrder modelOrder;
 
-  const ContactScreen({super.key, required this.modelOrder});
+  final Function() onLauchPhone;
+
+  const ContactScreen(
+      {super.key, required this.modelOrder, required this.onLauchPhone});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
+      height: 440,
       child: Column(
         children: [
           readText(
@@ -36,24 +38,7 @@ class ContactScreen extends StatelessWidget {
           orderInfo(
               header: 'Телефон',
               text: modelOrder.userPhone.toString(),
-              onPressed: () async {
-                final phoneNumber = Uri(scheme: 'tel', path: '${modelOrder.userPhone}');
-                if (await canLaunchUrl(phoneNumber)) {
-                  await launchUrl(phoneNumber,
-                      mode: LaunchMode.externalApplication);
-                } else {
-                  log('Could not launch $phoneNumber');
-                }
-              }),
-          // bStyle(
-          //     padding: const EdgeInsets.only(left: 15, right: 15, top: 20),
-          //     text: 'Закрити',
-          //     size: 23,
-          //     c: c,
-          //     colorText: Colors.black,
-          //     vertical: 15,
-          //     colorButt: const Color(0xffF2F2F2),
-          //     onPressed: () => Navigator.pop(c))
+              onPressed: onLauchPhone)
         ],
       ),
     );

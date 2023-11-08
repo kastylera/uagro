@@ -49,5 +49,13 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>whatsapp</string>
+		<string>viber</string>
+		<string>tg</string>
+		<string>itms-beta</string>
+		<string>itms</string>
+	</array>
 </dict>
 </plist>

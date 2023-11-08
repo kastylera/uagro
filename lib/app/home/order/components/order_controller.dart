@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:agro/app/home/order/components/add_price.dart';
+import 'package:agro/app/home/order/components/launch_phone.dart';
 import 'package:agro/model/model_order_price/struct_order_price.dart';
 import 'package:agro/model/model_user/model_user.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,7 +18,6 @@ import '../../../../model/model_order_price/model_order_price.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../../ui/local_notification/local_notification.dart';
 import '../../../../vars/model_notifier/user_notifier/user_notifier.dart';
-import 'contact.dart';
 
 class OrderController extends FormController {
   late Function(VoidCallback fn) setState;
@@ -91,7 +91,7 @@ class OrderController extends FormController {
 
   void onBack() => Navigator.pop(c, modelOrder);
 
-  void onContact() => showCupertinoModalBottomSheet(topRadius: const Radius.circular(30), context: c, builder: (c) => ContactScreen(modelOrder: modelOrder));
+  void onLaunchPhone() => showCupertinoModalBottomSheet(topRadius: const Radius.circular(30), context: c, builder: (c) => LaunchPhone(modelOrder: modelOrder));
 
   void onAddPriceSave() => loadIfValid(() async {
         ApiAnswer apiAnswer = await Api().traider.addPrice(c: c, orderId: modelOrder.id!, price: priceController.text);

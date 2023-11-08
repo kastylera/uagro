@@ -92,7 +92,9 @@ class _OrderScreenState extends State<OrderScreen> {
                           padding: const EdgeInsets.only(top: 10))
                     ],
                     contactOpened
-                        ? ContactScreen(modelOrder: controller.modelOrder)
+                        ? ContactScreen(
+                            modelOrder: controller.modelOrder,
+                            onLauchPhone: controller.onLaunchPhone)
                         : const SizedBox(),
                     if (controller.modelUser.role == 'distrib') ...[
                       Padding(
