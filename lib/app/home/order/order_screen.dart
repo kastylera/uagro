@@ -1,5 +1,8 @@
 import 'package:agro/app/home/order/components/contact.dart';
+import 'package:agro/model/model_order/model_order.dart';
 import 'package:agro/model/model_order_price/model_order_price.dart';
+import 'package:agro/ui/buttons/b_transparent_scalable_button.dart';
+import 'package:agro/ui/local_notification/local_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -36,6 +39,16 @@ class _OrderScreenState extends State<OrderScreen> {
             ? 'Заявка №${controller.modelOrder.id} від ${DateFormat('dd.MM.yyyy').format(controller.modelOrder.startDate!)}'
             : 'Ваші заявки',
         isBack: true,
+        endWidget: BTransparentScalableButton(
+            onPressed: () {
+              Clipboard.setData(
+                  ClipboardData(text: controller.modelOrder.toText()));
+              inAppNotification(
+                  text: "Дані про замовлення скопійовані в буфер обміну",
+                  c: context);
+            },
+            scale: ScaleFormat.big,
+            child: const Icon(Icons.copy, color: Color(0xffFCD300), size: 24)),
         theme: SystemUiOverlayStyle.dark,
         onPressedReturn: controller.onBack,
         child: !controller.loadPage
@@ -86,7 +99,8 @@ class _OrderScreenState extends State<OrderScreen> {
                             Expanded(
                                 child: bStyle(
                                     width: 160,
-                                    text: contactOpened ? "Сховати" : 'Контакти',
+                                    text:
+                                        contactOpened ? "Сховати" : 'Контакти',
                                     size: 23,
                                     c: c,
                                     colorText: Colors.black,
@@ -171,4 +185,23 @@ class _OrderScreenState extends State<OrderScreen> {
                 fontWeight: FontWeight.w500,
                 align: TextAlign.end))
       ]));
+}
+
+extension OrderX on ModelOrder {
+  String toText() {
+    return "Заявка №$id від ${DateFormat('dd.MM.yyyy').format(startDate!)}\n"
+        "Область: $region\n"
+        "Культура: $crop\n"
+        "Об’єм: $capacity\n"
+        "Рік врожаю: $harvestYear\n"
+        "Форма оплати: $payForm\n"
+        "Тип доставки: $deliveryForm\n"
+        "Коментар: $comment\n"
+        "$userName\n"
+        "Адреса: $userRegion\n"
+        "$userDistrict\n"
+        "$userCity\n"
+        "E-mail: $userEmail\n"
+        "Телефон: $userPhone\n";
+  }
 }
