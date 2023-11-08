@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:agro/model/model_user/struct_auth.dart';
@@ -38,7 +40,7 @@ class AuthConfirmationController extends FormController {
   void onLogin() => loadIfValid(() async {
         ApiAnswer apiAnswer = await Api().auth.loginCode(c: c, code: codeController.text);
 
-        print(apiAnswer.data);
+        log(apiAnswer.data.toString());
 
         if (apiAnswer.data['status']) {
           structUserData(data: apiAnswer.data['payload']['user'], token: apiAnswer.data['payload']['key'], login: true);

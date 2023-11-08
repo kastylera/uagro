@@ -72,6 +72,8 @@ dependencies:
 
   # CONNECT
   url_launcher: ^6.1.11
+  http: ^0.13.6
+  intl: ^0.18.1
 
 
 dev_dependencies:

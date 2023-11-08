@@ -13,19 +13,11 @@ class ContactScreen extends StatelessWidget {
   const ContactScreen({super.key, required this.modelOrder});
 
   @override
-  Widget build(BuildContext c) {
+  Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
       child: Column(
         children: [
-          // Padding(
-          //     padding: const EdgeInsets.only(top: 15),
-          //     child: Container(
-          //         decoration: BoxDecoration(
-          //             color: const Color(0xffEDEDED),
-          //             borderRadius: BorderRadius.circular(3)),
-          //         height: 10,
-          //         width: 100)),
           readText(
               text: 'Контакти фермера',
               color: Colors.black,

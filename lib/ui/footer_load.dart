@@ -6,7 +6,7 @@ class FooterLoad extends StatelessWidget {
   const FooterLoad({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext c) {
+  Widget build(BuildContext context) {
     return CustomFooter(
       builder: (BuildContext c, LoadStatus? mode) {
         return mode == LoadStatus.loading ? const Padding(padding: EdgeInsets.only(bottom: 20), child: AppCircularProgressIndicator(size: 70)) : const Center();

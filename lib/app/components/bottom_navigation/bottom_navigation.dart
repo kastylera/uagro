@@ -7,7 +7,7 @@ class BottomNavigation extends StatelessWidget {
   const BottomNavigation({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext c) {
+  Widget build(BuildContext context) {
     return Stack(
       children: [
         Align(
@@ -42,9 +42,9 @@ class BottomNavigation extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 15, right: 15),
                       child: Row(
                         children: [
-                          buttBottomNavigation(icon: Assets.bottomNavigationHome, text: 'Заявки', buttNum: 0, c: c),
-                          buttBottomNavigation(icon: Assets.bottomNavigationHelp, text: 'Підтримка', buttNum: 1, c: c),
-                          buttBottomNavigation(icon: Assets.bottomNavigationProfile, text: 'Профіль', buttNum: 2, c: c),
+                          buttBottomNavigation(icon: Assets.bottomNavigationHome, text: 'Заявки', buttNum: 0, c: context),
+                          buttBottomNavigation(icon: Assets.bottomNavigationHelp, text: 'Підтримка', buttNum: 1, c: context),
+                          buttBottomNavigation(icon: Assets.bottomNavigationProfile, text: 'Профіль', buttNum: 2, c: context),
                         ],
                       ),
                     ),

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:agro/ui/text/read_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,9 +28,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext c) {
-    print(controller.modelUser.name);
+    log(controller.modelUser.name.toString());
     // print(controller.modelUser);
-    print(controller.modelUser.phone);
+    log(controller.modelUser.phone.toString());
 
     return BlockPageScreen(
         headerSize: 21,

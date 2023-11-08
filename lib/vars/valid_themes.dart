@@ -8,7 +8,7 @@ class ValidThemes extends StatelessWidget {
   const ValidThemes({Key? key, required this.child, this.theme}) : super(key: key);
 
   @override
-  Widget build(BuildContext c) {
+  Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(value: theme ?? SystemUiOverlayStyle.light, child: child);
   }
 }

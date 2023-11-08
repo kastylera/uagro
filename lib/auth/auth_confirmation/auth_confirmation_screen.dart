@@ -32,7 +32,7 @@ class _AuthConfirmScreenState extends State<AuthConfirmScreen> {
         height: 60,
         padding: EdgeInsets.zero,
         textStyle: const TextStyle(fontSize: 24, color: Colors.black, fontWeight: FontWeight.w600),
-        decoration: BoxDecoration(border: Border.all(width: 1, color: Colors.transparent), color: Color(0xffF8F8F8), borderRadius: BorderRadius.circular(10)));
+        decoration: BoxDecoration(border: Border.all(width: 1, color: Colors.transparent), color: const Color(0xffF8F8F8), borderRadius: BorderRadius.circular(10)));
 
     final focusPinTheme = PinTheme(
         width: MediaQuery.of(c).size.width / 4,

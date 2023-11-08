@@ -12,7 +12,7 @@ class BlockSetting extends StatelessWidget {
   const BlockSetting({Key? key, required this.header, required this.icon, required this.onPressed, this.arrowActive = true}) : super(key: key);
 
   @override
-  Widget build(BuildContext c) {
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 15),
       child: Column(
@@ -32,7 +32,7 @@ class BlockSetting extends StatelessWidget {
           ),
           if (arrowActive) ...[Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Container(color: const Color(0xffDDC3F9), width: MediaQuery.of(c).size.width, height: 1),
+            child: Container(color: const Color(0xffDDC3F9), width: MediaQuery.of(context).size.width, height: 1),
           )]
         ],
       ),

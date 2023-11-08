@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:agro/app/home/order/components/add_price.dart';
 import 'package:agro/model/model_order_price/struct_order_price.dart';
 import 'package:agro/model/model_user/model_user.dart';
@@ -50,7 +52,7 @@ class OrderController extends FormController {
 
   void onSell() => loadIfValid(() async {
         ApiAnswer apiAnswer = await Api().fermer.closePriceOrder(c: c, orderId: modelOrder.id!);
-        print(apiAnswer.data);
+        log(apiAnswer.data.toString());
 
         if (apiAnswer.data['status'].toString() == 'true') {
           setState(() => modelOrder.endDate = DateTime.now().subtract(const Duration(days: 1)));
@@ -65,7 +67,7 @@ class OrderController extends FormController {
         totalPrice = apiAnswer.data['payload']['total'];
 
         for (final i in apiAnswer.data['payload']['prices']) {
-          print(i);
+          log(i.toString());
           modelOrderPrice.add(structOrderData(data: i));
         }
 
@@ -94,7 +96,7 @@ class OrderController extends FormController {
   void onAddPriceSave() => loadIfValid(() async {
         ApiAnswer apiAnswer = await Api().traider.addPrice(c: c, orderId: modelOrder.id!, price: priceController.text);
 
-        print(apiAnswer.data);
+        log(apiAnswer.data.toString());
         if (apiAnswer.data['status'].toString() == 'true') {
           Navigator.pop(c);
           modelOrderPrice = [];

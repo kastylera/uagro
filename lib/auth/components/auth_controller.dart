@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -38,7 +40,7 @@ class AuthController extends FormController {
   void onLogin() => loadIfValid(() async {
         ApiAnswer apiAnswer = await Api().auth.loginNumber(c: c, number: '+${numberController.text.replaceAll(RegExp('\\D'), '')}');
 
-        print(apiAnswer.data);
+        log(apiAnswer.data.toString());
 
         if (apiAnswer.data['status']) {
           Get.offAllNamed(Routes.authConfirm);

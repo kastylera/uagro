@@ -9,11 +9,11 @@ class UiBlockContainer extends StatelessWidget {
   const UiBlockContainer({Key? key, required this.child, this.padding, this.colorBg, this.height}) : super(key: key);
 
   @override
-  Widget build(BuildContext c) {
+  Widget build(BuildContext context) {
     return Padding(
         padding: padding ?? const EdgeInsets.only(left: 10, right: 10, top: 20),
         child: Container(
-            width: MediaQuery.of(c).size.width,
+            width: MediaQuery.of(context).size.width,
             height: height,
             decoration: BoxDecoration(
                 color: colorBg ?? const Color(0xff2D2D30).withOpacity(.5),

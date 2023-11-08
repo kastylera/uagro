@@ -1,12 +1,12 @@
+import 'dart:developer';
+
 import 'package:agro/model/model_user/model_user.dart';
-import 'package:agro/vars/model_notifier/user_notifier/user_notifier.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:agro/model/model_order/struct_order.dart';
 import 'package:agro/routes/app_pages.dart';
 import 'package:agro/server/api/api.dart';
 import 'package:hive/hive.dart';
-import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../../controllers/abstract/from_controller.dart';
@@ -74,7 +74,7 @@ class HomeController extends FormController {
           apiAnswer = await Api().fermer.getOrderList(c: c, page: page, limit: 15, search: searchController.text);
         }
 
-        print(apiAnswer.data);
+        log(apiAnswer.data.toString());
 
         setState(() {
           if (c.mounted) {
@@ -86,8 +86,7 @@ class HomeController extends FormController {
             }
           }
         });
-        print('modelOrder.length');
-        print(modelOrder.length);
+        log('modelOrder.length: ${modelOrder.length}');
       }, c: c);
 
   void onLoadData() {

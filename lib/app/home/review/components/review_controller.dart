@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:agro/model/model_review/struct_review.dart';
 import 'package:agro/model/model_user/model_user.dart';
 import 'package:flutter/cupertino.dart';
@@ -64,8 +66,8 @@ class ReviewController extends FormController {
 
         ApiAnswer apiAnswer = await Api().fermer.sendReviewFermer(c: c, orderId: modelOrder.id!, rating: countStar.round(), comment: reviewController.text);
 
-        print(modelOrder.id);
-        print(apiAnswer.data);
+        log(modelOrder.id.toString());
+        log(apiAnswer.data.toString());
 
         if (apiAnswer.data['status'].toString() == 'true') {
           if (c.mounted) {

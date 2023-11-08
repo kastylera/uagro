@@ -1,10 +1,10 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:hive/hive.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 import '../../routes/app_pages.dart';
 import 'controller/auth.dart';
@@ -32,21 +32,21 @@ class Api {
 
   final url = 'https://uagro.trade/apiapp.php';
 
-  Future<http.StreamedResponse> dataRequest(path,
+  Future<StreamedResponse> dataRequest(path,
       {String req = 'POST', String? parameter, bool urlActive = true, bool bearerActive = true, String? body, required BuildContext c}) async {
-    http.StreamedResponse request = await ((http.Request(req, Uri.parse('${urlActive ? url : ''}$path?${parameter ?? ''}')))
+    StreamedResponse request = await ((Request(req, Uri.parse('${urlActive ? url : ''}$path?${parameter ?? ''}')))
           ..headers.addAll(bearerActive ? headers(c: c) : headersNoBearer())
           ..body = body ?? json.encode({}))
         .send();
 
-    print('$url$path${parameter ?? ''}');
+    log('$url$path${parameter ?? ''}');
 
     return request;
   }
 
-  Future<http.StreamedResponse> dataRequestMultipart(method,
+  Future<StreamedResponse> dataRequestMultipart(method,
       {String? parameter, bool urlActive = true, bool bearerActive = true, Map<String, String>? formData, required BuildContext c}) async {
-    var request = http.MultipartRequest(
+    var request = MultipartRequest(
         'POST',
         Uri.parse('${urlActive ? url : ''}?method=$method&'
             'key=${Hive.box('data').get('modelUser') == null || Hive.box('data').get('modelUser').token == null ? '' : Hive.box('data').get('modelUser').token}${parameter == null ? '' : '&$parameter'}'));
@@ -78,8 +78,7 @@ class ApiAnswer {
 }
 
 void checkAuth(data) {
-  print('data');
-  print(data);
+  log('data: $data');
   try {
     if (data['message'] == 'Unauthorized') {
       Hive.box('data').put('pinCode', null);

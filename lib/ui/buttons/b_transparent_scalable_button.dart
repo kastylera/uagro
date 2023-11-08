@@ -10,7 +10,7 @@ class BTransparentScalableButton extends StatefulWidget {
   const BTransparentScalableButton({super.key, required this.child, required this.onPressed, this.onLongPress, required this.scale});
 
   @override
-  _BTransparentScalableButtonState createState() => _BTransparentScalableButtonState();
+  State<BTransparentScalableButton> createState() => _BTransparentScalableButtonState();
 }
 
 class _BTransparentScalableButtonState extends State<BTransparentScalableButton> with SingleTickerProviderStateMixin {

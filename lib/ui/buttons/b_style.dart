@@ -39,9 +39,9 @@ Widget bStyle(
                 color: colorButt ?? (!active ? const Color(0xffE6E6EA) : const Color(0xff69A509)),
                 borderRadius: BorderRadius.circular(circular ?? 15),
                 boxShadow:
-                    !boxShadowActive ? null : [BoxShadow(color: const Color(0xff01CA20), spreadRadius: 0, blurRadius: 6, offset: const Offset(0, 3))],
+                    !boxShadowActive ? null : [const BoxShadow(color: Color(0xff01CA20), spreadRadius: 0, blurRadius: 6, offset: Offset(0, 3))],
                 border: border,
-                gradient: linear == null ? null : LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: linear ?? [])),
+                gradient: linear == null ? null : LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: linear)),
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: vertical ?? 22, horizontal: spacerActive ? 20 : 0),
               child: Row(crossAxisAlignment: CrossAxisAlignment.center, mainAxisAlignment: MainAxisAlignment.center, children: [

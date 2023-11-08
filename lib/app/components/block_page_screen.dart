@@ -35,7 +35,7 @@ class BlockPageScreen extends StatelessWidget {
       : super(key: key);
 
   @override
-  Widget build(BuildContext c) {
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: resizeToAvoidBottomInset,
@@ -55,7 +55,7 @@ class BlockPageScreen extends StatelessWidget {
                     child: Row(children: [
                       if (isBack) ...[
                         BTransparentScalableButton(
-                            onPressed: onPressedReturn ?? () => Navigator.pop(c), scale: ScaleFormat.small, child: SvgPicture.asset(Assets.componentsBack, width: 18, color: Colors.black)),
+                            onPressed: onPressedReturn ?? () => Navigator.pop(context), scale: ScaleFormat.small, child: SvgPicture.asset(Assets.componentsBack, width: 18, color: Colors.black)),
                       ] else if (endIcon != null || isCancel) ...[
                         const SizedBox(width: 32)
                       ],
@@ -79,7 +79,7 @@ class BlockPageScreen extends StatelessWidget {
                     ]),
                   ),
                 ),
-                Padding(padding: const EdgeInsets.only(top: 15), child: Container(width: MediaQuery.of(c).size.width, height: 1, color: Colors.black.withOpacity(0.05))),
+                Padding(padding: const EdgeInsets.only(top: 15), child: Container(width: MediaQuery.of(context).size.width, height: 1, color: Colors.black.withOpacity(0.05))),
                 Expanded(child: child)
               ],
             ),

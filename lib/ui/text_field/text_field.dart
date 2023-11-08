@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../generated/assets.dart';
-import '../buttons/b_transparent_scalable_button.dart';
 import '../text/read_text.dart';
 
 class TextFieldWidget extends StatefulWidget {
@@ -72,7 +70,7 @@ class TextFieldWidget extends StatefulWidget {
       : super(key: key);
 
   @override
-  _TextFieldState createState() => _TextFieldState();
+  State<TextFieldWidget> createState() => _TextFieldState();
 }
 
 class _TextFieldState extends State<TextFieldWidget> {

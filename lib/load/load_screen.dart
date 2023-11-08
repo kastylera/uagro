@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
 import '../../generated/assets.dart';
@@ -9,7 +8,7 @@ class LoadScreen extends StatelessWidget {
   const LoadScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext c) {
+  Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.dark,
         child: Scaffold(
@@ -17,8 +16,8 @@ class LoadScreen extends StatelessWidget {
           body: Stack(
             alignment: Alignment.topCenter,
             children: [
-              Image.asset(Assets.startBg, fit: BoxFit.fill, width: MediaQuery.of(c).size.width, height: MediaQuery.of(c).size.height),
-              Align(alignment: Alignment.center, child: Image.asset(Assets.pictureLogo, width: MediaQuery.of(c).size.width / 1.4)),
+              Image.asset(Assets.startBg, fit: BoxFit.fill, width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height),
+              Align(alignment: Alignment.center, child: Image.asset(Assets.pictureLogo, width: MediaQuery.of(context).size.width / 1.4)),
             ],
           ),
         ));
@@ -32,7 +31,7 @@ class AppCircularProgressIndicator extends StatelessWidget {
   const AppCircularProgressIndicator({Key? key, this.size, this.color}) : super(key: key);
 
   @override
-  Widget build(BuildContext c) {
+  Widget build(BuildContext context) {
     return Center(
         child: SizedBox(
             width: size ?? 100,

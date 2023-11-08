@@ -4,7 +4,6 @@ import 'package:agro/ui/buttons/b_transparent_scalable_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 import '../../../model/model_review/model_review.dart';
 import '../../components/block_page_screen.dart';

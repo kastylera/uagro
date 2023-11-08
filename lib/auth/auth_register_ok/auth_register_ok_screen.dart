@@ -11,7 +11,7 @@ class AuthRegisterOkScreen extends StatelessWidget {
   const AuthRegisterOkScreen({super.key});
 
   @override
-  Widget build(BuildContext c) {
+  Widget build(BuildContext context) {
     AuthRegisterOkController controller = Get.find();
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -24,14 +24,14 @@ class AuthRegisterOkScreen extends StatelessWidget {
             child: Stack(
               alignment: Alignment.topCenter,
               children: [
-                Image.asset(Assets.authBg, fit: BoxFit.fitWidth, width: MediaQuery.of(c).size.width),
+                Image.asset(Assets.authBg, fit: BoxFit.fitWidth, width: MediaQuery.of(context).size.width),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Padding(padding: const EdgeInsets.only(top: 25), child: Center(child: Image.asset(Assets.pictureLogo, width: MediaQuery.of(c).size.width / 1.4))),
+                    Padding(padding: const EdgeInsets.only(top: 25), child: Center(child: Image.asset(Assets.pictureLogo, width: MediaQuery.of(context).size.width / 1.4))),
                     const Spacer(),
                     Container(
-                        width: MediaQuery.of(c).size.width,
+                        width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(color: const Color(0xffF8F8F8), borderRadius: BorderRadius.circular(10)),
                         child: Padding(
                           padding: const EdgeInsets.all(15),

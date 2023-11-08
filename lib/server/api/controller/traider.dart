@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import '../api.dart';
@@ -6,7 +7,7 @@ import '../api.dart';
 class Traider extends Api {
   Future<ApiAnswer> getOrderList({required BuildContext c, required int page, required int limit, String? search}) async {
     ApiAnswer apiAnswer = ApiAnswer();
-    print('mode=trader&page=$page&limit=$limit&search=$search&sphere=15');
+    log('mode=trader&page=$page&limit=$limit&search=$search&sphere=15');
     var request = await dataRequestMultipart('order.list', c: c, parameter: 'mode=trader&page=$page&limit=$limit&search=$search&sphere=15');
 
     apiAnswer.code = request.statusCode;

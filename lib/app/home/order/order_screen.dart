@@ -41,8 +41,10 @@ class _OrderScreenState extends State<OrderScreen> {
         isBack: true,
         endWidget: BTransparentScalableButton(
             onPressed: () {
-              Clipboard.setData(
-                  ClipboardData(text: controller.modelOrder.toText()));
+              Clipboard.setData(ClipboardData(
+                  text: contactOpened
+                      ? controller.modelOrder.toTextFull()
+                      : controller.modelOrder.toTextShort()));
               inAppNotification(
                   text: "Дані про замовлення скопійовані в буфер обміну",
                   c: context);
@@ -188,7 +190,18 @@ class _OrderScreenState extends State<OrderScreen> {
 }
 
 extension OrderX on ModelOrder {
-  String toText() {
+  String toTextShort() {
+    return "Заявка №$id від ${DateFormat('dd.MM.yyyy').format(startDate!)}\n"
+        "Область: $region\n"
+        "Культура: $crop\n"
+        "Об’єм: $capacity\n"
+        "Рік врожаю: $harvestYear\n"
+        "Форма оплати: $payForm\n"
+        "Тип доставки: $deliveryForm\n"
+        "Коментар: $comment\n";
+  }
+
+  String toTextFull() {
     return "Заявка №$id від ${DateFormat('dd.MM.yyyy').format(startDate!)}\n"
         "Область: $region\n"
         "Культура: $crop\n"

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -43,7 +44,7 @@ Future<void> main() async {
     await Hive.openBox<String>('configs');
     await Hive.openBox('data');
   } catch (err) {
-    print(err);
+    log(err.toString());
   }
 
   runApp(MultiProvider(providers: [
@@ -57,7 +58,7 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext c) {
+  Widget build(BuildContext context) {
     return InAppNotification(
         child: AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
@@ -80,7 +81,7 @@ class MyApp extends StatelessWidget {
                   )),
             );
           },
-          locale: c.watch<LocaleManager>().locale,
+          locale: context.watch<LocaleManager>().locale,
           supportedLocales: AppLocalizations.supportedLocales,
           theme: ThemeData.dark(),
           localizationsDelegates: const [
@@ -90,7 +91,7 @@ class MyApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
           debugShowCheckedModeBanner: false,
-          getPages: AppPages.pages(context: c),
+          getPages: AppPages.pages(context: context),
           transitionDuration: const Duration(milliseconds: 200),
           home: const Material(child: MyStart())),
     ));
@@ -101,7 +102,7 @@ class MyStart extends HookWidget {
   const MyStart({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext c) {
+  Widget build(BuildContext context) {
     final future = useMemoized(() {});
     return FutureBuilder<String>(
         future: future,
