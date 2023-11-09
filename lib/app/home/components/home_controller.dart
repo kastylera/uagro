@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:agro/model/model_user/model_user.dart';
+import 'package:agro/model/tariff/tariff.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:agro/model/model_order/struct_order.dart';
@@ -25,6 +26,7 @@ class HomeController extends FormController {
 
   int page = 1;
   List<ModelOrder> modelOrder = [];
+  Tariff? tariff;
 
   @override
   void onInit() {
@@ -34,7 +36,9 @@ class HomeController extends FormController {
     super.onInit();
   }
 
-  void initPage({required BuildContext context, required Function(VoidCallback fn) set}) async {
+  void initPage(
+      {required BuildContext context,
+      required Function(VoidCallback fn) set}) async {
     c = context;
     setState = set;
     modelUser = Hive.box('data').get('modelUser');
@@ -51,7 +55,10 @@ class HomeController extends FormController {
 
         if (c.mounted) {
           if (apiAnswer.data['status']) {
-            inAppNotification(text: 'Заявка відправлена. Скоро з вами зв’яжеться оператор.', c: c, seconds: 5);
+            inAppNotification(
+                text: 'Заявка відправлена. Скоро з вами зв’яжеться оператор.',
+                c: c,
+                seconds: 5);
           } else {
             inAppNotification(text: apiAnswer.data['message'], c: c);
             // setState(() => errorCode = apiAnswer.data['message']);
@@ -69,9 +76,11 @@ class HomeController extends FormController {
         late ApiAnswer apiAnswer;
 
         if (modelUser.role == 'distrib') {
-          apiAnswer = await Api().traider.getOrderList(c: c, page: page, limit: 15, search: searchController.text);
+          apiAnswer = await Api().traider.getOrderList(
+              c: c, page: page, limit: 15, search: searchController.text);
         } else {
-          apiAnswer = await Api().fermer.getOrderList(c: c, page: page, limit: 15, search: searchController.text);
+          apiAnswer = await Api().fermer.getOrderList(
+              c: c, page: page, limit: 15, search: searchController.text);
         }
 
         log(apiAnswer.data.toString());
@@ -96,7 +105,7 @@ class HomeController extends FormController {
 
   onPageOrderFermer({required ModelOrder model}) async {
     model.request = true;
-    var data = await Get.toNamed(Routes.orderInfo, arguments: model);
+    var data = await Get.toNamed(Routes.orderInfo, arguments: [model, tariff]);
 
     if (data != null) {
       model = data as ModelOrder;
@@ -118,6 +127,9 @@ class HomeController extends FormController {
     try {
       ApiAnswer apiAnswer = await Api().traider.getTariff(c: c);
       messHeader = apiAnswer.data['message'];
-    } catch (_) {}
+      tariff = Tariff.fromJson(apiAnswer.data['payload']);
+    } catch (e) {
+      log(e.toString(), error: e);
+    }
   }
 }

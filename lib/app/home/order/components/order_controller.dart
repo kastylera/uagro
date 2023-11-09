@@ -4,6 +4,7 @@ import 'package:agro/app/home/order/components/add_price.dart';
 import 'package:agro/app/home/order/components/launch_phone.dart';
 import 'package:agro/model/model_order_price/struct_order_price.dart';
 import 'package:agro/model/model_user/model_user.dart';
+import 'package:agro/model/tariff/tariff.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:agro/model/model_order/model_order.dart';
 import 'package:agro/server/api/api.dart';
@@ -23,6 +24,8 @@ class OrderController extends FormController {
   late Function(VoidCallback fn) setState;
   late BuildContext c;
   late ModelOrder modelOrder;
+  late Tariff tariff;
+
   late ModelUser modelUser;
   bool loadPage = false;
   int totalPrice = 0;
@@ -35,14 +38,18 @@ class OrderController extends FormController {
     super.onInit();
   }
 
-  void initPage({required BuildContext context, required Function(VoidCallback fn) set}) async {
+  void initPage(
+      {required BuildContext context,
+      required Function(VoidCallback fn) set}) async {
     c = context;
     setState = set;
     modelUser = c.read<UserNotifier>().modelUser;
 
     await Future.delayed(const Duration(milliseconds: 100));
     if (c.mounted) {
-      modelOrder = ModalRoute.of(c)!.settings.arguments as ModelOrder;
+      final arguments = ModalRoute.of(c)!.settings.arguments as List;
+      modelOrder = arguments[0] as ModelOrder;
+      tariff = arguments[1] as Tariff;
       await Future.delayed(const Duration(milliseconds: 100));
       onLoadInfoUser();
       onLoadPrice();
@@ -51,18 +58,21 @@ class OrderController extends FormController {
   }
 
   void onSell() => loadIfValid(() async {
-        ApiAnswer apiAnswer = await Api().fermer.closePriceOrder(c: c, orderId: modelOrder.id!);
+        ApiAnswer apiAnswer =
+            await Api().fermer.closePriceOrder(c: c, orderId: modelOrder.id!);
         log(apiAnswer.data.toString());
 
         if (apiAnswer.data['status'].toString() == 'true') {
-          setState(() => modelOrder.endDate = DateTime.now().subtract(const Duration(days: 1)));
+          setState(() => modelOrder.endDate =
+              DateTime.now().subtract(const Duration(days: 1)));
         }
       }, c: c);
 
   void onReview() => Get.toNamed(Routes.review, arguments: modelOrder);
 
   void onLoadPrice() => loadIfValid(() async {
-        ApiAnswer apiAnswer = await Api().fermer.getInfoPriceOrder(c: c, orderId: modelOrder.id!);
+        ApiAnswer apiAnswer =
+            await Api().fermer.getInfoPriceOrder(c: c, orderId: modelOrder.id!);
         // ApiAnswer apiAnswer = await Api().fermer.getInfoPriceOrder(c: c, orderId: 99384);
         totalPrice = apiAnswer.data['payload']['total'];
 
@@ -74,10 +84,15 @@ class OrderController extends FormController {
         setState(() {});
       }, c: c);
 
-  void onAddPrice() => showCupertinoModalBottomSheet(topRadius: const Radius.circular(30), context: c, builder: (c) => const AddPriceScreen());
+  void onAddPrice() => showCupertinoModalBottomSheet(
+      topRadius: const Radius.circular(30),
+      context: c,
+      builder: (c) => const AddPriceScreen());
 
   void onLoadInfoUser() async {
-    ApiAnswer apiAnswer = await Api().traider.orderOpenContactFermer(c: c, orderId: modelOrder.id!);
+    ApiAnswer apiAnswer = await Api()
+        .traider
+        .orderOpenContactFermer(c: c, orderId: modelOrder.id!);
 
     modelOrder.userName = apiAnswer.data['payload']['name'];
     modelOrder.userRegion = apiAnswer.data['payload']['region'];
@@ -91,10 +106,14 @@ class OrderController extends FormController {
 
   void onBack() => Navigator.pop(c, modelOrder);
 
-  void onLaunchPhone() => showCupertinoModalBottomSheet(topRadius: const Radius.circular(30), context: c, builder: (c) => LaunchPhone(modelOrder: modelOrder));
+  void onLaunchPhone() => showCupertinoModalBottomSheet(
+      topRadius: const Radius.circular(30),
+      context: c,
+      builder: (c) => LaunchPhone(modelOrder: modelOrder));
 
   void onAddPriceSave() => loadIfValid(() async {
-        ApiAnswer apiAnswer = await Api().traider.addPrice(c: c, orderId: modelOrder.id!, price: priceController.text);
+        ApiAnswer apiAnswer = await Api().traider.addPrice(
+            c: c, orderId: modelOrder.id!, price: priceController.text);
 
         log(apiAnswer.data.toString());
         if (apiAnswer.data['status'].toString() == 'true') {
@@ -102,7 +121,9 @@ class OrderController extends FormController {
           modelOrderPrice = [];
           onLoadPrice();
         } else {
-          inAppNotification(text: 'Трапилась помилка при додаванні ціни, перевірте ваші дані', c: c);
+          inAppNotification(
+              text: 'Трапилась помилка при додаванні ціни, перевірте ваші дані',
+              c: c);
         }
 
         //addPrice

@@ -1,6 +1,7 @@
 import 'package:agro/app/home/order/components/contact.dart';
 import 'package:agro/model/model_order/model_order.dart';
 import 'package:agro/model/model_order_price/model_order_price.dart';
+import 'package:agro/model/tariff/tariff.dart';
 import 'package:agro/ui/buttons/b_transparent_scalable_button.dart';
 import 'package:agro/ui/local_notification/local_notification.dart';
 import 'package:flutter/material.dart';
@@ -91,7 +92,9 @@ class _OrderScreenState extends State<OrderScreen> {
                           fontWeight: FontWeight.w500,
                           padding: const EdgeInsets.only(top: 10))
                     ],
-                    contactOpened
+                    (controller.tariff.isVip ||
+                            controller.tariff.isExclusive ||
+                            contactOpened)
                         ? ContactScreen(
                             modelOrder: controller.modelOrder,
                             onLauchPhone: controller.onLaunchPhone)
@@ -100,22 +103,40 @@ class _OrderScreenState extends State<OrderScreen> {
                       Padding(
                           padding: const EdgeInsets.only(top: 35),
                           child: Row(children: [
-                            Expanded(
-                                child: bStyle(
-                                    width: 160,
-                                    text:
-                                        contactOpened ? "Сховати" : 'Контакти',
-                                    size: 23,
-                                    c: c,
-                                    colorText: Colors.black,
-                                    vertical: 15,
-                                    colorButt: const Color(0xffF2F2F2),
-                                    onPressed: () {
-                                      setState(() {
-                                        contactOpened = !contactOpened;
-                                      });
-                                    })),
-                            const SizedBox(width: 25),
+                            controller.tariff.isVip ||
+                                    controller.tariff.isExclusive
+                                ? const SizedBox()
+                                : Expanded(
+                                    child: bStyle(
+                                            width: 160,
+                                            text: contactOpened
+                                                ? "Сховати"
+                                                : 'Контакти',
+                                            size: 23,
+                                            c: c,
+                                            colorText: Colors.black,
+                                            vertical: 15,
+                                            colorButt: const Color(0xffF2F2F2),
+                                            onPressed: () {
+                                              setState(() {
+                                                contactOpened = !contactOpened;
+                                              });
+                                            })),
+                            controller.tariff.isVip
+                                ? Expanded(
+                                    child: bStyle(
+                                        width: 160,
+                                        text: 'Угода',
+                                        size: 23,
+                                        c: c,
+                                        colorText: Colors.black,
+                                        vertical: 15,
+                                        colorButt: const Color(0xffF2F2F2),
+                                        onPressed: () {
+                                          //TODO
+                                        }))
+                                : const SizedBox(),
+                            SizedBox(width: !controller.tariff.isExclusive ? 25 : 0),  
                             Expanded(
                                 child: bStyle(
                                     width: 160,
