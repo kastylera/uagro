@@ -49,6 +49,20 @@ class Traider extends Api {
     return apiAnswer;
   }
 
+  Future<ApiAnswer> deal(
+      {required BuildContext c,
+      required int tenderId}) async {
+    ApiAnswer apiAnswer = ApiAnswer();
+    var request = await dataRequestMultipart('vip_accept',
+        c: c,
+        parameter: 'tender_id=$tenderId');
+    apiAnswer.code = request.statusCode;
+    apiAnswer.data = json.decode(await request.stream.bytesToString());
+    checkAuth(apiAnswer.data);
+
+    return apiAnswer;
+  }
+
   Future<ApiAnswer> getTariff({required BuildContext c}) async {
     ApiAnswer apiAnswer = ApiAnswer();
     var request = await dataRequestMultipart('tariff', c: c);

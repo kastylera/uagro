@@ -128,4 +128,22 @@ class OrderController extends FormController {
 
         //addPrice
       }, c: c);
+
+  void onDeal() => loadIfValid(() async {
+        ApiAnswer apiAnswer = await Api().traider.deal(
+            c: c, tenderId: modelOrder.id!);
+
+        log(apiAnswer.data.toString());
+        if (apiAnswer.data['status'].toString() == 'true') {
+          Navigator.pop(c);
+          modelOrderPrice = [];
+          onLoadPrice();
+        } else {
+          inAppNotification(
+              text: 'Трапилась помилка при угоді',
+              c: c);
+        }
+
+        //addPrice
+      }, c: c);
 }

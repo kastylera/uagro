@@ -108,20 +108,20 @@ class _OrderScreenState extends State<OrderScreen> {
                                 ? const SizedBox()
                                 : Expanded(
                                     child: bStyle(
-                                            width: 160,
-                                            text: contactOpened
-                                                ? "Сховати"
-                                                : 'Контакти',
-                                            size: 23,
-                                            c: c,
-                                            colorText: Colors.black,
-                                            vertical: 15,
-                                            colorButt: const Color(0xffF2F2F2),
-                                            onPressed: () {
-                                              setState(() {
-                                                contactOpened = !contactOpened;
-                                              });
-                                            })),
+                                        width: 160,
+                                        text: contactOpened
+                                            ? "Сховати"
+                                            : 'Контакти',
+                                        size: 23,
+                                        c: c,
+                                        colorText: Colors.black,
+                                        vertical: 15,
+                                        colorButt: const Color(0xffF2F2F2),
+                                        onPressed: () {
+                                          setState(() {
+                                            contactOpened = !contactOpened;
+                                          });
+                                        })),
                             controller.tariff.isVip
                                 ? Expanded(
                                     child: bStyle(
@@ -133,10 +133,11 @@ class _OrderScreenState extends State<OrderScreen> {
                                         vertical: 15,
                                         colorButt: const Color(0xffF2F2F2),
                                         onPressed: () {
-                                          //TODO
+                                          controller.onDeal();
                                         }))
                                 : const SizedBox(),
-                            SizedBox(width: !controller.tariff.isExclusive ? 25 : 0),  
+                            SizedBox(
+                                width: !controller.tariff.isExclusive ? 25 : 0),
                             Expanded(
                                 child: bStyle(
                                     width: 160,
