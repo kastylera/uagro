@@ -77,7 +77,6 @@ class OrderController extends FormController {
         totalPrice = apiAnswer.data['payload']['total'];
 
         for (final i in apiAnswer.data['payload']['prices']) {
-          log(i.toString());
           modelOrderPrice.add(structOrderData(data: i));
         }
 

@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:agro/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -32,6 +34,10 @@ Future<void> main() async {
         statusBarBrightness: Brightness.light,
         systemNavigationBarColor: Color(0xff14175B),
         systemNavigationBarIconBrightness: Brightness.light),
+  );
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
   );
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
@@ -71,7 +77,7 @@ class MyApp extends StatelessWidget {
               child: MediaQuery(
                   data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
                   child: ScrollConfiguration(
-                    behavior: _ScrollBehaviour(),
+                    behavior: const ScrollBehavior(),
                     child: ResponsiveWrapper.builder(child, minWidth: 500, defaultScale: true, breakpoints: [
                       const ResponsiveBreakpoint.autoScale(600, name: MOBILE),
                       const ResponsiveBreakpoint.resize(480, name: MOBILE),
@@ -124,12 +130,5 @@ class MyStart extends HookWidget {
         Get.offAllNamed(Routes.auth);
       }
     }
-  }
-}
-
-class _ScrollBehaviour extends ScrollBehavior {
-  @override
-  Widget buildViewportChrome(BuildContext context, Widget child, AxisDirection axisDirection) {
-    return child;
   }
 }

@@ -72,4 +72,14 @@ class Traider extends Api {
 
     return apiAnswer;
   }
+
+  Future<ApiAnswer> sendDeviceToken({required BuildContext c, required String deviceToken}) async {
+    ApiAnswer apiAnswer = ApiAnswer();
+    var request = await dataRequestMultipart('send_devicetoken', c: c, parameter: 'device_token=$deviceToken');
+    apiAnswer.code = request.statusCode;
+    apiAnswer.data = json.decode(await request.stream.bytesToString());
+    checkAuth(apiAnswer.data);
+
+    return apiAnswer;
+  }
 }

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "180463119032",
+    "project_id": "uagrotrade-d02d8",
+    "storage_bucket": "uagrotrade-d02d8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:180463119032:android:8f98c7ac6ec5c79703624d",
+        "android_client_info": {
+          "package_name": "aom.uagro.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBv4vvU7rDHRwUdHtgvOokEDRWvVywUWwM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:180463119032:android:0a0d155ee4cb3b1003624d",
+        "android_client_info": {
+          "package_name": "com.uagro.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBv4vvU7rDHRwUdHtgvOokEDRWvVywUWwM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

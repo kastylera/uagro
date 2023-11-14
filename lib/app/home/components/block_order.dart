@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:agro/model/model_order/model_order.dart';
 import 'package:agro/ui/text/read_text.dart';
@@ -20,7 +18,6 @@ class BlockOrder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeController controller = Get.find();
-    log(modelOrder.payForm.toString());
     return Padding(
       padding: const EdgeInsets.only(top: 30),
       child: BTransparentScalableButton(
