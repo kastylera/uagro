@@ -2,9 +2,12 @@ import 'dart:developer';
 
 import 'package:agro/app/home/order/components/add_price.dart';
 import 'package:agro/app/home/order/components/launch_phone.dart';
+import 'package:agro/app/home/order/components/set_answer.dart.dart';
+import 'package:agro/model/call_result/call_result.dart';
 import 'package:agro/model/model_order_price/struct_order_price.dart';
 import 'package:agro/model/model_user/model_user.dart';
 import 'package:agro/model/tariff/tariff.dart';
+import 'package:agro/repository/local_storage_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:agro/model/model_order/model_order.dart';
 import 'package:agro/server/api/api.dart';
@@ -25,12 +28,14 @@ class OrderController extends FormController {
   late BuildContext c;
   late ModelOrder modelOrder;
   late Tariff tariff;
+  late CallResult? result;
 
   late ModelUser modelUser;
   bool loadPage = false;
   int totalPrice = 0;
   List<ModelOrderPrice> modelOrderPrice = [];
   late TextEditingController priceController;
+  final _localStorageRepository = LocalStorageRepository();
 
   @override
   void onInit() {
@@ -50,6 +55,8 @@ class OrderController extends FormController {
       final arguments = ModalRoute.of(c)!.settings.arguments as List;
       modelOrder = arguments[0] as ModelOrder;
       tariff = arguments[1] as Tariff;
+      result =
+          await _localStorageRepository.getResult(modelOrder.id.toString());
       await Future.delayed(const Duration(milliseconds: 100));
       onLoadInfoUser();
       onLoadPrice();
@@ -110,6 +117,16 @@ class OrderController extends FormController {
       context: c,
       builder: (c) => LaunchPhone(modelOrder: modelOrder));
 
+  void onSetAnswer() => showCupertinoModalBottomSheet(
+      topRadius: const Radius.circular(30),
+      context: c,
+      builder: (c) => SetAnswer(onAnswered: (p0) {
+            _localStorageRepository.addNew(p0, modelOrder.id.toString());
+            result = p0;
+            setState(() {});
+            Navigator.pop(c);
+          }));
+
   void onAddPriceSave() => loadIfValid(() async {
         ApiAnswer apiAnswer = await Api().traider.addPrice(
             c: c, orderId: modelOrder.id!, price: priceController.text);
@@ -129,8 +146,8 @@ class OrderController extends FormController {
       }, c: c);
 
   void onDeal() => loadIfValid(() async {
-        ApiAnswer apiAnswer = await Api().traider.deal(
-            c: c, tenderId: modelOrder.id!);
+        ApiAnswer apiAnswer =
+            await Api().traider.deal(c: c, tenderId: modelOrder.id!);
 
         log(apiAnswer.data.toString());
         if (apiAnswer.data['status'].toString() == 'true') {
@@ -138,9 +155,7 @@ class OrderController extends FormController {
           modelOrderPrice = [];
           onLoadPrice();
         } else {
-          inAppNotification(
-              text: 'Трапилась помилка при угоді',
-              c: c);
+          inAppNotification(text: 'Трапилась помилка при угоді', c: c);
         }
 
         //addPrice

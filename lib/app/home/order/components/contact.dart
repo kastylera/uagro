@@ -17,7 +17,6 @@ class ContactScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      height: 440,
       child: Column(
         children: [
           readText(

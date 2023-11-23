@@ -41,28 +41,16 @@ class LaunchPhone extends StatelessWidget {
             const SizedBox(width: 30),
             BTransparentScalableButton(
                 onPressed: () {
-                  try {
-                    openTelegram(phone: modelOrder.userPhone.toString());
-                  } catch (e) {
-                    inAppNotification(
-                        text:
-                            'Ми не знайшли «Telegram» на Вашому телефоні. Будь ласка, встановіть додаток та стробуйте знову.',
-                        c: context);
-                  }
+                  openTelegram(
+                      phone: modelOrder.userPhone.toString(), context: context);
                 },
                 scale: ScaleFormat.small,
                 child: Image.asset(Assets.authTelegram, width: 50)),
             const SizedBox(width: 30),
             BTransparentScalableButton(
                 onPressed: () {
-                  try {
-                    openViber(phone: modelOrder.userPhone.toString());
-                  } catch (e) {
-                    inAppNotification(
-                        text:
-                            'Ми не знайшли «Viber» на Вашому телефоні. Будь ласка, встановіть додаток та стробуйте знову.',
-                        c: context);
-                  }
+                  openViber(
+                      phone: modelOrder.userPhone.toString(), context: context);
                 },
                 scale: ScaleFormat.small,
                 child: Image.asset(Assets.authViber, width: 50))
@@ -90,6 +78,7 @@ class LaunchPhone extends StatelessWidget {
           mode: LaunchMode.externalApplication);
 
   Future<void> openTelegram({
+    required BuildContext context,
     required String phone,
     LaunchMode mode = LaunchMode.externalApplication,
   }) async {
@@ -101,11 +90,15 @@ class LaunchPhone extends StatelessWidget {
         mode: mode,
       );
     } else {
-      throw Exception('openTelegram could not launching url: $url?to=$phone');
+      inAppNotification(
+          text:
+              'Ми не знайшли «Telegram» на Вашому телефоні. Будь ласка, встановіть додаток та стробуйте знову.',
+          c: context);
     }
   }
 
   Future<void> openViber({
+    required BuildContext context,
     required String phone,
     LaunchMode mode = LaunchMode.externalApplication,
   }) async {
@@ -117,7 +110,10 @@ class LaunchPhone extends StatelessWidget {
         mode: mode,
       );
     } else {
-      throw Exception('openViber could not launching url: $url');
+      inAppNotification(
+          text:
+              'Ми не знайшли «Viber» на Вашому телефоні. Будь ласка, встановіть додаток та стробуйте знову.',
+          c: context);
     }
   }
 

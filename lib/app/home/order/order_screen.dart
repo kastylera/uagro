@@ -1,4 +1,5 @@
 import 'package:agro/app/home/order/components/contact.dart';
+import 'package:agro/app/home/order/components/order_info.dart';
 import 'package:agro/model/model_order/model_order.dart';
 import 'package:agro/model/model_order_price/model_order_price.dart';
 import 'package:agro/model/tariff/tariff.dart';
@@ -99,6 +100,15 @@ class _OrderScreenState extends State<OrderScreen> {
                             modelOrder: controller.modelOrder,
                             onLauchPhone: controller.onLaunchPhone)
                         : const SizedBox(),
+                    const SizedBox(height: 10),    
+                    OrderInfo(
+                      header: "Результат дзвінка",
+                      text: controller.result?.label ?? "Не встановлено",
+                      textColor: controller.result?.color,
+                      onPressed: () {
+                        controller.onSetAnswer();
+                      },
+                    ),
                     if (controller.modelUser.role == 'distrib') ...[
                       Padding(
                           padding: const EdgeInsets.only(top: 35),
@@ -137,7 +147,10 @@ class _OrderScreenState extends State<OrderScreen> {
                                         }))
                                 : const SizedBox(),
                             SizedBox(
-                                width: !controller.tariff.isExclusive ? 25 : 0),
+                                width: !controller.tariff.isExclusive ||
+                                        controller.tariff.isVip
+                                    ? 25
+                                    : 0),
                             Expanded(
                                 child: bStyle(
                                     width: 160,
