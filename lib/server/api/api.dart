@@ -14,17 +14,9 @@ import 'controller/traider.dart';
 int numRequestSend = 0;
 
 class Api {
-  // var headers = {
-  //   // 'Authorization': 'Bearer ${Hive.box('data').get('modelUser') != null ? Hive.box('data').get('modelUser').token : ''}',
   //   'Authorization': 'Bearer ${Hive.box('data').get('modelUser') != null ? Hive.box('data').get('modelUser').token : ''}',
-  //   'Content-Type': 'application/json',
-  // };
-  //Hive.box('data').get('modelUser');
   Map<String, String> headers() => {
-        // 'Authorization': 'Bearer ${Hive.box('data').get('modelUser') != null ? Hive.box('data').get('modelUser').token : ''}',
-        // 'Authorization':
-        //     'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwZXJzb25hbF9pZCI6Ijg1MDA3MjgzMDEiLCJleHAiOjE2OTI4MDYwNTV9.ZZ_IYoJrXv96qxRDYkicpD2IV0CaFcvtdJhJasq2UqU',
-        'Content-Type': 'application/json',
+       'Content-Type': 'application/json',
         'Accept': 'application/json'
       };
 
@@ -59,9 +51,6 @@ class Api {
       });
     }
 
-//    await request.send();
-//
-// print(request)
     return await request.send();
   }
 
@@ -74,7 +63,7 @@ class Api {
 
 class ApiAnswer {
   int? code;
-  var data;
+  dynamic data;
 }
 
 void checkAuth(data) {
