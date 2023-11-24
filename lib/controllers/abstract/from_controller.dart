@@ -30,7 +30,8 @@ abstract class FormController extends GetxController {
 
   void updateErrorText(String? errorText) => _errorText.value = errorText;
 
-  Future<void> _load(Future<void> Function() func, {required BuildContext c}) async {
+  Future<void> _load(Future<void> Function() func,
+      {required BuildContext c}) async {
     updateErrorText(null);
     loading(true);
     try {
@@ -55,15 +56,19 @@ abstract class FormController extends GetxController {
     }
   }
 
-  Future<void> load(Future<void> Function() func, {required BuildContext c}) async {
-    await Get.showOverlay(asyncFunction: () async => await _load(func, c: c), loadingWidget: const Center(child: AppCircularProgressIndicator()));
+  Future<void> load(Future<void> Function() func,
+      {required BuildContext c}) async {
+    await Get.showOverlay(
+        asyncFunction: () async => await _load(func, c: c),
+        loadingWidget: const Center(child: AppCircularProgressIndicator()));
   }
 
-  Future<void> loadIfValid(Future<void> Function() func, {required BuildContext c}) async {
+  Future<void> loadIfValid(Future<void> Function() func,
+      {required BuildContext c}) async {
     try {
       await load(func, c: c);
     } catch (err) {
-      inAppNotification(text: err.toString(), c: c);
+      notification(text: err.toString());
     }
   }
 }

@@ -96,9 +96,8 @@ class OrderController extends FormController {
       builder: (c) => const AddPriceScreen());
 
   void onLoadInfoUser() async {
-    ApiAnswer apiAnswer = await Api()
-        .traider
-        .orderOpenContactFermer(orderId: modelOrder.id!);
+    ApiAnswer apiAnswer =
+        await Api().traider.orderOpenContactFermer(orderId: modelOrder.id!);
 
     modelOrder.userName = apiAnswer.data['payload']['name'];
     modelOrder.userRegion = apiAnswer.data['payload']['region'];
@@ -128,20 +127,20 @@ class OrderController extends FormController {
           }));
 
   void onAddPriceSave() => loadIfValid(() async {
-        ApiAnswer apiAnswer = await Api().traider.addPrice(
-            orderId: modelOrder.id!, price: priceController.text);
+        ApiAnswer apiAnswer = await Api()
+            .traider
+            .addPrice(orderId: modelOrder.id!, price: priceController.text);
 
         log(apiAnswer.data.toString());
         if (apiAnswer.data['status'].toString() == 'true') {
-          Navigator.pop(c);
+          Get.back();
           modelOrderPrice = [];
           onLoadPrice();
         } else {
-          inAppNotification(
-              text: 'Трапилась помилка при додаванні ціни, перевірте ваші дані',
-              c: c);
+          notification(
+              text:
+                  'Трапилась помилка при додаванні ціни, перевірте ваші дані');
         }
-
         //addPrice
       }, c: c);
 
@@ -151,11 +150,11 @@ class OrderController extends FormController {
 
         log(apiAnswer.data.toString());
         if (apiAnswer.data['status'].toString() == 'true') {
-          Navigator.pop(c);
+          Get.back();
           modelOrderPrice = [];
           onLoadPrice();
         } else {
-          inAppNotification(text: 'Трапилась помилка при угоді', c: c);
+          notification(text: 'Трапилась помилка при угоді');
         }
 
         //addPrice

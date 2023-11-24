@@ -90,10 +90,10 @@ class LaunchPhone extends StatelessWidget {
         mode: mode,
       );
     } else {
-      inAppNotification(
+      notification(
           text:
               'Ми не знайшли «Telegram» на Вашому телефоні. Будь ласка, встановіть додаток та стробуйте знову.',
-          c: context);
+         );
     }
   }
 
@@ -110,10 +110,10 @@ class LaunchPhone extends StatelessWidget {
         mode: mode,
       );
     } else {
-      inAppNotification(
+      notification(
           text:
               'Ми не знайшли «Viber» на Вашому телефоні. Будь ласка, встановіть додаток та стробуйте знову.',
-          c: context);
+          );
     }
   }
 
