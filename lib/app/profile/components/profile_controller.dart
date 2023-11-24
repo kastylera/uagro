@@ -1,3 +1,4 @@
+import 'package:agro/controllers/abstract/base_controller.dart';
 import 'package:agro/model/model_user/model_user.dart';
 import 'package:agro/vars/model_notifier/user_notifier/user_notifier.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,23 +8,19 @@ import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../controllers/abstract/from_controller.dart';
 import '../../../main.dart';
 import '../../../ui/local_notification/local_notification.dart';
 import '../../../ui/text/read_text.dart';
 import '../../../vars/model_notifier/bottom_menu_notifier/bottom_menu_notifier.dart';
 import '../../home/components/home_controller.dart';
 
-class ProfileController extends FormController {
+class ProfileController extends BaseController {
   late Function(VoidCallback fn) setState;
-  late BuildContext c;
-  ModelUser modelUser = Hive.box('data').get('modelUser');
-
-  void initPage(
-      {required BuildContext context,
-      required Function(VoidCallback fn) set}) async {
-    c = context;
-    setState = set;
+  final modelUser = Rx<ModelUser>(ModelUser());
+  @override
+  void onInit() {
+    modelUser.value = Hive.box('data').get('modelUser');
+    super.onInit();
   }
 
   void onSite() => launchUrl(Uri.parse('https://uagro.trade/'));
@@ -33,10 +30,8 @@ class ProfileController extends FormController {
   void onPrivacy() => launchUrl(Uri.parse(
       'https://www.freeprivacypolicy.com/live/3afe785c-8de8-4a5b-985b-353bfca6bd17'));
 
-  // void onTerms() {}
-
-  void onDeleteAccount() => showCupertinoModalPopup<void>(
-      context: c,
+  void onDeleteAccount(BuildContext context) => showCupertinoModalPopup<void>(
+      context: context,
       builder: (BuildContext c) => Theme(
           data: ThemeData.light(),
           child: CupertinoAlertDialog(
@@ -95,8 +90,8 @@ class ProfileController extends FormController {
                         size: 20))
               ])));
 
-  void onExit() => showCupertinoModalPopup<void>(
-      context: c,
+  void onExit(BuildContext context) => showCupertinoModalPopup<void>(
+      context: context,
       builder: (BuildContext c) => Theme(
           data: ThemeData.light(),
           child: CupertinoAlertDialog(
