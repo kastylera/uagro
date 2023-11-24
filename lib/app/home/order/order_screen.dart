@@ -35,7 +35,7 @@ class _OrderScreenState extends State<OrderScreen> {
   }
 
   @override
-  Widget build(BuildContext c) {
+  Widget build(BuildContext context) {
     return BlockPageScreen(
         headerSize: 20,
         header: controller.loadPage
@@ -55,7 +55,7 @@ class _OrderScreenState extends State<OrderScreen> {
             scale: ScaleFormat.big,
             child: const Icon(Icons.copy, color: Color(0xffFCD300), size: 24)),
         theme: SystemUiOverlayStyle.dark,
-        onPressedReturn: controller.onBack,
+        onPressedReturn: () => controller.onBack(context),
         child: !controller.loadPage
             ? const SizedBox()
             : SingleChildScrollView(
@@ -99,16 +99,15 @@ class _OrderScreenState extends State<OrderScreen> {
                             contactOpened)
                         ? ContactScreen(
                             modelOrder: controller.modelOrder,
-                            onLauchPhone: controller.onLaunchPhone)
+                            onLauchPhone: () =>
+                                controller.onLaunchPhone(context))
                         : const SizedBox(),
                     const SizedBox(height: 10),
                     controller.modelUser.isTraider
                         ? CallResultInfo(
                             text: controller.result?.label ?? "Встановити",
                             textColor: controller.result?.color,
-                            onPressed: () {
-                              controller.onSetAnswer();
-                            },
+                            onPressed: () => controller.onSetAnswer(context),
                           )
                         : const SizedBox(),
                     if (controller.modelUser.role == 'distrib') ...[
@@ -125,7 +124,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                             ? "Сховати"
                                             : 'Контакти',
                                         size: 23,
-                                        c: c,
+                                        c: context,
                                         colorText: Colors.black,
                                         vertical: 15,
                                         colorButt: const Color(0xffF2F2F2),
@@ -140,7 +139,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                         width: 160,
                                         text: 'Угода',
                                         size: 23,
-                                        c: c,
+                                        c: context,
                                         colorText: Colors.black,
                                         vertical: 15,
                                         colorButt: const Color(0xffF2F2F2),
@@ -159,7 +158,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                     width: 160,
                                     text: 'Відгуки',
                                     size: 23,
-                                    c: c,
+                                    c: context,
                                     colorText: Colors.black,
                                     vertical: 15,
                                     colorButt: const Color(0xffF2F2F2),
@@ -170,9 +169,9 @@ class _OrderScreenState extends State<OrderScreen> {
                           key: UniqueKey(),
                           text: 'Додати ціну',
                           size: 23,
-                          c: c,
+                          c: context,
                           colorButt: const Color(0xffFCD300),
-                          onPressed: controller.onAddPrice)
+                          onPressed: () => controller.onAddPrice(context))
                     ] else ...[
                       bStyle(
                           key: UniqueKey(),
@@ -183,7 +182,7 @@ class _OrderScreenState extends State<OrderScreen> {
                               ? 'Продано'
                               : 'Продав',
                           size: 23,
-                          c: c,
+                          c: context,
                           active: DateTime.now().millisecondsSinceEpoch <
                               controller
                                   .modelOrder.endDate!.millisecondsSinceEpoch,
