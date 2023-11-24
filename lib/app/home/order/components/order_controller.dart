@@ -66,7 +66,7 @@ class OrderController extends FormController {
 
   void onSell() => loadIfValid(() async {
         ApiAnswer apiAnswer =
-            await Api().fermer.closePriceOrder(c: c, orderId: modelOrder.id!);
+            await Api().fermer.closePriceOrder(orderId: modelOrder.id!);
         log(apiAnswer.data.toString());
 
         if (apiAnswer.data['status'].toString() == 'true') {
@@ -79,7 +79,7 @@ class OrderController extends FormController {
 
   void onLoadPrice() => loadIfValid(() async {
         ApiAnswer apiAnswer =
-            await Api().fermer.getInfoPriceOrder(c: c, orderId: modelOrder.id!);
+            await Api().fermer.getInfoPriceOrder(orderId: modelOrder.id!);
         // ApiAnswer apiAnswer = await Api().fermer.getInfoPriceOrder(c: c, orderId: 99384);
         totalPrice = apiAnswer.data['payload']['total'];
 
@@ -98,7 +98,7 @@ class OrderController extends FormController {
   void onLoadInfoUser() async {
     ApiAnswer apiAnswer = await Api()
         .traider
-        .orderOpenContactFermer(c: c, orderId: modelOrder.id!);
+        .orderOpenContactFermer(orderId: modelOrder.id!);
 
     modelOrder.userName = apiAnswer.data['payload']['name'];
     modelOrder.userRegion = apiAnswer.data['payload']['region'];
@@ -129,7 +129,7 @@ class OrderController extends FormController {
 
   void onAddPriceSave() => loadIfValid(() async {
         ApiAnswer apiAnswer = await Api().traider.addPrice(
-            c: c, orderId: modelOrder.id!, price: priceController.text);
+            orderId: modelOrder.id!, price: priceController.text);
 
         log(apiAnswer.data.toString());
         if (apiAnswer.data['status'].toString() == 'true') {
@@ -147,7 +147,7 @@ class OrderController extends FormController {
 
   void onDeal() => loadIfValid(() async {
         ApiAnswer apiAnswer =
-            await Api().traider.deal(c: c, tenderId: modelOrder.id!);
+            await Api().traider.deal(tenderId: modelOrder.id!);
 
         log(apiAnswer.data.toString());
         if (apiAnswer.data['status'].toString() == 'true') {

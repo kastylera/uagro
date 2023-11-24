@@ -1,12 +1,10 @@
 import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
 import '../api.dart';
 
 class Auth extends Api {
-  Future<ApiAnswer> loginNumber({required BuildContext c, required String number}) async {
+  Future<ApiAnswer> loginNumber({required String number}) async {
     ApiAnswer apiAnswer = ApiAnswer();
-    var request = await dataRequestMultipart('auth', c: c, parameter: 'phone=$number');
+    var request = await dataRequestMultipart('auth', parameter: 'phone=$number');
 
     apiAnswer.code = request.statusCode;
     apiAnswer.data = json.decode(await request.stream.bytesToString());
@@ -14,9 +12,9 @@ class Auth extends Api {
     return apiAnswer;
   }
 
-  Future<ApiAnswer> loginCode({required BuildContext c, required String code}) async {
+  Future<ApiAnswer> loginCode({required String code}) async {
     ApiAnswer apiAnswer = ApiAnswer();
-    var request = await dataRequestMultipart('auth', c: c, parameter: 'code=$code');
+    var request = await dataRequestMultipart('auth', parameter: 'code=$code');
 
     apiAnswer.code = request.statusCode;
     apiAnswer.data = json.decode(await request.stream.bytesToString());

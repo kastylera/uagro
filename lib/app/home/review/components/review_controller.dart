@@ -49,7 +49,7 @@ class ReviewController extends FormController {
   }
 
   void onLoadReview() async => loadIfValid(() async {
-        ApiAnswer apiAnswer = await Api().fermer.viewReview(c: c, orderId: modelOrder.id!);
+        ApiAnswer apiAnswer = await Api().fermer.viewReview(orderId: modelOrder.id!);
 
         for (final i in apiAnswer.data['payload']['items']) {
           modelReview.add(structReview(data: i));
@@ -64,7 +64,7 @@ class ReviewController extends FormController {
           inAppNotification(text: 'Потрібно написати відгук', c: c);
         }
 
-        ApiAnswer apiAnswer = await Api().fermer.sendReviewFermer(c: c, orderId: modelOrder.id!, rating: countStar.round(), comment: reviewController.text);
+        ApiAnswer apiAnswer = await Api().fermer.sendReviewFermer(orderId: modelOrder.id!, rating: countStar.round(), comment: reviewController.text);
 
         log(modelOrder.id.toString());
         log(apiAnswer.data.toString());

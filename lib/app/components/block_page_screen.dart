@@ -44,28 +44,53 @@ class BlockPageScreen extends StatelessWidget {
         child: SafeArea(
           bottom: false,
           child: Padding(
-            padding: allPadding ?? EdgeInsets.only(left: isCancel ? 20 : 15, right: isCancel ? 20 : 15, top: isCancel ? 25 : 0),
+            padding: allPadding ??
+                EdgeInsets.only(
+                    left: isCancel ? 20 : 15,
+                    right: isCancel ? 20 : 15,
+                    top: isCancel ? 25 : 0),
             child: Column(
               children: [
                 Padding(
                   padding: padding ?? EdgeInsets.zero,
                   child: Container(
-                    decoration: BoxDecoration(
-                        boxShadow: [BoxShadow(color: const Color(0xff000000).withOpacity(0.01), spreadRadius: 0, blurRadius: 10, offset: const Offset(0, 30))]),
+                    decoration: BoxDecoration(boxShadow: [
+                      BoxShadow(
+                          color: const Color(0xff000000).withOpacity(0.01),
+                          spreadRadius: 0,
+                          blurRadius: 10,
+                          offset: const Offset(0, 30))
+                    ]),
                     child: Row(children: [
                       if (isBack) ...[
                         BTransparentScalableButton(
-                            onPressed: onPressedReturn ?? () => Navigator.pop(context), scale: ScaleFormat.small, child: SvgPicture.asset(Assets.componentsBack, width: 18, color: Colors.black)),
+                            onPressed:
+                                onPressedReturn ?? () => Navigator.pop(context),
+                            scale: ScaleFormat.small,
+                            child: SvgPicture.asset(
+                              Assets.componentsBack,
+                              width: 18,
+                              colorFilter: const ColorFilter.mode(
+                                  Colors.black, BlendMode.srcIn),
+                            )),
                       ] else if (endIcon != null || isCancel) ...[
                         const SizedBox(width: 32)
                       ],
                       if (header != null) ...[
                         Expanded(
-                            child:
-                                Center(child: readText(text: header!, size: headerSize ?? 24, fontWeight: FontWeight.w500, color: Colors.black, align: TextAlign.center)))
+                            child: Center(
+                                child: readText(
+                                    text: header!,
+                                    size: headerSize ?? 24,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black,
+                                    align: TextAlign.center)))
                       ],
                       if (endIcon != null) ...[
-                        BTransparentScalableButton(onPressed: onPressed ?? () {}, scale: ScaleFormat.small, child: SvgPicture.asset(endIcon!, width: 32)),
+                        BTransparentScalableButton(
+                            onPressed: onPressed ?? () {},
+                            scale: ScaleFormat.small,
+                            child: SvgPicture.asset(endIcon!, width: 32)),
                       ] else ...[
                         if (endWidget != null) ...[
                           endWidget!
@@ -79,7 +104,12 @@ class BlockPageScreen extends StatelessWidget {
                     ]),
                   ),
                 ),
-                Padding(padding: const EdgeInsets.only(top: 15), child: Container(width: MediaQuery.of(context).size.width, height: 1, color: Colors.black.withOpacity(0.05))),
+                Padding(
+                    padding: const EdgeInsets.only(top: 15),
+                    child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 1,
+                        color: Colors.black.withOpacity(0.05))),
                 Expanded(child: child)
               ],
             ),

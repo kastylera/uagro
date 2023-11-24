@@ -38,7 +38,7 @@ class AuthController extends FormController {
   void onContactViber() => launchUrl(Uri.parse('viber://chat?number=${Uri.encodeComponent('+380990026222')}'));
 
   void onLogin() => loadIfValid(() async {
-        ApiAnswer apiAnswer = await Api().auth.loginNumber(c: c, number: '+${numberController.text.replaceAll(RegExp('\\D'), '')}');
+        ApiAnswer apiAnswer = await Api().auth.loginNumber(number: '+${numberController.text.replaceAll(RegExp('\\D'), '')}');
 
         log(apiAnswer.data.toString());
 

@@ -6,19 +6,33 @@ import '../../../../ui/buttons/b_transparent_scalable_button.dart';
 import '../../../../ui/text/read_text.dart';
 import '../../../../vars/model_notifier/bottom_menu_notifier/bottom_menu_notifier.dart';
 
-Widget buttBottomNavigation({required String icon, required int buttNum, required String text, required BuildContext c}) => Expanded(
+Widget buttBottomNavigation(
+        {required String icon,
+        required int buttNum,
+        required String text,
+        required BuildContext c}) =>
+    Expanded(
       child: Padding(
         padding: const EdgeInsets.only(top: 10),
         child: Center(
             child: BTransparentScalableButton(
-          onPressed: () => c.read<BottomMenuNotifier>().setActiveButtMenu(val: buttNum),
+          onPressed: () =>
+              c.read<BottomMenuNotifier>().setActiveButtMenu(val: buttNum),
           scale: ScaleFormat.big,
           child: Column(
             children: [
-              SvgPicture.asset(icon, height: 32, color: c.watch<BottomMenuNotifier>().activeButtMenu != buttNum ? const Color(0xffDCDCDC) : const Color(0xff078F1C)),
+              SvgPicture.asset(icon,
+                  height: 32,
+                  colorFilter: ColorFilter.mode(
+                      c.watch<BottomMenuNotifier>().activeButtMenu != buttNum
+                          ? const Color(0xffDCDCDC)
+                          : const Color(0xff078F1C),
+                      BlendMode.srcIn)),
               readText(
                   text: text,
-                  color: c.watch<BottomMenuNotifier>().activeButtMenu != buttNum ? const Color(0xffDCDCDC) : const Color(0xff078F1C),
+                  color: c.watch<BottomMenuNotifier>().activeButtMenu != buttNum
+                      ? const Color(0xffDCDCDC)
+                      : const Color(0xff078F1C),
                   size: 18,
                   fontWeight: FontWeight.w600,
                   padding: const EdgeInsets.only(top: 8))

@@ -38,7 +38,7 @@ class AuthConfirmationController extends FormController {
   void onAuth() => Get.offAllNamed(Routes.auth);
 
   void onLogin() => loadIfValid(() async {
-        ApiAnswer apiAnswer = await Api().auth.loginCode(c: c, code: codeController.text);
+        ApiAnswer apiAnswer = await Api().auth.loginCode(code: codeController.text);
 
         log(apiAnswer.data.toString());
 

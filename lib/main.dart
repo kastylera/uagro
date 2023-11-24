@@ -17,7 +17,6 @@ import 'package:in_app_notification/in_app_notification.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:agro/routes/app_pages.dart';
-import 'package:agro/vars/locales.dart';
 import 'package:agro/vars/model_notifier/user_notifier/user_notifier.dart';
 
 import 'config/config.dart';
@@ -60,7 +59,6 @@ Future<void> main() async {
 
   runApp(MultiProvider(
       providers: [
-        ChangeNotifierProvider<LocaleManager>(create: (_) => LocaleManager()),
         ChangeNotifierProvider<BottomMenuNotifier>(
             create: (_) => BottomMenuNotifier()),
         ChangeNotifierProvider<UserNotifier>(create: (_) => UserNotifier()),
@@ -103,7 +101,6 @@ class MyApp extends StatelessWidget {
                   )),
             );
           },
-          locale: context.watch<LocaleManager>().locale,
           supportedLocales: AppLocalizations.supportedLocales,
           theme: ThemeData.dark(),
           localizationsDelegates: const [

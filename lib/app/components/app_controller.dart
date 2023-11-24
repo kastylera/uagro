@@ -143,7 +143,7 @@ class AppController extends FormController {
     }
 
     ApiAnswer apiAnswer =
-        await Api().traider.sendDeviceToken(c: c, deviceToken: token);
+        await Api().traider.sendDeviceToken(deviceToken: token);
 
     log("FCM token:  $token");
     log("FCM token: ${apiAnswer.data}");

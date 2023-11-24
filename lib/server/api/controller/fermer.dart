@@ -6,7 +6,7 @@ import '../api.dart';
 class Fermer extends Api {
   Future<ApiAnswer> getOrderList({required BuildContext c, required int page, required int limit, String? search}) async {
     ApiAnswer apiAnswer = ApiAnswer();
-    var request = await dataRequestMultipart('order.list', c: c, parameter: 'mode=fermer&page=$page&limit=$limit&search=$search&deleted=false');
+    var request = await dataRequestMultipart('order.list', parameter: 'mode=fermer&page=$page&limit=$limit&search=$search&deleted=false');
 
     apiAnswer.code = request.statusCode;
     apiAnswer.data = json.decode(await request.stream.bytesToString());
@@ -15,9 +15,9 @@ class Fermer extends Api {
     return apiAnswer;
   }
 
-  Future<ApiAnswer> createOrder({required BuildContext c}) async {
+  Future<ApiAnswer> createOrder() async {
     ApiAnswer apiAnswer = ApiAnswer();
-    var request = await dataRequestMultipart('order.list', c: c, parameter: 'mode=fermer.createorder');
+    var request = await dataRequestMultipart('order.list', parameter: 'mode=fermer.createorder');
 
     apiAnswer.code = request.statusCode;
     apiAnswer.data = json.decode(await request.stream.bytesToString());
@@ -26,9 +26,9 @@ class Fermer extends Api {
     return apiAnswer;
   }
 
-  Future<ApiAnswer> getInfoPriceOrder({required BuildContext c, required int orderId}) async {
+  Future<ApiAnswer> getInfoPriceOrder({required int orderId}) async {
     ApiAnswer apiAnswer = ApiAnswer();
-    var request = await dataRequestMultipart('order.pricelist', c: c, parameter: 'order_id=$orderId');
+    var request = await dataRequestMultipart('order.pricelist', parameter: 'order_id=$orderId');
 
     apiAnswer.code = request.statusCode;
     apiAnswer.data = json.decode(await request.stream.bytesToString());
@@ -37,9 +37,9 @@ class Fermer extends Api {
     return apiAnswer;
   }
 
-  Future<ApiAnswer> closePriceOrder({required BuildContext c, required int orderId}) async {
+  Future<ApiAnswer> closePriceOrder({required int orderId}) async {
     ApiAnswer apiAnswer = ApiAnswer();
-    var request = await dataRequestMultipart('fermer.closeorder', c: c, parameter: 'order_id=$orderId');
+    var request = await dataRequestMultipart('fermer.closeorder', parameter: 'order_id=$orderId');
 
     apiAnswer.code = request.statusCode;
     apiAnswer.data = json.decode(await request.stream.bytesToString());
@@ -48,9 +48,9 @@ class Fermer extends Api {
     return apiAnswer;
   }
 
-  Future<ApiAnswer> viewReview({required BuildContext c, required int orderId}) async {
+  Future<ApiAnswer> viewReview({required int orderId}) async {
     ApiAnswer apiAnswer = ApiAnswer();
-    var request = await dataRequestMultipart('order.reviews', c: c, parameter: 'itemid=$orderId');
+    var request = await dataRequestMultipart('order.reviews', parameter: 'itemid=$orderId');
 
     apiAnswer.code = request.statusCode;
     apiAnswer.data = json.decode(await request.stream.bytesToString());
@@ -59,9 +59,9 @@ class Fermer extends Api {
     return apiAnswer;
   }
 
-  Future<ApiAnswer> sendReviewFermer({required BuildContext c, required int orderId, required int rating, required String comment}) async {
+  Future<ApiAnswer> sendReviewFermer({required int orderId, required int rating, required String comment}) async {
     ApiAnswer apiAnswer = ApiAnswer();
-    var request = await dataRequestMultipart('order.comment', c: c, parameter: 'order_id=$orderId&rating=$rating&comment=$comment');
+    var request = await dataRequestMultipart('order.comment', parameter: 'order_id=$orderId&rating=$rating&comment=$comment');
 
     apiAnswer.code = request.statusCode;
     apiAnswer.data = json.decode(await request.stream.bytesToString());

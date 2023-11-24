@@ -55,7 +55,7 @@ class HomeController extends FormController {
   }
 
   void fermerCreateOrder() => loadIfValid(() async {
-        ApiAnswer apiAnswer = await Api().fermer.createOrder(c: c);
+        ApiAnswer apiAnswer = await Api().fermer.createOrder();
 
         if (c.mounted) {
           if (apiAnswer.data['status']) {
@@ -81,7 +81,7 @@ class HomeController extends FormController {
 
         if (modelUser.role == 'distrib') {
           apiAnswer = await Api().traider.getOrderList(
-              c: c, page: page, limit: 15, search: searchController.text);
+              page: page, limit: 15, search: searchController.text);
         } else {
           apiAnswer = await Api().fermer.getOrderList(
               c: c, page: page, limit: 15, search: searchController.text);
@@ -129,7 +129,7 @@ class HomeController extends FormController {
 
   void onTariffInfo() async {
     try {
-      ApiAnswer apiAnswer = await Api().traider.getTariff(c: c);
+      ApiAnswer apiAnswer = await Api().traider.getTariff();
       messHeader = apiAnswer.data['message'];
       tariff = Tariff.fromJson(apiAnswer.data['payload']);
     } catch (e) {

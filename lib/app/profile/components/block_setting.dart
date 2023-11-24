@@ -9,7 +9,13 @@ class BlockSetting extends StatelessWidget {
   final Function() onPressed;
   final bool arrowActive;
 
-  const BlockSetting({Key? key, required this.header, required this.icon, required this.onPressed, this.arrowActive = true}) : super(key: key);
+  const BlockSetting(
+      {Key? key,
+      required this.header,
+      required this.icon,
+      required this.onPressed,
+      this.arrowActive = true})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,16 +30,32 @@ class BlockSetting extends StatelessWidget {
               scale: ScaleFormat.small,
               child: Row(
                 children: [
-                  SvgPicture.asset(icon, width: 32, color: const Color(0xff7A7B7D)),
-                  Expanded(child: readText(text: header, color: Colors.black, fontWeight: FontWeight.w400, padding: const EdgeInsets.only(left: 20), size: 21))
+                  SvgPicture.asset(
+                    icon,
+                    width: 32,
+                    colorFilter: const ColorFilter.mode(
+                        Color(0xff7A7B7D), BlendMode.srcIn),
+                  ),
+                  Expanded(
+                      child: readText(
+                          text: header,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400,
+                          padding: const EdgeInsets.only(left: 20),
+                          size: 21))
                 ],
               ),
             ),
           ),
-          if (arrowActive) ...[Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Container(color: const Color(0xffDDC3F9), width: MediaQuery.of(context).size.width, height: 1),
-          )]
+          if (arrowActive) ...[
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Container(
+                  color: const Color(0xffDDC3F9),
+                  width: MediaQuery.of(context).size.width,
+                  height: 1),
+            )
+          ]
         ],
       ),
     );

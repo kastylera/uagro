@@ -4,9 +4,23 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../text/read_text.dart';
 
 class TextFieldWidget extends StatefulWidget {
-  final String? icon, error, iconClear, leftIcon, text, labelText, endText, header, prefixText, suffixText;
+  final String? icon,
+      error,
+      iconClear,
+      leftIcon,
+      text,
+      labelText,
+      endText,
+      header,
+      prefixText,
+      suffixText;
   final TextEditingController controller;
-  final bool passActive, errorActive, enable, openKeyboardAuto, isGreenColor, isBorder;
+  final bool passActive,
+      errorActive,
+      enable,
+      openKeyboardAuto,
+      isGreenColor,
+      isBorder;
   final Function(String)? onChanged, onSubmitted;
   final Function()? onEditingComplete;
   final EdgeInsetsGeometry? padding;
@@ -106,8 +120,10 @@ class _TextFieldState extends State<TextFieldWidget> {
   @override
   Widget build(BuildContext c) {
     return Padding(
-        padding: widget.padding ?? const EdgeInsets.only(top: 30, left: 30, right: 30),
-        child: StatefulBuilder(builder: (BuildContext context, StateSetter set) {
+        padding: widget.padding ??
+            const EdgeInsets.only(top: 30, left: 30, right: 30),
+        child:
+            StatefulBuilder(builder: (BuildContext context, StateSetter set) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -121,17 +137,30 @@ class _TextFieldState extends State<TextFieldWidget> {
               ],
               Container(
                 decoration: BoxDecoration(
-                  color: widget.colorBg ?? (widget.isGreenColor && widget.error == null ? Colors.black : Colors.transparent),
-                  borderRadius: widget.borderRadius ?? BorderRadius.circular(40),
-                  border: !widget.isBorder ? null : widget.border ?? Border.all(color: const Color(0xff5851A8)),
+                  color: widget.colorBg ??
+                      (widget.isGreenColor && widget.error == null
+                          ? Colors.black
+                          : Colors.transparent),
+                  borderRadius:
+                      widget.borderRadius ?? BorderRadius.circular(40),
+                  border: !widget.isBorder
+                      ? null
+                      : widget.border ??
+                          Border.all(color: const Color(0xff5851A8)),
                 ),
                 height: widget.height ?? 70,
                 child: Row(
                   children: [
-                    if (widget.leftIcon != null) ...[Padding(padding: const EdgeInsets.only(left: 15), child: SvgPicture.asset(widget.leftIcon!, width: 30))],
+                    if (widget.leftIcon != null) ...[
+                      Padding(
+                          padding: const EdgeInsets.only(left: 15),
+                          child: SvgPicture.asset(widget.leftIcon!, width: 30))
+                    ],
                     Expanded(
                         child: Padding(
-                      padding: widget.paddingTextField ?? EdgeInsets.only(left: widget.leftIcon != null ? 15 : 25),
+                      padding: widget.paddingTextField ??
+                          EdgeInsets.only(
+                              left: widget.leftIcon != null ? 15 : 25),
                       child: FocusScope(
                           onFocusChange: (value) {
                             if (!value && widget.onEditingComplete != null) {
@@ -141,10 +170,16 @@ class _TextFieldState extends State<TextFieldWidget> {
                           child: TextField(
                               // autofocus: true,
                               // textInputAction: TextInputAction.done,
-                              inputFormatters: widget.inputFormatters ?? [if (widget.maxLength != null) LengthLimitingTextInputFormatter(widget.maxLength)],
+                              inputFormatters: widget.inputFormatters ??
+                                  [
+                                    if (widget.maxLength != null)
+                                      LengthLimitingTextInputFormatter(
+                                          widget.maxLength)
+                                  ],
                               focusNode: focusNode,
                               enabled: widget.enable,
-                              textCapitalization: widget.textCapitalization ?? TextCapitalization.none,
+                              textCapitalization: widget.textCapitalization ??
+                                  TextCapitalization.none,
                               onSubmitted: widget.onSubmitted,
                               maxLines: widget.maxLine ?? 1,
                               minLines: widget.minLines ?? 1,
@@ -156,20 +191,38 @@ class _TextFieldState extends State<TextFieldWidget> {
                                   prefix: widget.prefixText == null
                                       ? null
                                       : readText(
-                                          text: widget.prefixText!, fontWeight: FontWeight.w500, size: widget.sizeText ?? 20, color: widget.colorText ?? Colors.black),
+                                          text: widget.prefixText!,
+                                          fontWeight: FontWeight.w500,
+                                          size: widget.sizeText ?? 20,
+                                          color:
+                                              widget.colorText ?? Colors.black),
                                   suffix: widget.suffixText == null
                                       ? null
                                       : readText(
-                                          text: widget.suffixText!, fontWeight: FontWeight.w500, size: widget.sizeText ?? 20, color: widget.colorText ?? Colors.black),
+                                          text: widget.suffixText!,
+                                          fontWeight: FontWeight.w500,
+                                          size: widget.sizeText ?? 20,
+                                          color:
+                                              widget.colorText ?? Colors.black),
                                   labelText: widget.labelText,
                                   border: InputBorder.none,
                                   hintText: widget.text,
-                                  labelStyle:
-                                      TextStyle(fontWeight: FontWeight.w500, fontSize: widget.sizeText ?? 20, color: widget.headerColor ?? const Color(0xffCDCDCD)),
-                                  hintStyle:
-                                      TextStyle(color: widget.headerColor ?? const Color(0xffCDCDCD), fontSize: widget.sizeText ?? 20, fontWeight: FontWeight.w500)),
-                              style:
-                                  widget.textStyle ?? TextStyle(fontWeight: FontWeight.w500, fontSize: widget.sizeText ?? 20, color: widget.colorText ?? Colors.black))),
+                                  labelStyle: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: widget.sizeText ?? 20,
+                                      color: widget.headerColor ??
+                                          const Color(0xffCDCDCD)),
+                                  hintStyle: TextStyle(
+                                      color: widget.headerColor ??
+                                          const Color(0xffCDCDCD),
+                                      fontSize: widget.sizeText ?? 20,
+                                      fontWeight: FontWeight.w500)),
+                              style: widget.textStyle ??
+                                  TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: widget.sizeText ?? 20,
+                                      color:
+                                          widget.colorText ?? Colors.black))),
                     )),
                     if (widget.passActive) ...[
                       // BTransparentScalableButton(
@@ -178,7 +231,11 @@ class _TextFieldState extends State<TextFieldWidget> {
                       //     child: SvgPicture.asset(Assets.componentsPass,
                       //         width: 30, color: !passActiveView ? const Color(0xffA0A8C4) : const Color(0xffE7E4ED)))
                     ] else if (widget.icon != null) ...[
-                      SvgPicture.asset(widget.icon!, width: widget.iconSize ?? 30, color: widget.colorIcon ?? const Color(0xffCDCDCD))
+                      SvgPicture.asset(widget.icon!,
+                          width: widget.iconSize ?? 30,
+                          colorFilter: ColorFilter.mode(
+                              widget.colorIcon ?? const Color(0xffCDCDCD),
+                              BlendMode.srcIn))
                     ] else if (widget.endText != null) ...[
                       readText(
                           text: widget.endText!,
@@ -196,7 +253,13 @@ class _TextFieldState extends State<TextFieldWidget> {
                     height: 40,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 10),
-                      child: Center(child: readText(text: widget.error!, color: const Color(0xffEB5858), fontWeight: FontWeight.w600, size: 18, align: TextAlign.center)),
+                      child: Center(
+                          child: readText(
+                              text: widget.error!,
+                              color: const Color(0xffEB5858),
+                              fontWeight: FontWeight.w600,
+                              size: 18,
+                              align: TextAlign.center)),
                     ))
               ]
             ],

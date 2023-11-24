@@ -13,7 +13,6 @@ class ProfileScreen extends GetView<ProfileController> {
 
   @override
   Widget build(BuildContext context) {
-
     return BlockPageScreen(
         headerSize: 21,
         padding: EdgeInsets.only(
