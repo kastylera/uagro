@@ -27,7 +27,7 @@ class OrderController extends FormController {
   late Function(VoidCallback fn) setState;
   late BuildContext c;
   late ModelOrder modelOrder;
-  late Tariff tariff;
+  late Tariff? tariff;
   late CallResult? result;
 
   late ModelUser modelUser;
@@ -54,7 +54,7 @@ class OrderController extends FormController {
     if (c.mounted) {
       final arguments = ModalRoute.of(c)!.settings.arguments as List;
       modelOrder = arguments[0] as ModelOrder;
-      tariff = arguments[1] as Tariff;
+      tariff = arguments[1] as Tariff?;
       result =
           await _localStorageRepository.getResult(modelOrder.id.toString());
       await Future.delayed(const Duration(milliseconds: 100));

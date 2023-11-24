@@ -1,7 +1,9 @@
 import 'dart:developer';
 
+import 'package:agro/model/answer/answer.dart';
 import 'package:agro/model/model_user/model_user.dart';
 import 'package:agro/model/tariff/tariff.dart';
+import 'package:agro/repository/local_storage_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:agro/model/model_order/struct_order.dart';
@@ -23,9 +25,11 @@ class HomeController extends FormController {
   late final RefreshController controllerLoading;
   late final ScrollController controllerScroll;
   String messHeader = 'Заявки';
+  final _localStorageRepository = LocalStorageRepository();
 
   int page = 1;
   List<ModelOrder> modelOrder = [];
+  List<Answer> callResults = [];
   Tariff? tariff;
 
   @override
@@ -84,8 +88,8 @@ class HomeController extends FormController {
         }
 
         log(apiAnswer.data.toString());
-
-        setState(() {
+        callResults = await _localStorageRepository.getAll();
+        setState((){
           if (c.mounted) {
             if (apiAnswer.data['status']) {
               for (final i in apiAnswer.data['payload']['items']) {

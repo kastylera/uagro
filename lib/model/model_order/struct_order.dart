@@ -11,7 +11,7 @@ structOrderData({required data}) {
   modelOrder.region = data['region'];
   modelOrder.capacity = data['capacity'];
   modelOrder.count = data['count'];
-  modelOrder.harvestYear = data['harvest_year'];
+  modelOrder.harvestYear = int.tryParse(data['harvest_year'].toString());
   modelOrder.payForm = data['pay_form'];
   modelOrder.payment = data['payment'];
   modelOrder.deliveryForm = data['delivery_form'];

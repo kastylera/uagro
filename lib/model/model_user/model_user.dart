@@ -17,5 +17,11 @@ class ModelUser {
   @HiveField(5)
   String? token;
 
-  ModelUser({this.name, this.id, this.email, this.phone, this.role, this.token});
+  ModelUser(
+      {this.name, this.id, this.email, this.phone, this.role, this.token});
+}
+
+extension ModelUserX on ModelUser {
+  bool get isTraider => role == 'distrib';
+  bool get isFarmer => role == 'farmer';
 }

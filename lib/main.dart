@@ -54,7 +54,6 @@ Future<void> main() async {
   try {
     await Hive.openBox<String>('configs');
     await Hive.openBox('data');
-    await Hive.openBox('answers');
   } catch (err) {
     log(err.toString());
   }

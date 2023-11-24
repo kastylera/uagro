@@ -1,8 +1,10 @@
 import 'dart:developer';
 
+import 'package:agro/vars/model_notifier/user_notifier/user_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:provider/provider.dart';
 
 import 'model_user.dart';
 import '../../routes/app_pages.dart';
@@ -23,8 +25,7 @@ structUserData(
   log("ROLEE:$data");
   log(data['role']);
   if (login) {
-    // c!.read<UserNotifier>().setModelUser(val: modelUser, upd: false);
-
+    c?.read<UserNotifier>().setModelUser(val: modelUser, upd: false);
     Hive.box('data').put('modelUser', modelUser);
 
     Get.offAllNamed(Routes.app);

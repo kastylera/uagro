@@ -1,7 +1,8 @@
 import 'package:agro/app/home/order/components/contact.dart';
-import 'package:agro/app/home/order/components/order_info.dart';
+import 'package:agro/app/home/order/components/call_result_info.dart';
 import 'package:agro/model/model_order/model_order.dart';
 import 'package:agro/model/model_order_price/model_order_price.dart';
+import 'package:agro/model/model_user/model_user.dart';
 import 'package:agro/model/tariff/tariff.dart';
 import 'package:agro/ui/buttons/b_transparent_scalable_button.dart';
 import 'package:agro/ui/local_notification/local_notification.dart';
@@ -93,28 +94,29 @@ class _OrderScreenState extends State<OrderScreen> {
                           fontWeight: FontWeight.w500,
                           padding: const EdgeInsets.only(top: 10))
                     ],
-                    (controller.tariff.isVip ||
-                            controller.tariff.isExclusive ||
+                    (controller.tariff?.isVip == true ||
+                            controller.tariff?.isExclusive == true ||
                             contactOpened)
                         ? ContactScreen(
                             modelOrder: controller.modelOrder,
                             onLauchPhone: controller.onLaunchPhone)
                         : const SizedBox(),
-                    const SizedBox(height: 10),    
-                    OrderInfo(
-                      header: "Результат дзвінка",
-                      text: controller.result?.label ?? "Не встановлено",
-                      textColor: controller.result?.color,
-                      onPressed: () {
-                        controller.onSetAnswer();
-                      },
-                    ),
+                    const SizedBox(height: 10),
+                    controller.modelUser.isTraider
+                        ? CallResultInfo(
+                            text: controller.result?.label ?? "Встановити",
+                            textColor: controller.result?.color,
+                            onPressed: () {
+                              controller.onSetAnswer();
+                            },
+                          )
+                        : const SizedBox(),
                     if (controller.modelUser.role == 'distrib') ...[
                       Padding(
                           padding: const EdgeInsets.only(top: 35),
                           child: Row(children: [
-                            controller.tariff.isVip ||
-                                    controller.tariff.isExclusive
+                            controller.tariff?.isVip == true ||
+                                    controller.tariff?.isExclusive == true
                                 ? const SizedBox()
                                 : Expanded(
                                     child: bStyle(
@@ -132,7 +134,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                             contactOpened = !contactOpened;
                                           });
                                         })),
-                            controller.tariff.isVip
+                            controller.tariff?.isVip == true
                                 ? Expanded(
                                     child: bStyle(
                                         width: 160,
@@ -147,10 +149,11 @@ class _OrderScreenState extends State<OrderScreen> {
                                         }))
                                 : const SizedBox(),
                             SizedBox(
-                                width: !controller.tariff.isExclusive ||
-                                        controller.tariff.isVip
-                                    ? 25
-                                    : 0),
+                                width:
+                                    controller.tariff?.isExclusive == false ||
+                                            controller.tariff?.isVip == true
+                                        ? 25
+                                        : 0),
                             Expanded(
                                 child: bStyle(
                                     width: 160,

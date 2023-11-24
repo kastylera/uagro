@@ -31,12 +31,18 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return BlockPageScreen(
         headerSize: 21,
-        padding: EdgeInsets.only(left: controller.modelUser.role == 'distrib' ? 0 : 40),
-        header: controller.modelUser.role == 'distrib' ? controller.messHeader : 'Ваші заявки',
+        padding: EdgeInsets.only(
+            left: controller.modelUser.role == 'distrib' ? 0 : 40),
+        header: controller.modelUser.role == 'distrib'
+            ? controller.messHeader
+            : 'Ваші заявки',
         endWidget: controller.modelUser.role == 'distrib'
             ? const SizedBox()
             : BTransparentScalableButton(
-                onPressed: controller.fermerCreateOrder, scale: ScaleFormat.big, child: const Icon(Icons.add, color: Color(0xffFCD300), size: 40)),
+                onPressed: controller.fermerCreateOrder,
+                scale: ScaleFormat.big,
+                child:
+                    const Icon(Icons.add, color: Color(0xffFCD300), size: 40)),
         theme: SystemUiOverlayStyle.dark,
         child: Column(
           children: [
@@ -58,7 +64,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     onLoading: controller.onLoadData,
                     onRefresh: controller.onRefresh,
                     footer: const FooterLoad(),
-                    header: const WaterDropHeader(waterDropColor: Color(0xff01CA20)),
+                    header: const WaterDropHeader(
+                        waterDropColor: Color(0xff01CA20)),
                     child: ListView.separated(
                         physics: const ClampingScrollPhysics(),
                         itemCount: 1,
@@ -67,7 +74,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                         itemBuilder: (_, e) => Column(
                               children: [
-                                for (ModelOrder i in controller.modelOrder) ...[BlockOrder(modelOrder: i, onPressed: controller.onPageOrderFermer)]
+                                for (ModelOrder i in controller.modelOrder) ...[
+                                  BlockOrder(
+                                      modelOrder: i,
+                                      answer: controller.callResults
+                                          .firstWhereOrNull((element) =>
+                                              element.orderId ==
+                                              i.id.toString()),
+                                      onPressed: controller.onPageOrderFermer)
+                                ]
                               ],
                             ))))
           ],

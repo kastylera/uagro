@@ -19,7 +19,9 @@ class ProfileController extends FormController {
   late BuildContext c;
   ModelUser modelUser = Hive.box('data').get('modelUser');
 
-  void initPage({required BuildContext context, required Function(VoidCallback fn) set}) async {
+  void initPage(
+      {required BuildContext context,
+      required Function(VoidCallback fn) set}) async {
     c = context;
     setState = set;
   }
@@ -28,7 +30,8 @@ class ProfileController extends FormController {
 
   void onHelp() => launchUrl(Uri.parse('https://t.me/uagro_admin'));
 
-  void onPrivacy() =>  launchUrl(Uri.parse('https://www.freeprivacypolicy.com/live/3afe785c-8de8-4a5b-985b-353bfca6bd17'));
+  void onPrivacy() => launchUrl(Uri.parse(
+      'https://www.freeprivacypolicy.com/live/3afe785c-8de8-4a5b-985b-353bfca6bd17'));
 
   // void onTerms() {}
 
@@ -37,9 +40,19 @@ class ProfileController extends FormController {
       builder: (BuildContext c) => Theme(
           data: ThemeData.light(),
           child: CupertinoAlertDialog(
-              title: Center(child: readText(text: 'Видалити профіль?', color: Colors.black, fontWeight: FontWeight.w500, size: 20)),
-              content:
-                  Center(child: readText(text: 'Всі ваші дані будуть видалені', color: Colors.black, fontWeight: FontWeight.w400, size: 18, align: TextAlign.center)),
+              title: Center(
+                  child: readText(
+                      text: 'Видалити профіль?',
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                      size: 20)),
+              content: Center(
+                  child: readText(
+                      text: 'Всі ваші дані будуть видалені',
+                      color: Colors.black,
+                      fontWeight: FontWeight.w400,
+                      size: 18,
+                      align: TextAlign.center)),
               actions: <CupertinoDialogAction>[
                 CupertinoDialogAction(
                     isDefaultAction: true,
@@ -49,20 +62,37 @@ class ProfileController extends FormController {
 
                       if (c.mounted) {
                         c.read<UserNotifier>().setModelUser(val: ModelUser());
-                        c.read<BottomMenuNotifier>().setActiveButtMenu(val: 0, upd: false);
-                        inAppNotification(text: 'Ваш профіль буде видалено через 90 днів, щоб скасувати дію, зайдіть в свій аккаунт', c: c);
+                        c
+                            .read<BottomMenuNotifier>()
+                            .setActiveButtMenu(val: 0, upd: false);
+                        inAppNotification(
+                            text:
+                                'Ваш профіль буде видалено через 90 днів, щоб скасувати дію, зайдіть в свій аккаунт',
+                            c: c);
                         Get.delete<HomeController>();
                         Get.deleteAll();
 
                         Navigator.pushAndRemoveUntil<dynamic>(
-                            c, MaterialPageRoute<dynamic>(builder: (BuildContext context) => const Material(child: MyStart())), (route) => false);
+                            c,
+                            MaterialPageRoute<dynamic>(
+                                builder: (BuildContext context) =>
+                                    const Material(child: MyStart())),
+                            (route) => false);
                       }
                     },
-                    child: readText(text: 'Так', color: Colors.black, fontWeight: FontWeight.w500, size: 20)),
+                    child: readText(
+                        text: 'Так',
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                        size: 20)),
                 CupertinoDialogAction(
                     isDestructiveAction: true,
                     onPressed: () => Navigator.pop(c),
-                    child: readText(text: 'Скасувати', color: const Color(0xffFF1616), fontWeight: FontWeight.w500, size: 20))
+                    child: readText(
+                        text: 'Скасувати',
+                        color: const Color(0xffFF1616),
+                        fontWeight: FontWeight.w500,
+                        size: 20))
               ])));
 
   void onExit() => showCupertinoModalPopup<void>(
@@ -70,28 +100,52 @@ class ProfileController extends FormController {
       builder: (BuildContext c) => Theme(
           data: ThemeData.light(),
           child: CupertinoAlertDialog(
-              title: Center(child: readText(text: 'Вийти з профілю?', color: Colors.black, fontWeight: FontWeight.w500, size: 20)),
+              title: Center(
+                  child: readText(
+                      text: 'Вийти з профілю?',
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                      size: 20)),
               content: Center(
                   child: readText(
-                      text: 'Всі ваші дані на даному девайсі буде видалено', color: Colors.black, fontWeight: FontWeight.w400, size: 18, align: TextAlign.center)),
+                      text: 'Всі ваші дані на даному девайсі буде видалено',
+                      color: Colors.black,
+                      fontWeight: FontWeight.w400,
+                      size: 18,
+                      align: TextAlign.center)),
               actions: <CupertinoDialogAction>[
                 CupertinoDialogAction(
                     isDefaultAction: true,
                     onPressed: () async {
                       await Hive.box('data').clear();
+                      await Hive.box('answers').clear();
                       startActive = false;
 
                       if (c.mounted) {
                         c.read<UserNotifier>().setModelUser(val: ModelUser());
-                        c.read<BottomMenuNotifier>().setActiveButtMenu(val: 0, upd: false);
+                        c
+                            .read<BottomMenuNotifier>()
+                            .setActiveButtMenu(val: 0, upd: false);
                         Navigator.pushAndRemoveUntil<dynamic>(
-                            c, MaterialPageRoute<dynamic>(builder: (BuildContext context) => const Material(child: MyStart())), (route) => false);
+                            c,
+                            MaterialPageRoute<dynamic>(
+                                builder: (BuildContext context) =>
+                                    const Material(child: MyStart())),
+                            (route) => false);
                       }
                     },
-                    child: readText(text: 'Так', color: Colors.black, fontWeight: FontWeight.w500, size: 20)),
+                    child: readText(
+                        text: 'Так',
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                        size: 20)),
                 CupertinoDialogAction(
                     isDestructiveAction: true,
                     onPressed: () => Navigator.pop(c),
-                    child: readText(text: 'Скасувати', color: const Color(0xffFF1616), fontWeight: FontWeight.w500, size: 20))
+                    child: readText(
+                        text: 'Скасувати',
+                        color: const Color(0xffFF1616),
+                        fontWeight: FontWeight.w500,
+                        size: 20))
               ])));
 }
