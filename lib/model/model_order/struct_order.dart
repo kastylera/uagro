@@ -1,7 +1,7 @@
 import 'model_order.dart';
 import 'package:intl/intl.dart';
 
-structOrderData({required data}) {
+ModelOrder structOrderData({required data}) {
   ModelOrder modelOrder = ModelOrder();
 
   modelOrder.id = data['id'];

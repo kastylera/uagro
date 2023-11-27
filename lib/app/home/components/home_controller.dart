@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:agro/controllers/abstract/base_controller.dart';
 import 'package:agro/model/answer/answer.dart';
 import 'package:agro/model/model_user/model_user.dart';
 import 'package:agro/model/tariff/tariff.dart';
@@ -12,12 +13,11 @@ import 'package:agro/server/api/api.dart';
 import 'package:hive/hive.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import '../../../controllers/abstract/from_controller.dart';
 import '../../../controllers/app_input_controller.dart';
 import '../../../model/model_order/model_order.dart';
 import '../../../ui/local_notification/local_notification.dart';
 
-class HomeController extends FormController {
+class HomeController extends BaseController {
   late Function(VoidCallback fn) setState;
   late BuildContext c;
   late TextEditingController searchController;
@@ -59,16 +59,14 @@ class HomeController extends FormController {
 
         if (c.mounted) {
           if (apiAnswer.data['status']) {
-            inAppNotification(
-                text: 'Заявка відправлена. Скоро з вами зв’яжеться оператор.',
-                c: c,
-                seconds: 5);
+            notification(
+              text: 'Заявка відправлена. Скоро з вами зв’яжеться оператор.',
+            );
           } else {
-            inAppNotification(text: apiAnswer.data['message'], c: c);
-            // setState(() => errorCode = apiAnswer.data['message']);
+            notification(text: apiAnswer.data['message']);
           }
         }
-      }, c: c);
+      });
 
   void onSearch() {
     page = 1;
@@ -89,7 +87,7 @@ class HomeController extends FormController {
 
         log(apiAnswer.data.toString());
         callResults = await _localStorageRepository.getAll();
-        setState((){
+        setState(() {
           if (c.mounted) {
             if (apiAnswer.data['status']) {
               for (final i in apiAnswer.data['payload']['items']) {
@@ -100,11 +98,16 @@ class HomeController extends FormController {
           }
         });
         log('modelOrder.length: ${modelOrder.length}');
-      }, c: c);
+      });
 
   void onLoadData() {
     loadRequest();
     controllerLoading.loadComplete();
+  }
+
+  void updateCallResults() async {
+    log('callResults.length: ${callResults.length}');
+    callResults = await _localStorageRepository.getAll();
   }
 
   onPageOrderFermer({required ModelOrder model}) async {

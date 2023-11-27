@@ -1,3 +1,4 @@
+import 'package:agro/app/home/components/home_controller.dart';
 import 'package:agro/app/home/order/components/contact.dart';
 import 'package:agro/app/home/order/components/call_result_info.dart';
 import 'package:agro/model/model_order/model_order.dart';
@@ -26,6 +27,7 @@ class OrderScreen extends StatefulWidget {
 
 class _OrderScreenState extends State<OrderScreen> {
   OrderController controller = Get.find();
+  HomeController homecontroller = Get.find();
   bool contactOpened = false;
 
   @override
@@ -55,7 +57,10 @@ class _OrderScreenState extends State<OrderScreen> {
             scale: ScaleFormat.big,
             child: const Icon(Icons.copy, color: Color(0xffFCD300), size: 24)),
         theme: SystemUiOverlayStyle.dark,
-        onPressedReturn: () => controller.onBack(context),
+        onPressedReturn: () {
+          controller.onBack(context);
+          homecontroller.updateCallResults();
+        },
         child: !controller.loadPage
             ? const SizedBox()
             : SingleChildScrollView(
