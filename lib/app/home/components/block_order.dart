@@ -60,8 +60,6 @@ class BlockOrder extends StatelessWidget {
                                     color: Colors.black,
                                     fontWeight: FontWeight.w600,
                                     size: 20),
-                                // const SizedBox(height: 5),
-                                // readText(text: 'від: ${DateFormat('dd.MM.yyyy').format(modelOrder.startDate!)}', color: const Color(0xffA9A9A9), size: 20),
                               ]),
                           const Spacer(),
                           if (DateTime.now().millisecondsSinceEpoch >
@@ -116,7 +114,6 @@ class BlockOrder extends StatelessWidget {
                       orderInfo(
                           header: 'Тип доставки',
                           text: modelOrder.deliveryForm.toString()),
-                      // orderInfo(header: 'Дата заявки', text: DateFormat('dd.MM.yyyy').format(modelOrder.startDate!), bold: true),
                       if (modelOrder.comment != null &&
                           modelOrder.comment != '') ...[
                         readText(
@@ -131,7 +128,7 @@ class BlockOrder extends StatelessWidget {
                             padding: const EdgeInsets.only(top: 10)),
                         
                       ],
-                      controller.modelUser.isTraider
+                      controller.modelUser.isTraider && answer != null
                           ? Padding(
                               padding: const EdgeInsets.only(top: 10),
                               child: CallResultInfo(

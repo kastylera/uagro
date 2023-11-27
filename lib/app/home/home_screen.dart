@@ -65,6 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onRefresh: controller.onRefresh,
                     footer: const FooterLoad(),
                     header: const WaterDropHeader(
+                        complete: CompleteWidget(),
                         waterDropColor: Color(0xff01CA20)),
                     child: ListView.separated(
                         physics: const ClampingScrollPhysics(),
@@ -87,5 +88,29 @@ class _HomeScreenState extends State<HomeScreen> {
                             ))))
           ],
         ));
+  }
+}
+
+class CompleteWidget extends StatelessWidget {
+  const CompleteWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        const Icon(
+          Icons.done,
+          color: Colors.grey,
+        ),
+        Container(
+          width: 15.0,
+        ),
+        const Text(
+          "Оновлення завершено",
+          style: TextStyle(color: Colors.grey),
+        )
+      ],
+    );
   }
 }
