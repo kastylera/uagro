@@ -44,10 +44,14 @@ class Traider extends Api {
   }
 
   Future<ApiAnswer> addPrice(
-      {required int orderId, required String price}) async {
+      {required int orderId,
+      required String price,
+      required String form,
+      required String currency}) async {
     ApiAnswer apiAnswer = ApiAnswer();
     var request = await dataRequestMultipart('order.addbid',
-        parameter: 'order_id=$orderId&price=$price&place_type=EXW1&send_sms=1');
+        parameter:
+            'order_id=$orderId&price=$price&place_type=EXW1&send_sms=1&forma=$form&currc=$currency');
     apiAnswer.code = request.statusCode;
     apiAnswer.data = json.decode(await request.stream.bytesToString());
     checkAuth(apiAnswer.data);

@@ -123,10 +123,13 @@ class OrderController extends BaseController {
             Navigator.pop(c);
           }));
 
-  void onAddPriceSave() => loadIfValid(() async {
-        ApiAnswer apiAnswer = await Api()
-            .traider
-            .addPrice(orderId: modelOrder.id!, price: priceController.text);
+  void onAddPriceSave(String currency, String paymentForm) =>
+      loadIfValid(() async {
+        ApiAnswer apiAnswer = await Api().traider.addPrice(
+            orderId: modelOrder.id!,
+            price: priceController.text,
+            currency: currency,
+            form: paymentForm);
 
         log(apiAnswer.data.toString());
         if (apiAnswer.data['status'].toString() == 'true') {
