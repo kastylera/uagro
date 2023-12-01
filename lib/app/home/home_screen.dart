@@ -1,8 +1,7 @@
+import 'package:agro/app/home/components/home_header.dart';
 import 'package:agro/model/model_user/model_user.dart';
-import 'package:agro/ui/text/read_text.dart';
 import 'package:agro/ui/theme/colors.dart';
 import 'package:agro/ui/theme/fonts.dart';
-import 'package:agro/ui/utils/date_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -39,23 +38,10 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: EdgeInsets.only(
             left: controller.modelUser.isTraider ? 30 : 40,
             right: controller.modelUser.isTraider ? 30 : 0),
-        header: controller.modelUser.role == 'distrib' ? null : 'Ваші заявки',
-        endWidget: controller.modelUser.role == 'distrib'
+        header: controller.modelUser.isTraider ? null : 'Ваші заявки',
+        endWidget: controller.modelUser.isTraider
             ? Expanded(
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                    headerItem((controller.total).toString(), "Заявок"),
-                    headerItem(
-                        (controller.tariff?.balanceContactsDayOsttk ?? 0)
-                            .toString(),
-                        "Котактів"),
-                    headerItem(
-                        (controller.tariff?.balanceSms ?? 0).toString(), "SMS"),
-                    headerItem(
-                        controller.tariff?.balanceEnd?.formatDateShort() ?? '',
-                        "Термін дії тарифу")
-                  ]))
+                child: HomeHeader(tariff: controller.tariff, total: controller.total))
             : BTransparentScalableButton(
                 onPressed: controller.fermerCreateOrder,
                 scale: ScaleFormat.big,
@@ -113,12 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ));
   }
 
-  Widget headerItem(String value, String description) {
-    return Column(children: [
-      readText(text: value, style: AppFonts.body1bold.mainGreen),
-      readText(text: description, style: AppFonts.caption.darkGreen)
-    ]);
-  }
+  
 }
 
 class CompleteWidget extends StatelessWidget {
