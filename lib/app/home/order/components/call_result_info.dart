@@ -1,5 +1,6 @@
 import 'package:agro/ui/text/read_text.dart';
 import 'package:agro/ui/theme/colors.dart';
+import 'package:agro/ui/theme/fonts.dart';
 import 'package:flutter/material.dart';
 
 class CallResultInfo extends StatelessWidget {
@@ -25,19 +26,18 @@ class CallResultInfo extends StatelessWidget {
           Expanded(
               child: readText(
                   text: "Результат дзвінка",
-                  color: const Color(0xffA9A9A9),
-                  size: 20)),
+                  style: AppFonts.body1medium.grey3)),
           GestureDetector(
               onTap: onPressed,
               child: Container(
                   decoration: BoxDecoration(
-                      color: textColor ?? AppColors.grey,
-                      borderRadius: BorderRadius.circular(8)),
+                      border: Border.all(color: textColor ?? AppColors.grey4, width: 1),
+                      borderRadius: BorderRadius.circular(100)),
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
                   child: Text(
                     text,
-                    style: const TextStyle(fontSize: 20, color: Colors.black),
+                    style: AppFonts.body2bold.withColor(textColor ?? AppColors.grey4),
                   )))
         ]));
   }

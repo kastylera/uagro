@@ -1,4 +1,5 @@
 import 'package:agro/ui/theme/colors.dart';
+import 'package:agro/ui/theme/fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,7 +9,7 @@ import 'b_transparent_scalable_button.dart';
 
 Widget bStyle(
         {required String text,
-        required double size,
+        double size = 23,
         required BuildContext c,
         double? vertical,
         double? circular,
@@ -39,14 +40,14 @@ Widget bStyle(
             decoration: BoxDecoration(
                 color: colorButt ??
                     (!active
-                        ? const Color(0xffE6E6EA)
-                        : const Color(0xff69A509)),
-                borderRadius: BorderRadius.circular(circular ?? 15),
+                        ? AppColors.mainGreen.withOpacity(0.3)
+                        : AppColors.mainGreen),
+                borderRadius: BorderRadius.circular(circular ?? 100),
                 boxShadow: !boxShadowActive
                     ? null
                     : [
                         const BoxShadow(
-                            color: Color(0xff01CA20),
+                            color: AppColors.mainGreen,
                             spreadRadius: 0,
                             blurRadius: 6,
                             offset: Offset(0, 3))
@@ -77,10 +78,8 @@ Widget bStyle(
                     ],
                     readText(
                         text: text,
-                        color: colorText ??
-                            (!active ? const Color(0xff969696) : Colors.white),
-                        size: size,
-                        fontWeight: fontWeight,
+                        style: AppFonts.body1bold.withColor(colorText ??
+                            (!active ? const Color(0xff969696) : Colors.white)),
                         align: TextAlign.center),
                     if (rightIcon != null) ...[
                       if (spacerActive) ...[const Spacer()],
