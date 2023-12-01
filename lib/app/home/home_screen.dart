@@ -36,7 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return BlockPageScreen(
         headerSize: 21,
-        allPadding: const EdgeInsets.all(0),
         padding: EdgeInsets.only(
             left: controller.modelUser.isTraider ? 30 : 40,
             right: controller.modelUser.isTraider ? 30 : 0),
@@ -63,9 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child:
                     const Icon(Icons.add, color: Color(0xffFCD300), size: 40)),
         theme: SystemUiOverlayStyle.dark,
-        child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
+        child:  Column(
               children: [
                 TextFieldWidget(
                     padding: const EdgeInsets.only(top: 12),
@@ -113,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ],
                                 ))))
               ],
-            )));
+            ));
   }
 
   Widget headerItem(String value, String description) {
