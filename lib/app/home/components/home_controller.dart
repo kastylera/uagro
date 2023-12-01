@@ -25,6 +25,7 @@ class HomeController extends BaseController {
   late final RefreshController controllerLoading;
   late final ScrollController controllerScroll;
   String messHeader = 'Заявки';
+  int total = 0;
   final _localStorageRepository = LocalStorageRepository();
 
   int page = 1;
@@ -90,6 +91,9 @@ class HomeController extends BaseController {
         setState(() {
           if (c.mounted) {
             if (apiAnswer.data['status']) {
+              total =
+                  int.tryParse(apiAnswer.data['payload']['total'].toString()) ??
+                      0;
               for (final i in apiAnswer.data['payload']['items']) {
                 modelOrder.add(structOrderData(data: i));
               }

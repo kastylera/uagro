@@ -172,8 +172,8 @@ enum Currency {
 }
 
 enum PaymentForm {
-  f1("1ф.", '1f'),
-  f2("2ф.", '2f');
+  f1("1ф. (по перерахунку)", '1f'),
+  f2("2ф. (готівка)", '2f');
 
   final String label;
   final String json;
