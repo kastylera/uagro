@@ -1,3 +1,4 @@
+import 'package:agro/ui/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 import '../../../generated/assets.dart';
@@ -29,10 +30,10 @@ class BottomNavigation extends StatelessWidget {
         ),
         Align(
           alignment: Alignment.bottomCenter,
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 15),
-            child: Container(
-              decoration: const BoxDecoration(borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)), color: Colors.white),
+          child: Container(
+              decoration: const BoxDecoration(color: AppColors.mainGreen),
+              child: Padding(
+              padding: const EdgeInsets.only(bottom: 15),
               child: SafeArea(
                   top: false,
                   bottom: false,

@@ -1,3 +1,4 @@
+import 'package:agro/ui/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -8,8 +9,8 @@ Widget readText(
         int? maxLine,
         Color? color,
         TextAlign? align,
+        TextStyle? style,
         FontWeight? fontWeight,
-        bool? bold,
         EdgeInsetsGeometry? padding,
         Color? decorationColor,
         bool underline = false}) =>
@@ -23,13 +24,13 @@ Widget readText(
           children: <TextSpan>[
             TextSpan(
                 text: text,
-                style: GoogleFonts.getFont('Inter',
+                style: style ?? GoogleFonts.getFont('Nunito',
                     fontWeight: fontWeight ?? FontWeight.w400,
                     fontSize: size ?? 16,
-                    color: color ?? Colors.white,
+                    color: color ?? AppColors.black,
                     height: heightText ,
                     decoration: underline ? TextDecoration.underline : TextDecoration.none,
-                    decorationColor: decorationColor ?? Colors.white))
+                    decorationColor: decorationColor ?? AppColors.black))
           ],
         ),
       ),

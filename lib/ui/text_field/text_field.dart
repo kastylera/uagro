@@ -28,7 +28,7 @@ class TextFieldWidget extends StatefulWidget {
   final Color? colorBg, colorText, colorIcon, colorEndText, headerColor;
   final BoxBorder? border;
   final EdgeInsetsGeometry? paddingTextField;
-  final TextStyle? textStyle, hintStyle;
+  final TextStyle? textStyle, hintStyle, labelStyle;
   final int? maxLine, minLines, maxLength;
   final double? height, iconSize, sizeText;
   final BorderRadiusGeometry? borderRadius;
@@ -80,7 +80,7 @@ class TextFieldWidget extends StatefulWidget {
       this.borderRadius,
       this.labelText,
       this.inputFormatters,
-      this.textCapitalization})
+      this.textCapitalization, this.labelStyle})
       : super(key: key);
 
   @override
@@ -212,7 +212,7 @@ class _TextFieldState extends State<TextFieldWidget> {
                                       fontSize: widget.sizeText ?? 20,
                                       color: widget.headerColor ??
                                           const Color(0xffCDCDCD)),
-                                  hintStyle: TextStyle(
+                                  hintStyle: widget.hintStyle ?? TextStyle(
                                       color: widget.headerColor ??
                                           const Color(0xffCDCDCD),
                                       fontSize: widget.sizeText ?? 20,

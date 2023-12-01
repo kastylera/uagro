@@ -1,3 +1,4 @@
+import 'package:agro/ui/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -109,7 +110,7 @@ class BlockPageScreen extends StatelessWidget {
                     child: Container(
                         width: MediaQuery.of(context).size.width,
                         height: 1,
-                        color: Colors.black.withOpacity(0.05))),
+                        color: AppColors.grey3)),
                 Expanded(child: child)
               ],
             ),

@@ -5,25 +5,25 @@ import 'package:google_fonts/google_fonts.dart';
 //+6
 class AppFonts {
   static TextStyle title1 = GoogleFonts.nunito(
-      fontSize: 24, fontWeight: FontWeight.w700, color: AppColors.black);
+      fontSize: 28, fontWeight: FontWeight.w700, color: AppColors.black);
 
   static TextStyle body1medium = GoogleFonts.nunito(
-      fontSize: 16, fontWeight: FontWeight.w500, color: AppColors.black);
+      fontSize: 20, fontWeight: FontWeight.w500, color: AppColors.black);
   static TextStyle body1semibold = GoogleFonts.nunito(
-      fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.black);
+      fontSize: 20, fontWeight: FontWeight.w600, color: AppColors.black);
   static TextStyle body1bold = GoogleFonts.nunito(
-      fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.black);
+      fontSize: 20, fontWeight: FontWeight.w700, color: AppColors.black);
 
   static TextStyle body2semibold = GoogleFonts.nunito(
-      fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.black);
+      fontSize: 18, fontWeight: FontWeight.w600, color: AppColors.black);
   static TextStyle body2bold = GoogleFonts.nunito(
-      fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.black);
+      fontSize: 18, fontWeight: FontWeight.w700, color: AppColors.black);
 
   static TextStyle body3medium = GoogleFonts.nunito(
-      fontSize: 12, fontWeight: FontWeight.w500, color: AppColors.black);
+      fontSize: 16, fontWeight: FontWeight.w500, color: AppColors.black);
 
   static TextStyle caption = GoogleFonts.nunito(
-      fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.black);
+      fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.black);
 }
 
 extension CopyWithStyles on TextStyle {

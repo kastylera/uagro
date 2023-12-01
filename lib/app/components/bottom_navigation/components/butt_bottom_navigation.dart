@@ -1,3 +1,5 @@
+import 'package:agro/ui/theme/colors.dart';
+import 'package:agro/ui/theme/fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -25,17 +27,16 @@ Widget buttBottomNavigation(
                   height: 32,
                   colorFilter: ColorFilter.mode(
                       c.watch<BottomMenuNotifier>().activeButtMenu != buttNum
-                          ? const Color(0xffDCDCDC)
-                          : const Color(0xff078F1C),
+                          ? AppColors.greyGreen
+                          : AppColors.white,
                       BlendMode.srcIn)),
               readText(
                   text: text,
-                  color: c.watch<BottomMenuNotifier>().activeButtMenu != buttNum
-                      ? const Color(0xffDCDCDC)
-                      : const Color(0xff078F1C),
-                  size: 18,
-                  fontWeight: FontWeight.w600,
-                  padding: const EdgeInsets.only(top: 8))
+                  style: AppFonts.body2semibold.withColor(
+                      c.watch<BottomMenuNotifier>().activeButtMenu != buttNum
+                          ? AppColors.greyGreen
+                          : AppColors.white),
+                  padding: const EdgeInsets.only(top: 4))
             ],
           ),
         )),

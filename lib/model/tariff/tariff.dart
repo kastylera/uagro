@@ -15,7 +15,7 @@ class Tariff {
     balanceContacts = json['balance_contacts'];
     balanceSms = json['balance_sms'];
     balanceContactsDayTotal = json['balance_contacts_day_total'];
-    balanceContactsDayOsttk = json['balance_contact_day_osttk'];
+    balanceContactsDayOsttk = json['balance_contacts_day_osttk'];
     tafiffId = json['tariff_id'];
     DateFormat format = DateFormat('dd.MM.yyyy');
     balanceEnd = format.parse(json['balance_end']);

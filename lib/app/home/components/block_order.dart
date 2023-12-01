@@ -1,12 +1,14 @@
 import 'package:agro/app/home/order/components/call_result_info.dart';
 import 'package:agro/model/answer/answer.dart';
 import 'package:agro/model/model_user/model_user.dart';
+import 'package:agro/ui/theme/colors.dart';
+import 'package:agro/ui/theme/fonts.dart';
+import 'package:agro/ui/utils/date_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:agro/model/model_order/model_order.dart';
 import 'package:agro/ui/text/read_text.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart' show DateFormat;
 
 import '../../../generated/assets.dart';
 import '../../../ui/buttons/b_transparent_scalable_button.dart';
@@ -27,21 +29,16 @@ class BlockOrder extends StatelessWidget {
   Widget build(BuildContext context) {
     HomeController controller = Get.find();
     return Padding(
-      padding: const EdgeInsets.only(top: 30),
+      padding: const EdgeInsets.only(top: 10),
       child: BTransparentScalableButton(
           onPressed: () => onPressed(model: modelOrder),
           scale: ScaleFormat.small,
           child: Container(
               decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    BoxShadow(
-                        color: const Color(0xff000000).withOpacity(0.05),
-                        spreadRadius: 0,
-                        blurRadius: 10,
-                        offset: const Offset(0, 0))
-                  ]),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: AppColors.grey2),
+              ),
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
@@ -49,36 +46,30 @@ class BlockOrder extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 15),
+                        padding: const EdgeInsets.only(bottom: 10),
                         child: Row(children: [
-                          Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                readText(
-                                    text:
-                                        'Заявка № ${modelOrder.id}\nвід: ${DateFormat('dd.MM.yyyy').format(modelOrder.startDate!)}',
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w600,
-                                    size: 20),
-                              ]),
-                          const Spacer(),
+                          
+                                Expanded(child: readText(
+                                  text:
+                                      'Заявка № ${modelOrder.id}\nвід: ${modelOrder.startDate?.formatDateShort()}',
+                                  style: AppFonts.body1bold.black,
+                                ),
+                                ),
                           if (DateTime.now().millisecondsSinceEpoch >
                               modelOrder.endDate!.millisecondsSinceEpoch) ...[
                             readText(
-                                text: 'Термін дії закінчився',
-                                color: const Color(0xffFF5050),
-                                size: 18)
+                              text: 'Термін дії закінчився',
+                              style: AppFonts.body2semibold.red,
+                            )
                           ] else if (modelOrder.priceAdded != null &&
                               modelOrder.priceAdded!) ...[
                             readText(
                                 text: '₴',
-                                color: const Color(0xff01CA20),
-                                fontWeight: FontWeight.w600,
-                                size: 30,
+                                style: AppFonts.title1.mainGreen,
                                 padding: const EdgeInsets.only(bottom: 15))
                           ],
                           if (controller.modelUser.role == 'distrib') ...[
-                            const SizedBox(width: 20),
+                            const SizedBox(width: 10),
                             Padding(
                                 padding: const EdgeInsets.only(bottom: 10),
                                 child: SvgPicture.asset(
@@ -88,8 +79,8 @@ class BlockOrder extends StatelessWidget {
                                         : Assets.appIsViewFalse,
                                     height: modelOrder.request != null &&
                                             modelOrder.request!
-                                        ? 25
-                                        : 35))
+                                        ? 30
+                                        : 28))
                           ]
                         ]),
                       ),
@@ -117,16 +108,13 @@ class BlockOrder extends StatelessWidget {
                       if (modelOrder.comment != null &&
                           modelOrder.comment != '') ...[
                         readText(
-                            text: 'Коментар',
-                            color: const Color(0xffA9A9A9),
-                            size: 20),
+                          text: 'Коментар',
+                          style: AppFonts.body1medium.grey3,
+                        ),
                         readText(
                             text: modelOrder.comment!,
-                            color: Colors.black,
-                            size: 20,
-                            fontWeight: FontWeight.w500,
-                            padding: const EdgeInsets.only(top: 10)),
-                        
+                            style: AppFonts.body1medium.black,
+                            padding: const EdgeInsets.only(top: 4)),
                       ],
                       controller.modelUser.isTraider && answer != null
                           ? Padding(
@@ -143,22 +131,15 @@ class BlockOrder extends StatelessWidget {
     );
   }
 
-  Widget orderInfo(
-          {required String header, required String text, bool bold = false}) =>
-      Padding(
-        padding: const EdgeInsets.only(bottom: 10),
+  Widget orderInfo({required String header, required String text}) => Padding(
+        padding: const EdgeInsets.only(bottom: 4),
         child: Row(children: [
           readText(
-              text: header,
-              color: bold ? Colors.black : const Color(0xffA9A9A9),
-              size: 20,
-              fontWeight: bold ? FontWeight.w600 : FontWeight.w400),
+            text: header,
+            style: AppFonts.body1medium.grey3,
+          ),
           const Spacer(),
-          readText(
-              text: text,
-              color: Colors.black,
-              size: 20,
-              fontWeight: FontWeight.w500)
+          readText(text: text, style: AppFonts.body1medium.black)
         ]),
       );
 }
