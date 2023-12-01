@@ -9,6 +9,7 @@ import 'package:agro/model/tariff/tariff.dart';
 import 'package:agro/ui/buttons/b_transparent_scalable_button.dart';
 import 'package:agro/ui/local_notification/local_notification.dart';
 import 'package:agro/ui/theme/colors.dart';
+import 'package:agro/ui/theme/fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -56,7 +57,8 @@ class _OrderScreenState extends State<OrderScreen> {
                   c: context);
             },
             scale: ScaleFormat.big,
-            child: const Icon(Icons.copy, color: AppColors.darkGreen, size: 24)),
+            child:
+                const Icon(Icons.copy, color: AppColors.darkGreen, size: 24)),
         theme: SystemUiOverlayStyle.dark,
         onPressedReturn: () {
           controller.onBack(context);
@@ -68,7 +70,7 @@ class _OrderScreenState extends State<OrderScreen> {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 20),
                     orderInfo(
                         header: 'Область',
                         text: controller.modelOrder.region.toString()),
@@ -118,7 +120,7 @@ class _OrderScreenState extends State<OrderScreen> {
                         : const SizedBox(),
                     if (controller.modelUser.isTraider) ...[
                       Padding(
-                          padding: const EdgeInsets.only(top: 35),
+                          padding: const EdgeInsets.only(top: 20),
                           child: Row(children: [
                             controller.tariff?.isVip == true ||
                                     controller.tariff?.isExclusive == true
@@ -166,7 +168,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                     colorButt: Colors.transparent,
                                     onPressed: controller.onReview))
                           ])),
-                      const SizedBox(height: 25),
+                      const SizedBox(height: 16),
                       bStyle(
                           key: UniqueKey(),
                           text: 'Додати ціну',
@@ -198,16 +200,12 @@ class _OrderScreenState extends State<OrderScreen> {
                     Row(children: [
                       readText(
                           text: 'Запропоновані ціни',
-                          color: Colors.black,
-                          size: 20,
-                          fontWeight: FontWeight.w600,
+                          style: AppFonts.body1bold.black,
                           padding: const EdgeInsets.only(top: 25)),
                       const Spacer(),
                       readText(
                           text: controller.totalPrice.toString(),
-                          color: const Color(0xffA9A9A9),
-                          size: 22,
-                          fontWeight: FontWeight.w600,
+                          style: AppFonts.title2.grey3,
                           padding: const EdgeInsets.only(top: 25))
                     ]),
                     for (ModelOrderPrice i in controller.modelOrderPrice) ...[
@@ -217,15 +215,13 @@ class _OrderScreenState extends State<OrderScreen> {
   }
 
   Widget orderInfo({required String header, required String text}) => Padding(
-      padding: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.only(bottom: 6),
       child: Row(children: [
-        readText(text: header, color: const Color(0xffA9A9A9), size: 20),
+        readText(text: header, style: AppFonts.body1medium.grey3),
         Expanded(
             child: readText(
                 text: text,
-                color: Colors.black,
-                size: 20,
-                fontWeight: FontWeight.w500,
+                style: AppFonts.body1medium.black,
                 align: TextAlign.end))
       ]));
 }
