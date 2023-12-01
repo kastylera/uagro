@@ -1,6 +1,7 @@
 import 'package:agro/model/call_result/call_result.dart';
 import 'package:agro/ui/buttons/b_style.dart';
 import 'package:agro/ui/theme/colors.dart';
+import 'package:agro/ui/views/bottom_drawer_header.dart';
 import 'package:flutter/material.dart';
 
 class SetAnswer extends StatelessWidget {
@@ -15,14 +16,7 @@ class SetAnswer extends StatelessWidget {
       height: 550,
       child: Column(
         children: [
-          Padding(
-              padding: const EdgeInsets.only(top: 15),
-              child: Container(
-                  decoration: BoxDecoration(
-                      color: const Color(0xffEDEDED),
-                      borderRadius: BorderRadius.circular(3)),
-                  height: 10,
-                  width: 100)),
+          const BottomDrawerHeader(),
           const SizedBox(height: 32),
           ListView.builder(
               shrinkWrap: true,

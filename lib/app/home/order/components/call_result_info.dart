@@ -14,7 +14,7 @@ class CallResultInfo extends StatelessWidget {
       required this.text,
       required this.onPressed,
       this.textColor,
-      this.horizontalPadding = 10})
+      this.horizontalPadding = 0})
       : super(key: key);
 
   @override

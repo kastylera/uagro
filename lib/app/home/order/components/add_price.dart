@@ -1,4 +1,5 @@
 import 'package:agro/ui/text/read_text.dart';
+import 'package:agro/ui/views/bottom_drawer_header.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -46,14 +47,7 @@ class _AddPriceScreenState extends State<AddPriceScreen> {
         color: Colors.white,
         child: Column(
           children: [
-            Padding(
-                padding: const EdgeInsets.only(top: 15, bottom: 20),
-                child: Container(
-                    decoration: BoxDecoration(
-                        color: const Color(0xffEDEDED),
-                        borderRadius: BorderRadius.circular(3)),
-                    height: 10,
-                    width: 100)),
+            const BottomDrawerHeader(),
             readText(
                 text: 'Додати ціну',
                 color: Colors.black,
