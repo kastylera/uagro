@@ -1,9 +1,9 @@
 import 'package:agro/ui/theme/colors.dart';
+import 'package:agro/ui/theme/fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../generated/assets.dart';
 import '../../ui/buttons/b_transparent_scalable_button.dart';
 import '../../ui/text/read_text.dart';
 import '../../vars/valid_themes.dart';
@@ -68,11 +68,10 @@ class BlockPageScreen extends StatelessWidget {
                             onPressed:
                                 onPressedReturn ?? () => Navigator.pop(context),
                             scale: ScaleFormat.small,
-                            child: SvgPicture.asset(
-                              Assets.componentsBack,
-                              width: 18,
-                              colorFilter: const ColorFilter.mode(
-                                  Colors.black, BlendMode.srcIn),
+                            child: const Icon(
+                              Icons.arrow_back_ios_new_rounded,
+                              size: 24,
+                              color: Colors.black,
                             )),
                       ] else if (endIcon != null || isCancel) ...[
                         const SizedBox(width: 32)
@@ -82,9 +81,7 @@ class BlockPageScreen extends StatelessWidget {
                             child: Center(
                                 child: readText(
                                     text: header!,
-                                    size: headerSize ?? 24,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black,
+                                    style: AppFonts.body1bold.black,
                                     align: TextAlign.center)))
                       ],
                       if (endIcon != null) ...[

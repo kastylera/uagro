@@ -8,6 +8,7 @@ import 'package:agro/model/model_user/model_user.dart';
 import 'package:agro/model/tariff/tariff.dart';
 import 'package:agro/ui/buttons/b_transparent_scalable_button.dart';
 import 'package:agro/ui/local_notification/local_notification.dart';
+import 'package:agro/ui/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -55,7 +56,7 @@ class _OrderScreenState extends State<OrderScreen> {
                   c: context);
             },
             scale: ScaleFormat.big,
-            child: const Icon(Icons.copy, color: Color(0xffFCD300), size: 24)),
+            child: const Icon(Icons.copy, color: AppColors.darkGreen, size: 24)),
         theme: SystemUiOverlayStyle.dark,
         onPressedReturn: () {
           controller.onBack(context);
@@ -115,7 +116,7 @@ class _OrderScreenState extends State<OrderScreen> {
                             onPressed: () => controller.onSetAnswer(context),
                           )
                         : const SizedBox(),
-                    if (controller.modelUser.role == 'distrib') ...[
+                    if (controller.modelUser.isTraider) ...[
                       Padding(
                           padding: const EdgeInsets.only(top: 35),
                           child: Row(children: [
@@ -124,28 +125,26 @@ class _OrderScreenState extends State<OrderScreen> {
                                 ? const SizedBox()
                                 : Expanded(
                                     child: bStyle(
-                                        width: 160,
                                         text: controller.contactOpened
                                             ? "Сховати"
                                             : 'Контакти',
-                                        size: 23,
                                         c: context,
-                                        colorText: Colors.black,
+                                        colorText: AppColors.darkGreen,
                                         vertical: 15,
-                                        colorButt: const Color(0xffF2F2F2),
+                                        border: Border.all(
+                                            color: AppColors.darkGreen,
+                                            width: 1),
+                                        colorButt: Colors.transparent,
                                         onPressed: () {
                                           controller.onContactClick();
                                         })),
                             controller.tariff?.isVip == true
                                 ? Expanded(
                                     child: bStyle(
-                                        width: 160,
                                         text: 'Угода',
-                                        size: 23,
                                         c: context,
-                                        colorText: Colors.black,
+                                        colorText: AppColors.white,
                                         vertical: 15,
-                                        colorButt: const Color(0xffF2F2F2),
                                         onPressed: () {
                                           controller.onDeal();
                                         }))
@@ -158,22 +157,22 @@ class _OrderScreenState extends State<OrderScreen> {
                                         : 0),
                             Expanded(
                                 child: bStyle(
-                                    width: 160,
                                     text: 'Відгуки',
-                                    size: 23,
                                     c: context,
-                                    colorText: Colors.black,
+                                    colorText: AppColors.darkGreen,
                                     vertical: 15,
-                                    colorButt: const Color(0xffF2F2F2),
+                                    border: Border.all(
+                                        color: AppColors.darkGreen, width: 1),
+                                    colorButt: Colors.transparent,
                                     onPressed: controller.onReview))
                           ])),
                       const SizedBox(height: 25),
                       bStyle(
                           key: UniqueKey(),
                           text: 'Додати ціну',
-                          size: 23,
                           c: context,
-                          colorButt: const Color(0xffFCD300),
+                          vertical: 15,
+                          colorButt: AppColors.yellow,
                           onPressed: () => controller.onAddPrice(context))
                     ] else ...[
                       bStyle(

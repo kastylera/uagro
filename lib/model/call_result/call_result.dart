@@ -8,7 +8,7 @@ part 'call_result.g.dart';
 @HiveType(typeId: 3)
 enum CallResult {
   @HiveField(0)
-  agreement("Угода", AppColors.green),
+  agreement("Угода", AppColors.mainGreen),
   @HiveField(1)
   noAnswer("Не підняв слухавку", AppColors.yellow),
   @HiveField(2)
