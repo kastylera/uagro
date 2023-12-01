@@ -28,6 +28,11 @@ extension DateHelper on DateTime {
     return now.difference(this).inDays;
   }
 
+  bool isActive(){
+    final now = DateTime.now();
+    return isAfter(now);
+  }
+
   String formatDateFull() {
     return format(DateFormats.dateFull);
   }
