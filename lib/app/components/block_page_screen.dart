@@ -106,11 +106,19 @@ class BlockPageScreen extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                    padding: const EdgeInsets.only(top: 15),
-                    child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 1,
-                        color: AppColors.grey3)),
+                  padding: const EdgeInsets.only(top: 15),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: 1,
+                    child: Expanded(
+                        child: OverflowBox(
+                            maxWidth: MediaQuery.of(context).size.width,
+                            child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: 1,
+                                color: AppColors.grey3))),
+                  ),
+                ),
                 Expanded(child: child)
               ],
             ),
