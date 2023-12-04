@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:agro/ui/local_notification/local_notification.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -15,7 +16,8 @@ class AuthController extends FormController {
   late BuildContext c;
   late TextEditingController numberController;
   List<MaskTextInputFormatter> maskFormatterNumber = [
-    MaskTextInputFormatter(mask: '### ## ###-##-##', filter: {"#": RegExp(r'\d')})
+    MaskTextInputFormatter(
+        mask: '### ## ###-##-##', filter: {"#": RegExp(r'\d')})
   ];
   String? errorNumber;
 
@@ -26,7 +28,9 @@ class AuthController extends FormController {
     super.onInit();
   }
 
-  void initPage({required BuildContext context, required Function(VoidCallback fn) set}) async {
+  void initPage(
+      {required BuildContext context,
+      required Function(VoidCallback fn) set}) async {
     c = context;
     setState = set;
   }
@@ -35,17 +39,22 @@ class AuthController extends FormController {
 
   void onContactTelegram() => launchUrl(Uri.parse('https://t.me/uagro_admin'));
 
-  void onContactViber() => launchUrl(Uri.parse('viber://chat?number=${Uri.encodeComponent('+380990026222')}'));
+  void onContactViber() => launchUrl(
+      Uri.parse('viber://chat?number=${Uri.encodeComponent('+380990026222')}'));
 
   void onLogin() => loadIfValid(() async {
-        ApiAnswer apiAnswer = await Api().auth.loginNumber(number: '+${numberController.text.replaceAll(RegExp('\\D'), '')}');
+        ApiAnswer apiAnswer = await Api().auth.loginNumber(
+            number: '+${numberController.text.replaceAll(RegExp('\\D'), '')}');
 
         log(apiAnswer.data.toString());
 
         if (apiAnswer.data['status']) {
           Get.offAllNamed(Routes.authConfirm);
         } else {
-          Get.offAllNamed(Routes.authRegisterOk);
+          notification(
+              text:
+                  "Цей номер не зареєстрований, перевірте дані та повторіть спробу");
+          //Get.offAllNamed(Routes.authRegisterOk);
         }
       }, c: c);
 }
