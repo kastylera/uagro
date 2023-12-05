@@ -8,5 +8,11 @@
   "continue_": "Продовжити",
   "changeNumber": "'Змінити номер?",
   "save": "Зберегти",
+  "profile": "Профіль",
+  "ourSite": "Наш сайт",
+  "support": "Підтримка",
+  "privacyPolicy": "Політика конфеденційності",
+  "deleteProfile": "Видалити профіль",
+  "logOutOfProfile": "Вийти з профілю",
   "@save": {}
 }

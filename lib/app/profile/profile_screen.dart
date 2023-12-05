@@ -1,6 +1,7 @@
 import 'package:agro/ui/text/read_text.dart';
 import 'package:agro/ui/theme/colors.dart';
 import 'package:agro/ui/theme/fonts.dart';
+import 'package:agro/vars/helper.dart';
 import 'package:agro/vars/valid_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,7 +18,8 @@ class ProfileScreen extends GetView<ProfileController> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: readText(text: "Профіль", style: AppFonts.title1.white),
+          title:
+              readText(text: context.l.profile, style: AppFonts.title1.white),
           centerTitle: true,
           backgroundColor: AppColors.mainGreen,
           elevation: 0,
@@ -41,7 +43,7 @@ class ProfileScreen extends GetView<ProfileController> {
                               alignment: Alignment.topCenter,
                               child: Card(
                                 elevation: 2,
-                                shape: CircleBorder(),
+                                shape: const CircleBorder(),
                                 child: SvgPicture.asset(Assets.profile,
                                     width: 200, height: 200),
                               ))),
@@ -60,24 +62,24 @@ class ProfileScreen extends GetView<ProfileController> {
                           child: Column(
                             children: [
                               BlockSetting(
-                                  header: 'Наш сайт',
+                                  header: context.l.ourSite,
                                   icon: Assets.accountSite,
                                   onPressed: controller.onSite),
                               BlockSetting(
-                                  header: 'Підтримка',
+                                  header: context.l.support,
                                   icon: Assets.accountQuestion,
                                   onPressed: controller.onHelp),
                               BlockSetting(
-                                  header: 'Політика конфеденційності',
+                                  header: context.l.privacyPolicy,
                                   icon: Assets.accountPrivacy,
                                   onPressed: controller.onPrivacy),
                               BlockSetting(
-                                  header: 'Видалити профіль',
+                                  header: context.l.deleteProfile,
                                   icon: Assets.accountDelete,
                                   onPressed: () =>
                                       controller.onDeleteAccount(context)),
                               BlockSetting(
-                                header: 'Вийти з профілю',
+                                header: context.l.logOutOfProfile,
                                 icon: Assets.accountExit,
                                 onPressed: () => controller.onExit(context),
                               )
