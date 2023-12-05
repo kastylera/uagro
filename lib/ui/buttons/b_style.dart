@@ -79,7 +79,7 @@ Widget bStyle(
                     readText(
                         text: text,
                         style: AppFonts.body1bold.withColor(colorText ??
-                            (!active ? const Color(0xff969696) : Colors.white)),
+                            (!active ? AppColors.white.withOpacity(0.5) : AppColors.white)),
                         align: TextAlign.center),
                     if (rightIcon != null) ...[
                       if (spacerActive) ...[const Spacer()],

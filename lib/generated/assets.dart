@@ -27,15 +27,15 @@ class Assets {
   static const String appIsViewFalse = 'picture/app/is_view_false.svg';
   static const String appIsViewTrue = 'picture/app/is_view_true.svg';
   static const String authBg = 'picture/auth/bg.png';
-  static const String authTelegram = 'picture/auth/telegram.png';
-  static const String authViber = 'picture/auth/viber.png';
+  static const String authTelegram = 'picture/auth/telegram.svg';
+  static const String authViber = 'picture/auth/viber.svg';
   static const String bottomNavigationHelp = 'picture/app/bottom_navigation/help.svg';
   static const String bottomNavigationHome = 'picture/app/bottom_navigation/home.svg';
   static const String bottomNavigationProfile = 'picture/app/bottom_navigation/profile.svg';
   static const String componentsArrowBot = 'picture/components/arrow_bot.svg';
   static const String componentsArrowRight = 'picture/components/arrow_right.svg';
   static const String componentsBack = 'picture/components/back.svg';
-  static const String pictureLogo = 'picture/logo.png';
+  static const String pictureLogo = 'picture/logo.svg';
   static const String startBg = 'picture/start/bg.png';
 
 }

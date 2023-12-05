@@ -17,6 +17,8 @@ class AppFonts {
   static TextStyle body1bold = GoogleFonts.nunito(
       fontSize: 20, fontWeight: FontWeight.w700, color: AppColors.black);
 
+  static TextStyle body2medium = GoogleFonts.nunito(
+      fontSize: 18, fontWeight: FontWeight.w500, color: AppColors.black);
   static TextStyle body2semibold = GoogleFonts.nunito(
       fontSize: 18, fontWeight: FontWeight.w600, color: AppColors.black);
   static TextStyle body2bold = GoogleFonts.nunito(
