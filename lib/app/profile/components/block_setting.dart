@@ -1,3 +1,5 @@
+import 'package:agro/ui/theme/colors.dart';
+import 'package:agro/ui/theme/fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -24,25 +26,27 @@ class BlockSetting extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
+            padding:
+                const EdgeInsets.only(left: 20, right: 20, bottom: 15, top: 15),
             child: BTransparentScalableButton(
               onPressed: onPressed,
               scale: ScaleFormat.small,
               child: Row(
                 children: [
-                  SvgPicture.asset(
-                    icon,
-                    width: 32,
-                    colorFilter: const ColorFilter.mode(
-                        Color(0xff7A7B7D), BlendMode.srcIn),
-                  ),
+                  Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: SvgPicture.asset(
+                        icon,
+                        width: 32,
+                        colorFilter: const ColorFilter.mode(
+                            AppColors.additionalGreen, BlendMode.srcIn),
+                      )),
                   Expanded(
                       child: readText(
-                          text: header,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w400,
-                          padding: const EdgeInsets.only(left: 20),
-                          size: 21))
+                    text: header,
+                    style: AppFonts.body1medium.black,
+                    padding: const EdgeInsets.only(left: 20),
+                  ))
                 ],
               ),
             ),
@@ -51,7 +55,7 @@ class BlockSetting extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Container(
-                  color: const Color(0xffDDC3F9),
+                  color: AppColors.grey3,
                   width: MediaQuery.of(context).size.width,
                   height: 1),
             )

@@ -37,5 +37,5 @@ class Assets {
   static const String componentsBack = 'picture/components/back.svg';
   static const String pictureLogo = 'picture/logo.svg';
   static const String startBg = 'picture/start/bg.png';
-
+  static const String profile = 'picture/app/account/profile.svg';
 }
