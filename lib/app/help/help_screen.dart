@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:agro/ui/text/read_text.dart';
 
@@ -29,9 +30,9 @@ class HelpScreen extends StatelessWidget {
               color: Colors.black,
               padding: const EdgeInsets.only(top: 20)),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            BTransparentScalableButton(onPressed: controller.onContactTelegram, scale: ScaleFormat.small, child: Image.asset(Assets.authTelegram, width: 60)),
+            BTransparentScalableButton(onPressed: controller.onContactTelegram, scale: ScaleFormat.small, child: SvgPicture.asset(Assets.authTelegram, width: 60)),
             const SizedBox(width: 50),
-            BTransparentScalableButton(onPressed: controller.onContactViber, scale: ScaleFormat.small, child: Image.asset(Assets.authViber, width: 60))
+            BTransparentScalableButton(onPressed: controller.onContactViber, scale: ScaleFormat.small, child: SvgPicture.asset(Assets.authViber, width: 60))
           ]),
           readText(
               text:

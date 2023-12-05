@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:agro/ui/text/read_text.dart';
 
@@ -28,7 +29,7 @@ class AuthRegisterOkScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Padding(padding: const EdgeInsets.only(top: 25), child: Center(child: Image.asset(Assets.pictureLogo, width: MediaQuery.of(context).size.width / 1.4))),
+                    Padding(padding: const EdgeInsets.only(top: 25), child: Center(child: SvgPicture.asset(Assets.pictureLogo, width: MediaQuery.of(context).size.width / 1.4))),
                     const Spacer(),
                     Container(
                         width: MediaQuery.of(context).size.width,
@@ -43,9 +44,9 @@ class AuthRegisterOkScreen extends StatelessWidget {
                         )),
                     const Spacer(),
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      BTransparentScalableButton(onPressed: controller.onContactTelegram, scale: ScaleFormat.small, child: Image.asset(Assets.authTelegram, width: 50)),
+                      BTransparentScalableButton(onPressed: controller.onContactTelegram, scale: ScaleFormat.small, child: SvgPicture.asset(Assets.authTelegram, width: 50)),
                       const SizedBox(width: 20),
-                      BTransparentScalableButton(onPressed: controller.onContactViber, scale: ScaleFormat.small, child: Image.asset(Assets.authViber, width: 50))
+                      BTransparentScalableButton(onPressed: controller.onContactViber, scale: ScaleFormat.small, child: SvgPicture.asset(Assets.authViber, width: 50))
                     ]),
                     Center(
                         child: readText(

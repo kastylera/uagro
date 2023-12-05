@@ -4,6 +4,7 @@ import 'package:agro/ui/buttons/b_style.dart';
 import 'package:agro/ui/local_notification/local_notification.dart';
 import 'package:agro/ui/text/read_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../ui/buttons/b_transparent_scalable_button.dart';
@@ -45,7 +46,7 @@ class LaunchPhone extends StatelessWidget {
                       phone: contact.userPhone.toString(), context: context);
                 },
                 scale: ScaleFormat.small,
-                child: Image.asset(Assets.authTelegram, width: 50)),
+                child: SvgPicture.asset(Assets.authTelegram, width: 50)),
             const SizedBox(width: 30),
             BTransparentScalableButton(
                 onPressed: () {
@@ -53,7 +54,7 @@ class LaunchPhone extends StatelessWidget {
                       phone: contact.userPhone.toString(), context: context);
                 },
                 scale: ScaleFormat.small,
-                child: Image.asset(Assets.authViber, width: 50))
+                child: SvgPicture.asset(Assets.authViber, width: 50))
           ]),
           bStyle(
               padding: const EdgeInsets.only(left: 15, right: 15, top: 20),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
 import '../../generated/assets.dart';
@@ -22,7 +23,7 @@ class LoadScreen extends StatelessWidget {
                   height: MediaQuery.of(context).size.height),
               Align(
                   alignment: Alignment.center,
-                  child: Image.asset(Assets.pictureLogo,
+                  child: SvgPicture.asset(Assets.pictureLogo,
                       width: MediaQuery.of(context).size.width / 1.4)),
             ],
           ),
