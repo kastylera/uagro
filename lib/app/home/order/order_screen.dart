@@ -135,7 +135,15 @@ class _OrderScreenState extends State<OrderScreen> {
                                         colorButt: const Color(0xffF2F2F2),
                                         onPressed: () {
                                           setState(() {
-                                            contactOpened = !contactOpened;
+                                            if (controller
+                                                    .modelOrder.userName !=
+                                                null) {
+                                              contactOpened = !contactOpened;
+                                            } else {
+                                              notification(
+                                                  text:
+                                                      "Ви не можете відкрити ці контакти. Перевірте кількіть контактів в тарифі.");
+                                            }
                                           });
                                         })),
                             controller.tariff?.isVip == true

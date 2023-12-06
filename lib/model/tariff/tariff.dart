@@ -24,5 +24,5 @@ class Tariff {
 
 extension TariffX on Tariff {
   bool get isExclusive => balanceName == "Exclusive";
-  bool get isVip => true;
+  bool get isVip => vip == "Y";
 }
