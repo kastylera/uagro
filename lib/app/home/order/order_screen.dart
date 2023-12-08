@@ -1,6 +1,7 @@
 import 'package:agro/app/home/components/home_controller.dart';
 import 'package:agro/app/home/order/components/contact.dart';
 import 'package:agro/app/home/order/components/call_result_info.dart';
+import 'package:agro/model/model_order/model_contact.dart';
 import 'package:agro/model/model_order/model_order.dart';
 import 'package:agro/model/model_order_price/model_order_price.dart';
 import 'package:agro/model/model_user/model_user.dart';
@@ -28,7 +29,6 @@ class OrderScreen extends StatefulWidget {
 class _OrderScreenState extends State<OrderScreen> {
   OrderController controller = Get.find();
   HomeController homecontroller = Get.find();
-  bool contactOpened = false;
 
   @override
   void initState() {
@@ -47,8 +47,8 @@ class _OrderScreenState extends State<OrderScreen> {
         endWidget: BTransparentScalableButton(
             onPressed: () {
               Clipboard.setData(ClipboardData(
-                  text: contactOpened
-                      ? controller.modelOrder.toTextFull()
+                  text: controller.contactOpened
+                      ? controller.modelOrder.toTextFull(controller.contact)
                       : controller.modelOrder.toTextShort()));
               inAppNotification(
                   text: "Дані про замовлення скопійовані в буфер обміну",
@@ -101,9 +101,9 @@ class _OrderScreenState extends State<OrderScreen> {
                     ],
                     (controller.tariff?.isVip == true ||
                             controller.tariff?.isExclusive == true ||
-                            contactOpened)
+                            controller.contactOpened)
                         ? ContactScreen(
-                            modelOrder: controller.modelOrder,
+                            contact: controller.contact,
                             onLauchPhone: () =>
                                 controller.onLaunchPhone(context))
                         : const SizedBox(),
@@ -125,7 +125,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                 : Expanded(
                                     child: bStyle(
                                         width: 160,
-                                        text: contactOpened
+                                        text: controller.contactOpened
                                             ? "Сховати"
                                             : 'Контакти',
                                         size: 23,
@@ -134,17 +134,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                         vertical: 15,
                                         colorButt: const Color(0xffF2F2F2),
                                         onPressed: () {
-                                          setState(() {
-                                            if (controller
-                                                    .modelOrder.userName !=
-                                                null) {
-                                              contactOpened = !contactOpened;
-                                            } else {
-                                              notification(
-                                                  text:
-                                                      "Ви не можете відкрити ці контакти. Перевірте кількіть контактів в тарифі.");
-                                            }
-                                          });
+                                          controller.onContactClick();
                                         })),
                             controller.tariff?.isVip == true
                                 ? Expanded(
@@ -253,7 +243,7 @@ extension OrderX on ModelOrder {
         "Коментар: $comment\n";
   }
 
-  String toTextFull() {
+  String toTextFull(ModelContact? contact) {
     return "Заявка №$id від ${DateFormat('dd.MM.yyyy').format(startDate!)}\n"
         "Область: $region\n"
         "Культура: $crop\n"
@@ -262,11 +252,11 @@ extension OrderX on ModelOrder {
         "Форма оплати: $payForm\n"
         "Тип доставки: $deliveryForm\n"
         "Коментар: $comment\n"
-        "$userName\n"
-        "Адреса: $userRegion\n"
-        "$userDistrict\n"
-        "$userCity\n"
-        "E-mail: $userEmail\n"
-        "Телефон: $userPhone\n";
+        "${contact?.userName}\n"
+        "Адреса: ${contact?.userRegion}\n"
+        "${contact?.userDistrict}\n"
+        "${contact?.userCity}\n"
+        "E-mail: ${contact?.userEmail}\n"
+        "Телефон: ${contact?.userPhone}\n";
   }
 }

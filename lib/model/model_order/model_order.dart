@@ -3,7 +3,6 @@ class ModelOrder {
   String? title, crop, comment, region, capacity, count, payForm, payment, deliveryForm, sort, vidRabot;
   DateTime? startDate, endDate;
   bool? request, priceAdded;
-  String? userName, userRegion, userDistrict, userCity, userEmail, userPhone;
 
   ModelOrder(
       {this.id,
@@ -22,11 +21,5 @@ class ModelOrder {
       this.request,
       this.sort,
       this.startDate,
-      this.vidRabot,
-      this.userCity,
-      this.userDistrict,
-      this.userEmail,
-      this.userName,
-      this.userPhone,
-      this.userRegion});
+      this.vidRabot});
 }

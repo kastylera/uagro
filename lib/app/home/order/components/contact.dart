@@ -1,4 +1,4 @@
-import 'package:agro/model/model_order/model_order.dart';
+import 'package:agro/model/model_order/model_contact.dart';
 import 'package:agro/ui/text/read_text.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -6,12 +6,12 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../../ui/buttons/b_transparent_scalable_button.dart';
 
 class ContactScreen extends StatelessWidget {
-  final ModelOrder modelOrder;
+  final ModelContact contact;
 
   final Function() onLauchPhone;
 
   const ContactScreen(
-      {super.key, required this.modelOrder, required this.onLauchPhone});
+      {super.key, required this.contact, required this.onLauchPhone});
 
   @override
   Widget build(BuildContext context) {
@@ -25,18 +25,18 @@ class ContactScreen extends StatelessWidget {
               fontWeight: FontWeight.w600,
               size: 22,
               padding: const EdgeInsets.only(top: 25, bottom: 30)),
-          orderInfo(header: 'ФІО', text: modelOrder.userName.toString()),
-          orderInfo(header: 'Регіон', text: modelOrder.userRegion.toString()),
-          orderInfo(header: 'Район', text: modelOrder.userDistrict.toString()),
-          orderInfo(header: 'Місто', text: modelOrder.userCity.toString()),
+          orderInfo(header: 'ФІО', text: contact.userName.toString()),
+          orderInfo(header: 'Регіон', text: contact.userRegion.toString()),
+          orderInfo(header: 'Район', text: contact.userDistrict.toString()),
+          orderInfo(header: 'Місто', text: contact.userCity.toString()),
           orderInfo(
               header: 'E-mail',
-              text: modelOrder.userEmail.toString(),
-              onPressed: () => launchUrl(Uri(
-                  scheme: 'mailto', path: modelOrder.userEmail.toString()))),
+              text: contact.userEmail.toString(),
+              onPressed: () => launchUrl(
+                  Uri(scheme: 'mailto', path: contact.userEmail.toString()))),
           orderInfo(
               header: 'Телефон',
-              text: modelOrder.userPhone.toString(),
+              text: contact.userPhone.toString(),
               onPressed: onLauchPhone)
         ],
       ),

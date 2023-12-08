@@ -1,5 +1,5 @@
 import 'package:agro/generated/assets.dart';
-import 'package:agro/model/model_order/model_order.dart';
+import 'package:agro/model/model_order/model_contact.dart';
 import 'package:agro/ui/buttons/b_style.dart';
 import 'package:agro/ui/local_notification/local_notification.dart';
 import 'package:agro/ui/text/read_text.dart';
@@ -9,9 +9,9 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../../ui/buttons/b_transparent_scalable_button.dart';
 
 class LaunchPhone extends StatelessWidget {
-  final ModelOrder modelOrder;
+  final ModelContact contact;
 
-  const LaunchPhone({super.key, required this.modelOrder});
+  const LaunchPhone({super.key, required this.contact});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class LaunchPhone extends StatelessWidget {
           const SizedBox(height: 32),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             BTransparentScalableButton(
-                onPressed: () => onCall(modelOrder.userPhone.toString()),
+                onPressed: () => onCall(contact.userPhone.toString()),
                 scale: ScaleFormat.small,
                 child: const Icon(
                   Icons.call_rounded,
@@ -42,7 +42,7 @@ class LaunchPhone extends StatelessWidget {
             BTransparentScalableButton(
                 onPressed: () {
                   openTelegram(
-                      phone: modelOrder.userPhone.toString(), context: context);
+                      phone: contact.userPhone.toString(), context: context);
                 },
                 scale: ScaleFormat.small,
                 child: Image.asset(Assets.authTelegram, width: 50)),
@@ -50,7 +50,7 @@ class LaunchPhone extends StatelessWidget {
             BTransparentScalableButton(
                 onPressed: () {
                   openViber(
-                      phone: modelOrder.userPhone.toString(), context: context);
+                      phone: contact.userPhone.toString(), context: context);
                 },
                 scale: ScaleFormat.small,
                 child: Image.asset(Assets.authViber, width: 50))
@@ -91,9 +91,9 @@ class LaunchPhone extends StatelessWidget {
       );
     } else {
       notification(
-          text:
-              'Ми не знайшли «Telegram» на Вашому телефоні. Будь ласка, встановіть додаток та стробуйте знову.',
-         );
+        text:
+            'Ми не знайшли «Telegram» на Вашому телефоні. Будь ласка, встановіть додаток та стробуйте знову.',
+      );
     }
   }
 
@@ -111,9 +111,9 @@ class LaunchPhone extends StatelessWidget {
       );
     } else {
       notification(
-          text:
-              'Ми не знайшли «Viber» на Вашому телефоні. Будь ласка, встановіть додаток та стробуйте знову.',
-          );
+        text:
+            'Ми не знайшли «Viber» на Вашому телефоні. Будь ласка, встановіть додаток та стробуйте знову.',
+      );
     }
   }
 

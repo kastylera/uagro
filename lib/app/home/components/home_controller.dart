@@ -115,13 +115,18 @@ class HomeController extends BaseController {
   }
 
   onPageOrderFermer({required ModelOrder model}) async {
-    model.request = true;
+    //model.request = true;
     var data = await Get.toNamed(Routes.orderInfo, arguments: [model, tariff]);
 
     if (data != null) {
       model = data as ModelOrder;
     }
     setState(() {});
+  }
+
+  onContactOpened(ModelOrder order) {
+    modelOrder.firstWhere((element) => element.id == order.id).request = true;
+    setState((){});
   }
 
   void onRefresh() {
