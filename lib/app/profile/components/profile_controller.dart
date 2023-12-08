@@ -1,5 +1,6 @@
 import 'package:agro/controllers/abstract/base_controller.dart';
 import 'package:agro/model/model_user/model_user.dart';
+import 'package:agro/repository/local_storage_repository.dart';
 import 'package:agro/vars/model_notifier/user_notifier/user_notifier.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -113,7 +114,7 @@ class ProfileController extends BaseController {
                     isDefaultAction: true,
                     onPressed: () async {
                       await Hive.box('data').clear();
-                      await Hive.box('answers').clear();
+                      await LocalStorageRepository().clear();
                       startActive = false;
 
                       if (c.mounted) {

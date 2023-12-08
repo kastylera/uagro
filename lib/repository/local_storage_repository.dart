@@ -32,5 +32,11 @@ class LocalStorageRepository {
     return data;
   }
 
+  Future<void> clear() async {
+    final box = await Hive.openBox<Answer>(_answers);
+    box.clear();
+    box.close();
+  }
+
   static const String _answers = "answers";
 }
