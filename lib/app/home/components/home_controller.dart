@@ -116,7 +116,7 @@ class HomeController extends BaseController {
 
   onPageOrderFermer({required ModelOrder model}) async {
     //model.request = true;
-    var data = await Get.toNamed(Routes.orderInfo, arguments: [model, tariff]);
+    var data = await Get.toNamed(Routes.orderInfo, arguments: [model.id]);
 
     if (data != null) {
       model = data as ModelOrder;

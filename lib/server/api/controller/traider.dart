@@ -19,6 +19,20 @@ class Traider extends Api {
     return apiAnswer;
   }
 
+  Future<ApiAnswer> getOrder(
+      {required int? orderId}) async {
+    ApiAnswer apiAnswer = ApiAnswer();
+    var request = await dataRequestMultipart('order.view',
+        parameter:
+            'order_id=$orderId');
+
+    apiAnswer.code = request.statusCode;
+    apiAnswer.data = json.decode(await request.stream.bytesToString());
+    checkAuth(apiAnswer.data);
+
+    return apiAnswer;
+  }
+
   Future<ApiAnswer> orderOpenContactFermer({required int orderId}) async {
     ApiAnswer apiAnswer = ApiAnswer();
     var request = await dataRequestMultipart('order.opencontacts',

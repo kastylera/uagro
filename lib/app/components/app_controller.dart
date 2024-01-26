@@ -1,11 +1,14 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:agro/routes/app_pages.dart';
 import 'package:agro/server/api/api.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../../controllers/abstract/from_controller.dart';
@@ -49,22 +52,32 @@ class AppController extends FormController {
       }
     });
 
+    /// App is in background but opened and user taps on the notification
+    FirebaseMessaging.onMessageOpenedApp
+        .listen((message) => _handleTapOnPushNotification(message));
+
     /// Get notification info when its delivered in background
     FirebaseMessaging.onBackgroundMessage(backgroundNotificationHandler);
 
     await _initializeLocalNotifications();
   }
 
+  _handleTapOnPushNotification(RemoteMessage? remoteMessage) async {
+    log(" handle tap ${remoteMessage?.data}");
+    final clickAction = remoteMessage?.data['click_action'];
+    if (clickAction == "TENDER") {
+      final orderId = remoteMessage?.data['tender_id'];
+      await Get.toNamed(Routes.orderInfo, arguments: [orderId]);
+    } else {}
+  }
+
   _display(RemoteMessage message) async {
     try {
       final id = DateTime.now().millisecondsSinceEpoch ~/ 1000;
-      log(message.data.toString());
-      await _notificationsPlugin.show(
-        id,
-        message.notification?.title,
-        message.notification?.body,
-        _getNotificationDetails(),
-      );
+      log("NOTIFICATION ${message.data}");
+      await _notificationsPlugin.show(id, message.notification?.title,
+          message.notification?.body, _getNotificationDetails(),
+          payload: jsonEncode(message.data));
     } catch (e) {
       log("display notification: ${e.toString()}");
     }
@@ -94,8 +107,20 @@ class AppController extends FormController {
     );
 
     _notificationsPlugin.initialize(initializationSettings,
-        onDidReceiveNotificationResponse: (response) {
-      log("DidReceiveNotificationResponse");
+        onDidReceiveNotificationResponse: (response) async {
+      if (response.payload != null) {
+        log("DidReceiveNotificationResponse: ${response.payload}");
+        try {
+          final data = jsonDecode(response.payload!);
+          final clickAction = data['click_action'];
+          if (clickAction == "TENDER") {
+            final int? orderId = int.tryParse(data['tender_id']);
+            await Get.toNamed(Routes.orderInfo, arguments: [orderId]);
+          } else {}
+        } catch (e) {
+          log("handle tap error $e");
+        }
+      }
     });
 
     AndroidNotificationChannel channel = const AndroidNotificationChannel(

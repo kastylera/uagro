@@ -7,6 +7,7 @@ import 'package:agro/app/home/order/components/set_answer.dart.dart';
 import 'package:agro/controllers/abstract/base_controller.dart';
 import 'package:agro/model/call_result/call_result.dart';
 import 'package:agro/model/model_order/model_contact.dart';
+import 'package:agro/model/model_order/struct_order.dart';
 import 'package:agro/model/model_order_price/struct_order_price.dart';
 import 'package:agro/model/model_user/model_user.dart';
 import 'package:agro/model/tariff/tariff.dart';
@@ -55,8 +56,10 @@ class OrderController extends BaseController {
     await Future.delayed(const Duration(milliseconds: 100));
     if (context.mounted) {
       final arguments = ModalRoute.of(context)!.settings.arguments as List;
-      modelOrder = arguments[0] as ModelOrder;
-      tariff = arguments[1] as Tariff?;
+      final orderId = arguments[0] as int?;
+      await getOrderInfo(orderId);
+      modelOrder.id = orderId;
+      await getTariffInfo();
       result =
           await _localStorageRepository.getResult(modelOrder.id.toString());
       await Future.delayed(const Duration(milliseconds: 100));
@@ -87,7 +90,7 @@ class OrderController extends BaseController {
         totalPrice = apiAnswer.data['payload']['total'];
 
         for (final i in apiAnswer.data['payload']['prices']) {
-          modelOrderPrice.add(structOrderData(data: i));
+          modelOrderPrice.add(structOrderPriceData(data: i));
         }
 
         setState(() {});
@@ -167,6 +170,24 @@ class OrderController extends BaseController {
                 "Ви не можете відкрити ці контакти. Перевірте кількіть контактів в тарифі.");
       }
     });
+  }
+
+  Future<void> getTariffInfo() async {
+    try {
+      ApiAnswer apiAnswer = await Api().traider.getTariff();
+      tariff = Tariff.fromJson(apiAnswer.data['payload']);
+    } catch (e) {
+      log(e.toString(), error: e);
+    }
+  }
+
+  Future<void> getOrderInfo(int? orderId) async {
+    try {
+      ApiAnswer apiAnswer = await Api().traider.getOrder(orderId: orderId);
+      modelOrder = structOrderData(data: apiAnswer.data['payload']);
+    } catch (e) {
+      log(e.toString(), error: e);
+    }
   }
 
   void onDeal() => loadIfValid(() async {

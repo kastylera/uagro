@@ -5,19 +5,19 @@ ModelOrder structOrderData({required data}) {
   ModelOrder modelOrder = ModelOrder();
 
   modelOrder.id = data['id'];
-  modelOrder.title = data['title'];
-  modelOrder.crop = data['crop'];
-  modelOrder.comment = data['comment'];
-  modelOrder.region = data['region'];
-  modelOrder.capacity = data['capacity'];
-  modelOrder.count = data['count'];
+  modelOrder.title = data['title'].toString();
+  modelOrder.crop = data['crop'].toString();
+  modelOrder.comment = data['comment'].toString();
+  modelOrder.region = data['region'].toString();
+  modelOrder.capacity = data['capacity'].toString();
+  modelOrder.count = data['count'].toString();
   modelOrder.harvestYear = int.tryParse(data['harvest_year'].toString());
-  modelOrder.payForm = data['pay_form'];
-  modelOrder.payment = data['payment'];
-  modelOrder.deliveryForm = data['delivery_form'];
+  modelOrder.payForm = data['pay_form'].toString();
+  modelOrder.payment = data['payment'].toString();
+  modelOrder.deliveryForm = data['delivery_form'].toString();
   modelOrder.request = data['request'];
-  modelOrder.sort = data['sort'];
-  modelOrder.vidRabot = data['vid_rabot'];
+  modelOrder.sort = data['sort'].toString();
+  modelOrder.vidRabot = data['vid_rabot'].toString();
   modelOrder.priceAdded = data['price_added'];
 
   DateFormat format = DateFormat('dd.MM.yyyy HH:mm');

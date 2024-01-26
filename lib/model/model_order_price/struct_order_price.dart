@@ -1,6 +1,6 @@
 import 'model_order_price.dart';
 
-ModelOrderPrice structOrderData({required data}) {
+ModelOrderPrice structOrderPriceData({required data}) {
   ModelOrderPrice modelOrderPrice = ModelOrderPrice();
 
   modelOrderPrice.id = data['id'];
