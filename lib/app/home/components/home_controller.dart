@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:agro/controllers/abstract/base_controller.dart';
 import 'package:agro/model/answer/answer.dart';
+import 'package:agro/model/message/created.dart';
+import 'package:agro/model/message/message.dart';
 import 'package:agro/model/model_user/model_user.dart';
 import 'package:agro/model/tariff/tariff.dart';
 import 'package:agro/repository/local_storage_repository.dart';
@@ -31,6 +33,8 @@ class HomeController extends BaseController {
   int page = 1;
   List<ModelOrder> modelOrder = [];
   List<Answer> callResults = [];
+  List<Message> messages = [];
+  List<Created> combinedList = [];
   Tariff? tariff;
 
   @override
@@ -76,6 +80,7 @@ class HomeController extends BaseController {
   }
 
   void loadRequest() => loadIfValid(() async {
+        await onMessages();
         late ApiAnswer apiAnswer;
 
         if (modelUser.role == 'distrib') {
@@ -102,7 +107,24 @@ class HomeController extends BaseController {
           }
         });
         log('modelOrder.length: ${modelOrder.length}');
+        await onCombineList();
       });
+
+  Future<void> onCombineList() async {
+    final List<Created> list = [];
+    final splitedMessage =
+        messages.splitMatch((element) => (element.readed ?? 0) == 0);
+    list.addAll(splitedMessage.matched);
+    final List<Created> tale = [];
+    tale.addAll(modelOrder);
+    tale.addAll(splitedMessage.unmatched);
+    tale.sort((a, b) => (a.createdAt?.millisecondsSinceEpoch ?? 0)
+        .compareTo(b.createdAt?.millisecondsSinceEpoch ?? 0));
+    list.addAll(tale);
+    setState(() {
+      combinedList = list;
+    });
+  }
 
   void onLoadData() {
     loadRequest();
@@ -126,7 +148,14 @@ class HomeController extends BaseController {
 
   onContactOpened(ModelOrder order) {
     modelOrder.firstWhere((element) => element.id == order.id).request = true;
-    setState((){});
+    setState(() {});
+  }
+
+  onReadMessage(Message message) async {
+    await Api().traider.readMessage(message.id);
+    log("read message ${message.id}");
+    await onMessages();
+    onCombineList();
   }
 
   void onRefresh() {
@@ -148,4 +177,37 @@ class HomeController extends BaseController {
       log(e.toString(), error: e);
     }
   }
+
+  Future<void> onMessages() async {
+    try {
+      ApiAnswer apiAnswer = await Api().traider.getMessages();
+      messages.clear();
+      for (final i in apiAnswer.data) {
+        messages.add(Message.fromJson(i));
+      }
+    } catch (e) {
+      log(e.toString(), error: e);
+    }
+  }
+}
+
+extension SplitMatch<T> on List<T> {
+  ListMatch<T> splitMatch(bool Function(T element) matchFunction) {
+    final listMatch = ListMatch<T>();
+
+    for (final element in this) {
+      if (matchFunction(element)) {
+        listMatch.matched.add(element);
+      } else {
+        listMatch.unmatched.add(element);
+      }
+    }
+
+    return listMatch;
+  }
+}
+
+class ListMatch<T> {
+  List<T> matched = <T>[];
+  List<T> unmatched = <T>[];
 }

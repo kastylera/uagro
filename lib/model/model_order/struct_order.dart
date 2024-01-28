@@ -21,8 +21,10 @@ ModelOrder structOrderData({required data}) {
   modelOrder.priceAdded = data['price_added'];
 
   DateFormat format = DateFormat('dd.MM.yyyy HH:mm');
-  modelOrder.startDate = format.parse('${data['start_date']} ${data['start_time']}');
+  modelOrder.startDate =
+      format.parse('${data['start_date']} ${data['start_time']}');
   modelOrder.endDate = format.parse('${data['end_date']} ${data['end_time']}');
+  modelOrder.createdAt = modelOrder.startDate;
 
   return modelOrder;
 }

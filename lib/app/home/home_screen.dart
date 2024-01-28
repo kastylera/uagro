@@ -1,3 +1,6 @@
+import 'package:agro/app/home/components/block_message.dart';
+import 'package:agro/model/message/created.dart';
+import 'package:agro/model/message/message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -73,19 +76,25 @@ class _HomeScreenState extends State<HomeScreen> {
                         separatorBuilder: (c, i) {
                           return Container();
                         },
-                        itemBuilder: (_, e) => Column(
-                              children: [
-                                for (ModelOrder i in controller.modelOrder) ...[
-                                  BlockOrder(
-                                      modelOrder: i,
-                                      answer: controller.callResults
-                                          .firstWhereOrNull((element) =>
-                                              element.orderId ==
-                                              i.id.toString()),
-                                      onPressed: controller.onPageOrderFermer)
-                                ]
-                              ],
-                            ))))
+                        itemBuilder: (_, e) {
+                          return Column(
+                            children: [
+                              for (Created item in controller.combinedList) ...[
+                                item is ModelOrder
+                                    ? BlockOrder(
+                                        modelOrder: item,
+                                        answer: controller.callResults
+                                            .firstWhereOrNull((element) =>
+                                                element.orderId ==
+                                                item.id.toString()),
+                                        onPressed: controller.onPageOrderFermer)
+                                    : item is Message
+                                        ? BlockMessage(message: item)
+                                        : const SizedBox()
+                              ]
+                            ],
+                          );
+                        })))
           ],
         ));
   }

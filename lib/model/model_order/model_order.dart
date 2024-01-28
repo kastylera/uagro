@@ -1,4 +1,6 @@
-class ModelOrder {
+import 'package:agro/model/message/created.dart';
+
+class ModelOrder extends Created{
   int? id, harvestYear;
   String? title, crop, comment, region, capacity, count, payForm, payment, deliveryForm, sort, vidRabot;
   DateTime? startDate, endDate;
