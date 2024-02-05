@@ -88,7 +88,7 @@ class HomeController extends BaseController {
               page: page, limit: 15, search: searchController.text);
         } else {
           apiAnswer = await Api().fermer.getOrderList(
-              c: c, page: page, limit: 15, search: searchController.text);
+              page: page, limit: 15, search: searchController.text);
         }
 
         log(apiAnswer.data.toString());
@@ -118,8 +118,8 @@ class HomeController extends BaseController {
     final List<Created> tale = [];
     tale.addAll(modelOrder);
     tale.addAll(splitedMessage.unmatched);
-    tale.sort((a, b) => (a.createdAt?.millisecondsSinceEpoch ?? 0)
-        .compareTo(b.createdAt?.millisecondsSinceEpoch ?? 0));
+    tale.sort((a, b) => (b.createdAt?.millisecondsSinceEpoch ?? 0)
+        .compareTo(a.createdAt?.millisecondsSinceEpoch ?? 0));
     list.addAll(tale);
     setState(() {
       combinedList = list;

@@ -64,9 +64,9 @@ class AppController extends FormController {
 
   _handleTapOnPushNotification(RemoteMessage? remoteMessage) async {
     log(" handle tap ${remoteMessage?.data}");
-    final clickAction = remoteMessage?.data['click_action'];
+    final clickAction = remoteMessage?.data['messagetype'];
     if (clickAction == "TENDER") {
-      final orderId = remoteMessage?.data['tender_id'];
+      final orderId = int.tryParse(remoteMessage?.data['tender_id']);
       await Get.toNamed(Routes.orderInfo, arguments: [orderId]);
     } else {}
   }
@@ -112,7 +112,7 @@ class AppController extends FormController {
         log("DidReceiveNotificationResponse: ${response.payload}");
         try {
           final data = jsonDecode(response.payload!);
-          final clickAction = data['click_action'];
+          final clickAction = data['messagetype'];
           if (clickAction == "TENDER") {
             final int? orderId = int.tryParse(data['tender_id']);
             await Get.toNamed(Routes.orderInfo, arguments: [orderId]);

@@ -47,29 +47,27 @@ class BlockMessage extends StatelessWidget {
                     size: 20,
                     fontWeight: FontWeight.w400),
               ),
-              Align(
-                  alignment: Alignment.bottomRight,
-                  child: Padding(
-                      padding: const EdgeInsets.only(bottom: 10, top: 10),
-                      child: GestureDetector(
-                          onTap: () {
-                            if (!message.isRead) {
-                              controller.onReadMessage(message);
-                            }
-                          },
-                          child: Container(
-                              decoration: BoxDecoration(
-                                  color: message.isRead
-                                      ? AppColors.grey
-                                      : AppColors.green,
-                                  borderRadius: BorderRadius.circular(8)),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 10),
-                              child: Text(
-                                message.isRead ? "Прочитано" : "Прочитати",
-                                style: const TextStyle(
-                                    fontSize: 20, color: Colors.black),
-                              )))))
+              message.isRead
+                  ? const SizedBox()
+                  : Align(
+                      alignment: Alignment.bottomRight,
+                      child: Padding(
+                          padding: const EdgeInsets.only(bottom: 10, top: 10),
+                          child: GestureDetector(
+                              onTap: () {
+                                controller.onReadMessage(message);
+                              },
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                      color: AppColors.green,
+                                      borderRadius: BorderRadius.circular(8)),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 10),
+                                  child: const Text(
+                                    "Прочитати",
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.black),
+                                  )))))
             ]),
           )),
     );

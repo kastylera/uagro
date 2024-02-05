@@ -1,10 +1,9 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import '../api.dart';
 
 class Fermer extends Api {
-  Future<ApiAnswer> getOrderList({required BuildContext c, required int page, required int limit, String? search}) async {
+  Future<ApiAnswer> getOrderList({required int page, required int limit, String? search}) async {
     ApiAnswer apiAnswer = ApiAnswer();
     var request = await dataRequestMultipart('order.list', parameter: 'mode=fermer&page=$page&limit=$limit&search=$search&deleted=false');
 

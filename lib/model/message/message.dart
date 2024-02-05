@@ -11,7 +11,7 @@ class Message extends Created {
     tenderId = int.tryParse(json['tender_id'].toString());
 
     type = json['type'].toString();
-    title = json['message'].toString();
+    title = json['title'].toString();
     message = json['message'].toString();
 
     DateFormat format = DateFormat('dd.MM.yyyy HH:mm');
