@@ -18,7 +18,7 @@ class Tariff {
     balanceContactsDayOsttk = json['balance_contacts_day_osttk'];
     tafiffId = json['tariff_id'];
     DateFormat format = DateFormat('dd.MM.yyyy');
-    balanceEnd = format.parse(json['balance_end']);
+    balanceEnd = json['balance_end'] != null ? format.parse(json['balance_end']) : null;
   }
 }
 
