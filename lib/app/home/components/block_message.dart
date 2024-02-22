@@ -14,19 +14,14 @@ class BlockMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     HomeController controller = Get.find();
     return Padding(
-      padding: const EdgeInsets.only(top: 30),
+      padding: const EdgeInsets.only(top: 10),
       child: Container(
           width: double.infinity,
           decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: [
-                BoxShadow(
-                    color: const Color(0xff000000).withOpacity(0.05),
-                    spreadRadius: 0,
-                    blurRadius: 10,
-                    offset: const Offset(0, 0))
-              ]),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: AppColors.grey2),
+          ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
             child:
