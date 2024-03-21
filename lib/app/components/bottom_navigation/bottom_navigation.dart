@@ -33,7 +33,7 @@ class BottomNavigation extends StatelessWidget {
           child: Container(
               decoration: const BoxDecoration(color: AppColors.mainGreen),
               child: Padding(
-              padding: const EdgeInsets.only(bottom: 15),
+              padding: const EdgeInsets.only(bottom: 5),
               child: SafeArea(
                   top: false,
                   bottom: false,

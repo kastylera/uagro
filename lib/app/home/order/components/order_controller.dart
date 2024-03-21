@@ -27,13 +27,13 @@ import '../../../../vars/model_notifier/user_notifier/user_notifier.dart';
 
 class OrderController extends BaseController {
   late Function(VoidCallback fn) setState;
-  late ModelOrder modelOrder;
+  ModelOrder? modelOrder;
   ModelContact contact = ModelContact();
   late Tariff? tariff;
   late CallResult? result;
   bool contactOpened = false;
 
-  late ModelUser modelUser;
+  ModelUser? modelUser;
   bool loadPage = false;
   int totalPrice = 0;
   List<ModelOrderPrice> modelOrderPrice = [];
@@ -58,10 +58,10 @@ class OrderController extends BaseController {
       final arguments = ModalRoute.of(context)!.settings.arguments as List;
       final orderId = arguments[0] as int?;
       await getOrderInfo(orderId);
-      modelOrder.id = orderId;
+      modelOrder!.id = orderId;
       await getTariffInfo();
       result =
-          await _localStorageRepository.getResult(modelOrder.id.toString());
+          await _localStorageRepository.getResult(modelOrder!.id.toString());
       await Future.delayed(const Duration(milliseconds: 100));
       if (tariff?.isVip == true || tariff?.isExclusive == true) {
         onLoadInfoUser();
@@ -73,11 +73,11 @@ class OrderController extends BaseController {
 
   void onSell() => loadIfValid(() async {
         ApiAnswer apiAnswer =
-            await Api().fermer.closePriceOrder(orderId: modelOrder.id!);
+            await Api().fermer.closePriceOrder(orderId: modelOrder!.id!);
         log(apiAnswer.data.toString());
 
         if (apiAnswer.data['status'].toString() == 'true') {
-          setState(() => modelOrder.endDate =
+          setState(() => modelOrder!.endDate =
               DateTime.now().subtract(const Duration(days: 1)));
         }
       });
@@ -86,12 +86,18 @@ class OrderController extends BaseController {
 
   void onLoadPrice() => loadIfValid(() async {
         ApiAnswer apiAnswer =
-            await Api().fermer.getInfoPriceOrder(orderId: modelOrder.id!);
+            await Api().fermer.getInfoPriceOrder(orderId: modelOrder!.id!);
         totalPrice = apiAnswer.data['payload']['total'];
 
         for (final i in apiAnswer.data['payload']['prices']) {
           modelOrderPrice.add(structOrderPriceData(data: i));
         }
+
+        setState(() {});
+      });
+
+  void onSendPrice() => loadIfValid(() async {
+        
 
         setState(() {});
       });
@@ -103,7 +109,7 @@ class OrderController extends BaseController {
 
   Future<void> onLoadInfoUser() async {
     ApiAnswer apiAnswer =
-        await Api().traider.orderOpenContactFermer(orderId: modelOrder.id!);
+        await Api().traider.orderOpenContactFermer(orderId: modelOrder!.id!);
 
     contact.userName = apiAnswer.data['payload']['name'];
     contact.userRegion = apiAnswer.data['payload']['region'];
@@ -126,7 +132,7 @@ class OrderController extends BaseController {
       topRadius: const Radius.circular(30),
       context: context,
       builder: (c) => SetAnswer(onAnswered: (p0) {
-            _localStorageRepository.addNew(p0, modelOrder.id.toString());
+            _localStorageRepository.addNew(p0, modelOrder!.id.toString());
             result = p0;
             setState(() {});
             Navigator.pop(c);
@@ -135,7 +141,7 @@ class OrderController extends BaseController {
   void onAddPriceSave(String currency, String paymentForm) =>
       loadIfValid(() async {
         ApiAnswer apiAnswer = await Api().traider.addPrice(
-            orderId: modelOrder.id!,
+            orderId: modelOrder!.id!,
             price: priceController.text,
             currency: currency,
             form: paymentForm);
@@ -156,7 +162,7 @@ class OrderController extends BaseController {
     if (contact.userName == null) {
       try {
         await onLoadInfoUser();
-        homeController.onContactOpened(modelOrder);
+        homeController.onContactOpened(modelOrder!);
       } catch (e) {
         log("contact doesn't opened");
       }
@@ -192,7 +198,7 @@ class OrderController extends BaseController {
 
   void onDeal() => loadIfValid(() async {
         ApiAnswer apiAnswer =
-            await Api().traider.deal(tenderId: modelOrder.id!);
+            await Api().traider.deal(tenderId: modelOrder!.id!);
 
         log(apiAnswer.data.toString());
         if (apiAnswer.data['status'].toString() == 'true') {

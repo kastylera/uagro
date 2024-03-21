@@ -26,7 +26,7 @@ class _BlockPriceOrderState extends State<BlockPriceOrder> {
     return Padding(
         padding: const EdgeInsets.only(top: 20),
         child: BTransparentScalableButton(
-            onPressed: controller.modelUser.role == 'distrib' ? () {} : () => setState(() => isOpenBlock = !isOpenBlock),
+            onPressed: controller.modelUser?.role == 'distrib' ? () {} : () => setState(() => isOpenBlock = !isOpenBlock),
             scale: ScaleFormat.small,
             child: Container(
                 width: MediaQuery.of(c).size.width,
@@ -41,7 +41,7 @@ class _BlockPriceOrderState extends State<BlockPriceOrder> {
                     Row(children: [
                       readText(text: '${widget.modelOrderPrice.cost} грн/т. ${widget.modelOrderPrice.createdAt}', color: Colors.black, size: 20),
                       const Spacer(),
-                      if (controller.modelUser.role == 'distrib') ...[
+                      if (controller.modelUser?.role == 'distrib') ...[
                         if (widget.modelOrderPrice.isMy!) ...[readText(text: 'Ваша ціна', color: const Color(0xff01CA20), size: 18)]
                       ] else ...[
                         SvgPicture.asset(!isOpenBlock ? Assets.componentsArrowRight : Assets.componentsArrowBot, width: !isOpenBlock ? 15 : 24)

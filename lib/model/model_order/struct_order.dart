@@ -20,6 +20,8 @@ ModelOrder structOrderData({required data}) {
   modelOrder.vidRabot = data['vid_rabot'].toString();
   modelOrder.priceAdded = data['price_added'];
 
+  modelOrder.sphere = int.tryParse(data['sphere_id'].toString()) ?? int.tryParse(data['sphere'].toString());
+
   DateFormat format = DateFormat('dd.MM.yyyy HH:mm');
   modelOrder.startDate =
       format.parse('${data['start_date']} ${data['start_time']}');

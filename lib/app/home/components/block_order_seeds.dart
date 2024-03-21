@@ -14,12 +14,12 @@ import '../../../generated/assets.dart';
 import '../../../ui/buttons/b_transparent_scalable_button.dart';
 import 'home_controller.dart';
 
-class BlockOrder extends StatelessWidget {
+class BlockOrderSeeds extends StatelessWidget {
   final ModelOrder modelOrder;
   final Answer? answer;
   final Function({required ModelOrder model}) onPressed;
 
-  const BlockOrder(
+  const BlockOrderSeeds(
       {super.key,
       required this.modelOrder,
       required this.onPressed,
@@ -35,9 +35,9 @@ class BlockOrder extends StatelessWidget {
           scale: ScaleFormat.small,
           child: Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.seeds.withOpacity(0.05),
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: AppColors.grey2),
+                border: Border.all(color: AppColors.seeds),
               ),
               child: Padding(
                 padding:
@@ -48,13 +48,16 @@ class BlockOrder extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 10),
                         child: Row(children: [
-                          
-                                Expanded(child: readText(
-                                  text:
-                                      'Заявка № ${modelOrder.id}\nвід: ${modelOrder.startDate?.formatDateShort()}',
-                                  style: AppFonts.body1bold.black,
-                                ),
-                                ),
+                          Padding(padding: const EdgeInsets.only(right: 10), child: 
+                          SvgPicture.asset(Assets.seeds,
+                              width: 32)),
+                          Expanded(
+                            child: readText(
+                              text:
+                                  'Заявка № ${modelOrder.id}\nвід: ${modelOrder.startDate?.formatDateShort()}',
+                              style: AppFonts.body1bold.black,
+                            ),
+                          ),
                           if (DateTime.now().millisecondsSinceEpoch >
                               modelOrder.endDate!.millisecondsSinceEpoch) ...[
                             readText(
@@ -85,16 +88,13 @@ class BlockOrder extends StatelessWidget {
                         ]),
                       ),
                       orderInfo(
-                          header: 'Область',
+                          header: 'Регіон',
                           text: modelOrder.region.toString()),
                       orderInfo(
-                          header: 'Культура', text: modelOrder.crop.toString()),
+                          header: 'Назва', text: modelOrder.crop.toString()),
                       orderInfo(
-                          header: 'Об’єм',
+                          header: 'Обcяг',
                           text: modelOrder.capacity.toString()),
-                      orderInfo(
-                          header: 'Рік врожаю',
-                          text: modelOrder.harvestYear.toString()),
                       orderInfo(
                           header: 'Форма розрахунку',
                           text: modelOrder.payForm == 'beznal'

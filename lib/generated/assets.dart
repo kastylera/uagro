@@ -16,7 +16,8 @@ class Assets {
   static const String accountLearn = 'picture/app/account/learn.svg';
   static const String accountLike = 'picture/app/account/like.svg';
   static const String accountNotActive = 'picture/app/account/not_active.svg';
-  static const String accountNotification = 'picture/app/account/notification.svg';
+  static const String accountNotification =
+      'picture/app/account/notification.svg';
   static const String accountPrivacy = 'picture/app/account/privacy.svg';
   static const String accountQuestion = 'picture/app/account/question.svg';
   static const String accountSetting = 'picture/app/account/setting.svg';
@@ -29,13 +30,21 @@ class Assets {
   static const String authBg = 'picture/auth/bg.png';
   static const String authTelegram = 'picture/auth/telegram.svg';
   static const String authViber = 'picture/auth/viber.svg';
-  static const String bottomNavigationHelp = 'picture/app/bottom_navigation/help.svg';
-  static const String bottomNavigationHome = 'picture/app/bottom_navigation/home.svg';
-  static const String bottomNavigationProfile = 'picture/app/bottom_navigation/profile.svg';
+  static const String bottomNavigationHelp =
+      'picture/app/bottom_navigation/help.svg';
+  static const String bottomNavigationHome =
+      'picture/app/bottom_navigation/home.svg';
+  static const String bottomNavigationProfile =
+      'picture/app/bottom_navigation/profile.svg';
   static const String componentsArrowBot = 'picture/components/arrow_bot.svg';
-  static const String componentsArrowRight = 'picture/components/arrow_right.svg';
+  static const String componentsArrowRight =
+      'picture/components/arrow_right.svg';
   static const String componentsBack = 'picture/components/back.svg';
   static const String pictureLogo = 'picture/logo.svg';
   static const String startBg = 'picture/start/bg.png';
   static const String profile = 'picture/app/account/profile.svg';
+  static const String zerno = 'picture/components/zerno.svg';
+  static const String dobriva = 'picture/components/dobriva.svg';
+  static const String seeds = 'picture/components/seeds.svg';
+  static const String oil = 'picture/components/oil.svg';
 }

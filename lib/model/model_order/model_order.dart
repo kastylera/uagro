@@ -1,7 +1,7 @@
 import 'package:agro/model/message/created.dart';
 
-class ModelOrder extends Created{
-  int? id, harvestYear;
+class ModelOrder extends Created {
+  int? id, harvestYear, sphere;
   String? title, crop, comment, region, capacity, count, payForm, payment, deliveryForm, sort, vidRabot;
   DateTime? startDate, endDate;
   bool? request, priceAdded;

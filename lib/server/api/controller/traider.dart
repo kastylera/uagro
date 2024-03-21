@@ -7,10 +7,10 @@ class Traider extends Api {
   Future<ApiAnswer> getOrderList(
       {required int page, required int limit, String? search}) async {
     ApiAnswer apiAnswer = ApiAnswer();
-    log('mode=trader&page=$page&limit=$limit&search=$search&sphere=15');
+    log('mode=trader&page=$page&limit=$limit&search=$search');
     var request = await dataRequestMultipart('order.list',
         parameter:
-            'mode=trader&page=$page&limit=$limit&search=$search&sphere=15');
+            'mode=trader&page=$page&limit=$limit&search=$search');
 
     apiAnswer.code = request.statusCode;
     apiAnswer.data = json.decode(await request.stream.bytesToString());

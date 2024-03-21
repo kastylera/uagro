@@ -17,6 +17,8 @@ class BlockPageScreen extends StatelessWidget {
   final EdgeInsetsGeometry? padding, allPadding;
   final double? headerSize;
   final SystemUiOverlayStyle? theme;
+  final Color topbarColor, headerColor;
+
 
   const BlockPageScreen(
       {Key? key,
@@ -32,7 +34,9 @@ class BlockPageScreen extends StatelessWidget {
       this.isBack = false,
       this.isCancel = false,
       this.resizeToAvoidBottomInset = false,
-      this.padding})
+      this.padding,
+      this.topbarColor = AppColors.white,
+      this.headerColor = AppColors.black})
       : super(key: key);
 
   @override
@@ -44,83 +48,98 @@ class BlockPageScreen extends StatelessWidget {
         theme: theme,
         child: SafeArea(
           bottom: false,
-          child: Padding(
-            padding: allPadding ??
-                EdgeInsets.only(
-                    left: isCancel ? 20 : 15,
-                    right: isCancel ? 20 : 15,
-                    top: isCancel ? 25 : 0),
-            child: Column(
-              children: [
-                Padding(
-                  padding: padding ?? EdgeInsets.zero,
-                  child: Container(
-                    decoration: BoxDecoration(boxShadow: [
-                      BoxShadow(
-                          color: const Color(0xff000000).withOpacity(0.01),
-                          spreadRadius: 0,
-                          blurRadius: 10,
-                          offset: const Offset(0, 30))
-                    ]),
-                    child: Row(children: [
-                      if (isBack) ...[
-                        BTransparentScalableButton(
-                            onPressed:
-                                onPressedReturn ?? () => Navigator.pop(context),
-                            scale: ScaleFormat.small,
-                            child: const Icon(
-                              Icons.arrow_back_ios_new_rounded,
-                              size: 24,
-                              color: Colors.black,
-                            )),
-                      ] else if (endIcon != null || isCancel) ...[
-                        const SizedBox(width: 32)
-                      ],
-                      if (header != null) ...[
-                        Expanded(
-                            child: Center(
-                                child: readText(
-                                    text: header!,
-                                    style: AppFonts.body1bold.black,
-                                    align: TextAlign.center)))
-                      ],
-                      if (endIcon != null) ...[
-                        BTransparentScalableButton(
-                            onPressed: onPressed ?? () {},
-                            scale: ScaleFormat.small,
-                            child: SvgPicture.asset(endIcon!, width: 32)),
-                      ] else ...[
-                        if (endWidget != null) ...[
-                          endWidget!
-                        ] else if (isBack) ...[
-                          const SizedBox(width: 18)
-                        ] else if (isCancel) ...[
-                          // BTransparentScalableButton(
-                          //     onPressed: () => Navigator.pop(c), scale: ScaleFormat.small, child: SvgPicture.asset(Assets.componentsCancel, width: 32)),
-                        ]
-                      ]
-                    ]),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 15),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: 1,
-                    child: OverflowBox(
-                            maxWidth: MediaQuery.of(context).size.width,
-                            child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 1,
-                                color: AppColors.grey3)),
-                  ),
-                ),
-                Expanded(child: child)
-              ],
-            ),
+          child: Column(
+            children: [
+              TopBar(
+                  isBack: isBack,
+                  endIcon: endIcon,
+                  endWidget: endWidget,
+                  header: header,
+                  padding: padding,
+                  onPressed: onPressed,
+                  headerColor: headerColor,
+                  background: topbarColor,
+                  onPressedReturn: onPressedReturn),
+              Expanded(
+                  child: Padding(
+                      padding: allPadding ??
+                          EdgeInsets.only(
+                              left: isCancel ? 20 : 15,
+                              right: isCancel ? 20 : 15,
+                              top: isCancel ? 25 : 0),
+                      child: child))
+            ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class TopBar extends StatelessWidget {
+  final Widget? endWidget;
+  final bool isBack;
+  final String? header, endIcon;
+  final EdgeInsetsGeometry? padding;
+  final Function()? onPressed, onPressedReturn;
+  final Color background, headerColor;
+
+  const TopBar(
+      {super.key,
+      this.endWidget,
+      required this.isBack,
+      this.header,
+      this.endIcon,
+      this.padding,
+      this.onPressed,
+      this.onPressedReturn,
+      this.headerColor = AppColors.black,
+      this.background = AppColors.white});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(color: background),
+      child: Column(children: [
+        Row(children: [
+          const SizedBox(width: 10),
+          if (isBack) ...[
+            BTransparentScalableButton(
+                onPressed: onPressedReturn ?? () => Navigator.pop(context),
+                scale: ScaleFormat.small,
+                child: Icon(
+                  Icons.arrow_back_ios_new_rounded,
+                  size: 24,
+                  color: headerColor,
+                )),
+          ] else if (endIcon != null) ...[
+            const SizedBox(width: 32)
+          ],
+          if (header != null) ...[
+            Expanded(
+                child: Center(
+                    child: readText(
+                        text: header!,
+                        style: AppFonts.body1bold.copyWith(color: headerColor),
+                        align: TextAlign.center)))
+          ],
+          if (endIcon != null) ...[
+            BTransparentScalableButton(
+                onPressed: onPressed ?? () {},
+                scale: ScaleFormat.small,
+                child: SvgPicture.asset(endIcon!, width: 32, colorFilter: ColorFilter.mode(headerColor, BlendMode.color),)),
+          ] else ...[
+            if (endWidget != null) ...[
+              endWidget!
+            ] else if (isBack) ...[
+              const SizedBox(width: 18)
+            ]
+          ],
+          const SizedBox(width: 10),
+        ]),
+        const SizedBox(height: 15),
+        const Divider(height: 2, color: AppColors.grey3)
+      ]),
     );
   }
 }
