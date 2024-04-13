@@ -114,7 +114,7 @@ class ZernoOrder extends StatelessWidget {
             c: context,
             vertical: 15,
             colorButt: AppColors.yellow,
-            onPressed: () => controller.onAddPrice(context))
+            onPressed: () => controller.onAddPrice(context, controller.modelOrder!))
       ] else ...[
         bStyle(
             key: UniqueKey(),

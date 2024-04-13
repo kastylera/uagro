@@ -19,7 +19,6 @@ import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../controllers/app_input_controller.dart';
 import '../../../../model/model_order_price/model_order_price.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../../ui/local_notification/local_notification.dart';
@@ -37,15 +36,8 @@ class OrderController extends BaseController {
   bool loadPage = false;
   int totalPrice = 0;
   List<ModelOrderPrice> modelOrderPrice = [];
-  late TextEditingController priceController;
   final _localStorageRepository = LocalStorageRepository();
   HomeController homeController = Get.find();
-
-  @override
-  void onInit() {
-    priceController = AppInputController();
-    super.onInit();
-  }
 
   void initPage(
       {required BuildContext context,
@@ -97,15 +89,14 @@ class OrderController extends BaseController {
       });
 
   void onSendPrice() => loadIfValid(() async {
-        
-
         setState(() {});
       });
 
-  void onAddPrice(BuildContext context) => showCupertinoModalBottomSheet(
-      topRadius: const Radius.circular(30),
-      context: context,
-      builder: (c) => const AddPriceScreen());
+  void onAddPrice(BuildContext context, ModelOrder order) =>
+      showCupertinoModalBottomSheet(
+          topRadius: const Radius.circular(30),
+          context: context,
+          builder: (c) => AddPriceScreen(order: order));
 
   Future<void> onLoadInfoUser() async {
     ApiAnswer apiAnswer =
@@ -117,6 +108,7 @@ class OrderController extends BaseController {
     contact.userCity = apiAnswer.data['payload']['city'];
     contact.userEmail = apiAnswer.data['payload']['email'];
     contact.userPhone = apiAnswer.data['payload']['phone'];
+    modelOrder?.contact = contact;
 
     setState(() {});
   }
@@ -138,11 +130,12 @@ class OrderController extends BaseController {
             Navigator.pop(c);
           }));
 
-  void onAddPriceSave(String currency, String paymentForm) =>
+  void onAddPriceSave(
+          String currency, String paymentForm, String price, int orderId) =>
       loadIfValid(() async {
         ApiAnswer apiAnswer = await Api().traider.addPrice(
-            orderId: modelOrder!.id!,
-            price: priceController.text,
+            orderId: orderId,
+            price: price,
             currency: currency,
             form: paymentForm);
 

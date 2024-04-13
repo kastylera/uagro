@@ -49,7 +49,7 @@ class _BlockPriceOrderState extends State<BlockPriceOrder> {
                     ]),
                     if (isOpenBlock) ...[
                       const SizedBox(height: 20),
-                      priceInfo(header: 'ФІО', text: widget.modelOrderPrice.traiderName.toString()),
+                      priceInfo(header: 'ПІБ', text: widget.modelOrderPrice.traiderName.toString()),
                       priceInfo(header: 'Телефон', text: widget.modelOrderPrice.traiderPhone.toString())
                     ]
                   ]),

@@ -1,9 +1,12 @@
 import 'dart:developer';
 
+import 'package:agro/app/home/order/components/add_price.dart';
+import 'package:agro/app/home/order/components/launch_phone.dart';
 import 'package:agro/controllers/abstract/base_controller.dart';
 import 'package:agro/model/answer/answer.dart';
 import 'package:agro/model/message/created.dart';
 import 'package:agro/model/message/message.dart';
+import 'package:agro/model/model_order/model_contact.dart';
 import 'package:agro/model/model_user/model_user.dart';
 import 'package:agro/model/tariff/tariff.dart';
 import 'package:agro/repository/local_storage_repository.dart';
@@ -13,6 +16,7 @@ import 'package:agro/model/model_order/struct_order.dart';
 import 'package:agro/routes/app_pages.dart';
 import 'package:agro/server/api/api.dart';
 import 'package:hive/hive.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../../controllers/app_input_controller.dart';
@@ -73,6 +77,12 @@ class HomeController extends BaseController {
         }
       });
 
+  void onLaunchPhone(BuildContext context, ModelContact contact) =>
+      showCupertinoModalBottomSheet(
+          topRadius: const Radius.circular(30),
+          context: context,
+          builder: (c) => LaunchPhone(contact: contact));
+
   void onSearch() {
     page = 1;
     modelOrder = [];
@@ -129,6 +139,58 @@ class HomeController extends BaseController {
   void onLoadData() {
     loadRequest();
     controllerLoading.loadComplete();
+  }
+
+  Future<void> onContactClick(ModelOrder order) async {
+    if (order.contact == null) {
+      try {
+        var contact = await onLoadInfoUser(order);
+        onContactOpened(order);
+        setState(() {
+          modelOrder.firstWhere((element) => element.id == order.id).contact =
+              contact;
+        });
+      } catch (e) {
+        notification(
+            text:
+                "Ви не можете відкрити ці контакти. Перевірте кількіть контактів в тарифі.");
+        log("contact doesn't opened");
+      }
+    }
+  }
+
+  void onDeal(ModelOrder order) => loadIfValid(() async {
+        ApiAnswer apiAnswer = await Api().traider.deal(tenderId: order.id!);
+
+        log(apiAnswer.data.toString());
+        if (apiAnswer.data['status'].toString() == 'true') {
+          Get.back();
+        } else {
+          notification(text: 'Трапилась помилка при угоді');
+        }
+      });
+
+  void onAddPrice(BuildContext context, ModelOrder order) =>
+      showCupertinoModalBottomSheet(
+          topRadius: const Radius.circular(30),
+          context: context,
+          builder: (c) => AddPriceScreen(order: order));
+
+  void onReview(ModelOrder order) =>
+      Get.toNamed(Routes.review, arguments: order);
+
+  Future<ModelContact> onLoadInfoUser(ModelOrder order) async {
+    ApiAnswer apiAnswer =
+        await Api().traider.orderOpenContactFermer(orderId: order.id!);
+
+    var contact = ModelContact();
+    contact.userName = apiAnswer.data['payload']['name'];
+    contact.userRegion = apiAnswer.data['payload']['region'];
+    contact.userDistrict = apiAnswer.data['payload']['district'];
+    contact.userCity = apiAnswer.data['payload']['city'];
+    contact.userEmail = apiAnswer.data['payload']['email'];
+    contact.userPhone = apiAnswer.data['payload']['phone'];
+    return contact;
   }
 
   void updateCallResults() async {

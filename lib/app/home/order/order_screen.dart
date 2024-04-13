@@ -2,7 +2,6 @@ import 'package:agro/app/home/components/home_controller.dart';
 import 'package:agro/app/home/order/components/sphere/dobriva.dart';
 import 'package:agro/app/home/order/components/sphere/unknown.dart';
 import 'package:agro/app/home/order/components/sphere/zerno.dart';
-import 'package:agro/model/model_order/model_contact.dart';
 import 'package:agro/model/model_order/model_order.dart';
 import 'package:agro/ui/buttons/b_transparent_scalable_button.dart';
 import 'package:agro/ui/local_notification/local_notification.dart';
@@ -36,8 +35,8 @@ class _OrderScreenState extends State<OrderScreen> {
   Widget build(BuildContext context) {
     return BlockPageScreen(
         headerSize: 20,
-        headerColor: AppColors.white,
-        topbarColor: getOrderColor(controller.modelOrder),
+        headerColor: AppColors.black,
+        topbarColor: AppColors.white,
         header: controller.loadPage
             ? 'Заявка №${controller.modelOrder!.id} від ${DateFormat('dd.MM.yyyy').format(controller.modelOrder!.startDate!)}'
             : 'Ваші заявки',
@@ -90,35 +89,5 @@ class _OrderScreenState extends State<OrderScreen> {
       default:
         return AppColors.white;
     }
-  }
-}
-
-extension OrderX on ModelOrder {
-  String toTextShort() {
-    return "Заявка №$id від ${DateFormat('dd.MM.yyyy').format(startDate!)}\n"
-        "Область: $region\n"
-        "Культура: $crop\n"
-        "Об’єм: $capacity\n"
-        "Рік врожаю: $harvestYear\n"
-        "Форма оплати: $payForm\n"
-        "Тип доставки: $deliveryForm\n"
-        "Коментар: $comment\n";
-  }
-
-  String toTextFull(ModelContact? contact) {
-    return "Заявка №$id від ${DateFormat('dd.MM.yyyy').format(startDate!)}\n"
-        "Область: $region\n"
-        "Культура: $crop\n"
-        "Об’єм: $capacity\n"
-        "Рік врожаю: $harvestYear\n"
-        "Форма оплати: $payForm\n"
-        "Тип доставки: $deliveryForm\n"
-        "Коментар: $comment\n"
-        "${contact?.userName}\n"
-        "Адреса: ${contact?.userRegion}\n"
-        "${contact?.userDistrict}\n"
-        "${contact?.userCity}\n"
-        "E-mail: ${contact?.userEmail}\n"
-        "Телефон: ${contact?.userPhone}\n";
   }
 }

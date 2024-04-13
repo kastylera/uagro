@@ -1,21 +1,25 @@
+import 'package:agro/controllers/app_input_controller.dart';
+import 'package:agro/model/model_order/model_order.dart';
 import 'package:agro/ui/text/read_text.dart';
 import 'package:agro/ui/views/bottom_drawer_header.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../../../../ui/buttons/b_style.dart';
 import '../../../../ui/text_field/text_field.dart';
 import 'order_controller.dart';
 
 class AddPriceScreen extends StatefulWidget {
-  const AddPriceScreen({super.key});
+  const AddPriceScreen({super.key, required this.order});
+
+  final ModelOrder order;
 
   @override
   State<AddPriceScreen> createState() => _AddPriceScreenState();
 }
 
 class _AddPriceScreenState extends State<AddPriceScreen> {
-  OrderController controller = Get.find();
+  TextEditingController priceController = AppInputController();
+  OrderController controller = OrderController();
   Currency currency = Currency.uah;
   PaymentForm paymentForm = PaymentForm.f1;
 
@@ -63,7 +67,7 @@ class _AddPriceScreenState extends State<AddPriceScreen> {
                 openKeyboardAuto: true,
                 colorBg: const Color(0xffF8F8F8),
                 keyboardType: TextInputType.number,
-                controller: controller.priceController,
+                controller: priceController,
                 sizeText: 30),
             Container(
                 width: MediaQuery.of(context).size.width - 32,
@@ -130,8 +134,8 @@ class _AddPriceScreenState extends State<AddPriceScreen> {
                 colorText: Colors.white,
                 vertical: 15,
                 colorButt: const Color(0xffFCD300),
-                onPressed: () => controller.onAddPriceSave(
-                    currency.json, paymentForm.json))
+                onPressed: () =>
+                    controller.onAddPriceSave(currency.json, paymentForm.json, priceController.text, widget.order.id!))
           ],
         ),
       ),
@@ -156,6 +160,7 @@ enum Currency {
   uah("₴", "Гривня", "UAH"),
   usd("\$", "Долар", "USD"),
   euro("€", "Євро", "EUR");
+
   final String label;
   final String description;
   final String json;

@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:agro/model/model_order/model_contact.dart';
 import 'model_order.dart';
 import 'package:intl/intl.dart';
 
@@ -20,7 +23,23 @@ ModelOrder structOrderData({required data}) {
   modelOrder.vidRabot = data['vid_rabot'].toString();
   modelOrder.priceAdded = data['price_added'];
 
-  modelOrder.sphere = int.tryParse(data['sphere_id'].toString()) ?? int.tryParse(data['sphere'].toString());
+  modelOrder.sphere = int.tryParse(data['sphere_id'].toString()) ??
+      int.tryParse(data['sphere'].toString());
+
+  try {
+    if (data['contacts'] != null) {
+      var contact = ModelContact();
+      contact.userName = data['contacts']['name'];
+      contact.userRegion = data['contacts']['region'];
+      contact.userDistrict = data['contacts']['district'];
+      contact.userCity = data['contacts']['city'];
+      contact.userEmail = data['contacts']['email'];
+      contact.userPhone = data['contacts']['phone'];
+      modelOrder.contact = contact;
+    }
+  } catch (e) {
+    log("Parse contact error $e");
+  }
 
   DateFormat format = DateFormat('dd.MM.yyyy HH:mm');
   modelOrder.startDate =
