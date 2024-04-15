@@ -194,7 +194,7 @@ class _BlockOrderZernoState extends State<BlockOrderZerno> {
                                 //додаткові кнопки
                                 if (controller.tariff?.isVip == true) ...[
                                   Expanded(
-                                      child: bStyle(
+                                      child: Padding(padding: const EdgeInsets.only(left: 10), child: bStyle(
                                           text: 'Угода',
                                           c: context,
                                           colorText: AppColors.white,
@@ -202,7 +202,7 @@ class _BlockOrderZernoState extends State<BlockOrderZerno> {
                                           onPressed: () {
                                             controller
                                                 .onDeal(widget.modelOrder);
-                                          })),
+                                          }))),
                                 ]
                               ],
                             )),

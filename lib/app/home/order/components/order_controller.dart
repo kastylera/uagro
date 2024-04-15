@@ -28,8 +28,8 @@ class OrderController extends BaseController {
   late Function(VoidCallback fn) setState;
   ModelOrder? modelOrder;
   ModelContact contact = ModelContact();
-  late Tariff? tariff;
-  late CallResult? result;
+  Tariff? tariff;
+  CallResult? result;
   bool contactOpened = false;
 
   ModelUser? modelUser;
