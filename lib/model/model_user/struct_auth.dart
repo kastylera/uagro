@@ -34,3 +34,19 @@ structUserData(
   }
   return null;
 }
+
+  ModelUser? parseUser({required dynamic data, String? token}) {
+    ModelUser modelUser = ModelUser();
+    try {
+      modelUser.id = data['id'].toString();
+      modelUser.phone = data['phone'];
+      modelUser.email = data['email'];
+      modelUser.role = data['role'];
+      modelUser.name = data['name'];
+      modelUser.token = token;
+    } catch (err) {
+      log(err.toString());
+      return null;
+    }
+    return modelUser;
+  }

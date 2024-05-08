@@ -24,4 +24,7 @@ class ModelUser {
 extension ModelUserX on ModelUser {
   bool get isTraider => role == 'distrib';
   bool get isFarmer => role == 'farmer';
+  Role getRole() => role == 'distrib' ? Role.traider : Role.fermer;
 }
+
+enum Role { traider, fermer }

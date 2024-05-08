@@ -7,4 +7,5 @@ abstract class Routes {
   static const authRegisterOk = '/authRegisterOk';
   static const orderInfo = '/orderInfo';
   static const review = '/review';
+  static const splash = "/splash";
 }
