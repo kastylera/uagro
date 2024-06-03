@@ -78,29 +78,29 @@ class DobrivaOrder extends StatelessWidget {
       const SizedBox(height: 20),
       if ((controller.modelOrder?.bids ?? []).isNotEmpty)
         bids(controller.modelOrder?.bids ?? []),
-      readText(
-        text: 'Відкривали номер 4 трейдери:',
-        style: AppFonts.body1bold.black,
-      ),
-      const SizedBox(height: 10),
-      phoneNumberItem(
-          index: 1,
-          date: "15:00 06.03.2024",
-          number: "+380963965701",
-          onPhoneClick: () {
-            controller.onLaunchPhone(context, "+380963965701");
-          },
-          onPhoneOpen: () {}),
-      phoneNumberItem(
-          index: 2,
-          date: "15:00 06.03.2024",
-          number: "",
-          onPhoneClick: () {},
-          onPhoneOpen: () {
-            notification(
-                text:
-                    "Ця можливість для платних користувачів. Деталі в телеграм t.me/uagro_oper");
-          })
+      // readText(
+      //   text: 'Відкривали номер 4 трейдери:',
+      //   style: AppFonts.body1bold.black,
+      // ),
+      // const SizedBox(height: 10),
+      // phoneNumberItem(
+      //     index: 1,
+      //     date: "15:00 06.03.2024",
+      //     number: "+380963965701",
+      //     onPhoneClick: () {
+      //       controller.onLaunchPhone(context, "+380963965701");
+      //     },
+      //     onPhoneOpen: () {}),
+      // phoneNumberItem(
+      //     index: 2,
+      //     date: "15:00 06.03.2024",
+      //     number: "",
+      //     onPhoneClick: () {},
+      //     onPhoneOpen: () {
+      //       notification(
+      //           text:
+      //               "Ця можливість для платних користувачів. Деталі в телеграм t.me/uagro_oper");
+      //     })
     ]);
   }
 }
