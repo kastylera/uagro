@@ -5,6 +5,7 @@ class DateFormats {
   static const String date = 'MMMM dd';
   static const String dateShort = 'dd.MM.y';
   static const String dayShort = 'dd.MM.y';
+  static const String dayTimeShort = 'dd.MM.y HH:mm';
   static const String dateWithYear = "MMM dd, y";
   static const String dayOfWeek = 'EEEE, MMMM d';
   static const String time = 'hh:mm a';
@@ -28,7 +29,7 @@ extension DateHelper on DateTime {
     return now.difference(this).inDays;
   }
 
-  bool isActive(){
+  bool isActive() {
     final now = DateTime.now();
     return isAfter(now);
   }
@@ -47,6 +48,10 @@ extension DateHelper on DateTime {
 
   String formatDayShort() {
     return format(DateFormats.dayShort);
+  }
+
+  String formatDateTimeShort() {
+    return format(DateFormats.dayTimeShort);
   }
 
   String formatDayOfWeek() {

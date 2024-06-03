@@ -18,7 +18,7 @@ class BlockPageScreen extends StatelessWidget {
   final double? headerSize;
   final SystemUiOverlayStyle? theme;
   final Color topbarColor, headerColor;
-
+  final Color dividerColor;
 
   const BlockPageScreen(
       {Key? key,
@@ -36,7 +36,8 @@ class BlockPageScreen extends StatelessWidget {
       this.resizeToAvoidBottomInset = false,
       this.padding,
       this.topbarColor = AppColors.white,
-      this.headerColor = AppColors.black})
+      this.headerColor = AppColors.black,
+      this.dividerColor = AppColors.grey3})
       : super(key: key);
 
   @override
@@ -59,7 +60,8 @@ class BlockPageScreen extends StatelessWidget {
                   onPressed: onPressed,
                   headerColor: headerColor,
                   background: topbarColor,
-                  onPressedReturn: onPressedReturn),
+                  onPressedReturn: onPressedReturn,
+                  dividerColor: dividerColor,),
               Expanded(
                   child: Padding(
                       padding: allPadding ??
@@ -82,7 +84,7 @@ class TopBar extends StatelessWidget {
   final String? header, endIcon;
   final EdgeInsetsGeometry? padding;
   final Function()? onPressed, onPressedReturn;
-  final Color background, headerColor;
+  final Color background, headerColor, dividerColor;
 
   const TopBar(
       {super.key,
@@ -94,7 +96,8 @@ class TopBar extends StatelessWidget {
       this.onPressed,
       this.onPressedReturn,
       this.headerColor = AppColors.black,
-      this.background = AppColors.white});
+      this.background = AppColors.white,
+      this.dividerColor = AppColors.grey3});
 
   @override
   Widget build(BuildContext context) {
@@ -127,7 +130,11 @@ class TopBar extends StatelessWidget {
             BTransparentScalableButton(
                 onPressed: onPressed ?? () {},
                 scale: ScaleFormat.small,
-                child: SvgPicture.asset(endIcon!, width: 32, colorFilter: ColorFilter.mode(headerColor, BlendMode.color),)),
+                child: SvgPicture.asset(
+                  endIcon!,
+                  width: 32,
+                  colorFilter: ColorFilter.mode(headerColor, BlendMode.color),
+                )),
           ] else ...[
             if (endWidget != null) ...[
               endWidget!
@@ -138,7 +145,7 @@ class TopBar extends StatelessWidget {
           const SizedBox(width: 10),
         ]),
         const SizedBox(height: 15),
-        const Divider(height: 2, color: AppColors.grey3)
+        Divider(height: 2, color: dividerColor)
       ]),
     );
   }

@@ -50,7 +50,7 @@ class Api {
         request.fields[key] = value;
       });
     }
-    log('$url/$method?${parameter ?? ''}');
+    log('$url/?method=$method?${parameter ?? ''}');
 
     return await request.send();
   }

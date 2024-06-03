@@ -1,5 +1,7 @@
 import 'package:agro/app/home/components/home_controller.dart';
 import 'package:agro/app/home/order/components/sphere/dobriva.dart';
+import 'package:agro/app/home/order/components/sphere/oil.dart';
+import 'package:agro/app/home/order/components/sphere/seeds.dart';
 import 'package:agro/app/home/order/components/sphere/unknown.dart';
 import 'package:agro/app/home/order/components/sphere/zerno.dart';
 import 'package:agro/model/model_order/model_order.dart';
@@ -35,11 +37,12 @@ class _OrderScreenState extends State<OrderScreen> {
   Widget build(BuildContext context) {
     return BlockPageScreen(
         headerSize: 20,
-        headerColor: AppColors.black,
-        topbarColor: AppColors.white,
+        headerColor: AppColors.white,
+        topbarColor: getOrderColor(controller.modelOrder),
+        dividerColor: getOrderColor(controller.modelOrder),
         header: controller.loadPage
             ? 'Заявка №${controller.modelOrder!.id} від ${DateFormat('dd.MM.yyyy').format(controller.modelOrder!.startDate!)}'
-            : 'Ваші заявки',
+            : '',
         isBack: true,
         endWidget: BTransparentScalableButton(
             onPressed: () {
@@ -71,6 +74,10 @@ class _OrderScreenState extends State<OrderScreen> {
         return ZernoOrder(controller: controller);
       case 12:
         return DobrivaOrder(controller: controller);
+      case 13:
+        return SeedsOrder(controller: controller);
+      case 14:
+        return OilOrder(controller: controller);
       default:
         return UnknownOrder(controller: controller);
     }

@@ -39,11 +39,15 @@ class OrderController extends BaseController {
   final _localStorageRepository = LocalStorageRepository();
   HomeController homeController = Get.find();
 
+  String? sms;
+  String? asId;
+
   void initPage(
       {required BuildContext context,
       required Function(VoidCallback fn) set}) async {
     setState = set;
     modelUser = context.read<UserNotifier>().modelUser;
+    tariff = homeController.tariff;
 
     await Future.delayed(const Duration(milliseconds: 100));
     if (context.mounted) {
@@ -51,7 +55,6 @@ class OrderController extends BaseController {
       final orderId = arguments[0] as int?;
       await getOrderInfo(orderId);
       modelOrder!.id = orderId;
-      await getTariffInfo();
       result =
           await _localStorageRepository.getResult(modelOrder!.id.toString());
       await Future.delayed(const Duration(milliseconds: 100));
@@ -115,10 +118,10 @@ class OrderController extends BaseController {
 
   void onBack(BuildContext context) => Navigator.pop(context, modelOrder);
 
-  void onLaunchPhone(BuildContext context) => showCupertinoModalBottomSheet(
+  void onLaunchPhone(BuildContext context, String? phone) => showCupertinoModalBottomSheet(
       topRadius: const Radius.circular(30),
       context: context,
-      builder: (c) => LaunchPhone(contact: contact));
+      builder: (c) => LaunchPhone(contact: phone));
 
   void onSetAnswer(BuildContext context) => showCupertinoModalBottomSheet(
       topRadius: const Radius.circular(30),
@@ -171,15 +174,6 @@ class OrderController extends BaseController {
     });
   }
 
-  Future<void> getTariffInfo() async {
-    try {
-      ApiAnswer apiAnswer = await Api().traider.getTariff();
-      tariff = Tariff.fromJson(apiAnswer.data['payload']);
-    } catch (e) {
-      log(e.toString(), error: e);
-    }
-  }
-
   Future<void> getOrderInfo(int? orderId) async {
     try {
       ApiAnswer apiAnswer = await Api().traider.getOrder(orderId: orderId);
@@ -200,6 +194,52 @@ class OrderController extends BaseController {
           onLoadPrice();
         } else {
           notification(text: 'Трапилась помилка при угоді');
+        }
+      });
+
+  void checkSendOffer() => loadIfValid(() async {
+        ApiAnswer apiAnswer =
+            await Api().traider.checkSendOffer(sphere: modelOrder?.sphere);
+        log(apiAnswer.data.toString());
+        if (apiAnswer.data['status'] == '-') {
+          notification(
+              text:
+                  "Встановіть налаштування заявок у вашому кабінеті та завантажте прайс");
+          return;
+        }
+        asId = apiAnswer.data['as_id'];
+        sms = apiAnswer.data['sms'];
+        final int smsCount =
+            int.tryParse(apiAnswer.data['smslimit'].toString()) ?? 0;
+        final int abonents =
+            int.tryParse(apiAnswer.data['abonents'].toString()) ?? 0;
+        if (smsCount >= abonents) {
+          showConfirmDialog(
+              title: 'Чи впевнені ви?',
+              text:
+                  "Вашу пропозицію буде відправлено $abonents абонентам. Якщо впевнені в цій дії натисніть ОК.",
+              onConfirm: () {
+                onSendOffer();
+              });
+        } else {
+          showConfirmDialog(
+              title: 'Чи впевнені ви?',
+              text:
+                  "Через те що кількість доступних Вам sms менша за кількість абонентів, Вашу пропозицію буде відправлено $smsCount з $abonents абонентам. Якщо впевнені в цій дії натисніть ОК.",
+              onConfirm: () {
+                onSendOffer();
+              });
+        }
+      });
+
+  void onSendOffer() => loadIfValid(() async {
+        ApiAnswer apiAnswer = await Api().traider.sendOffer(asId, sms);
+        log(apiAnswer.data.toString());
+        if (apiAnswer.data['status'] == '+') {
+          final recepients = apiAnswer.data['recepients'];
+          notification(
+              text: "Ваша пропозиція була надіслана $recepients-м абонентам.");
+          return;
         }
       });
 }

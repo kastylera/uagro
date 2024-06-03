@@ -1,3 +1,5 @@
+import 'package:agro/ui/theme/colors.dart';
+import 'package:agro/ui/theme/fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:in_app_notification/in_app_notification.dart';
 import '../text/read_text.dart';
@@ -47,4 +49,25 @@ void notification({required String text}) {
       backgroundColor: Colors.transparent,
       snackPosition: SnackPosition.TOP,
       duration: const Duration(seconds: 2)));
+}
+
+void showConfirmDialog(
+    {required String title,
+    required String text,
+    required VoidCallback onConfirm}) {
+  Get.defaultDialog(
+      title: title,
+      middleText: text,
+      backgroundColor: Colors.white,
+      titleStyle: AppFonts.title1,
+      middleTextStyle: AppFonts.body2medium,
+      buttonColor: AppColors.mainGreen,
+      cancelTextColor: AppColors.mainGreen,
+      confirmTextColor: AppColors.white,
+      onConfirm: () {
+        onConfirm();
+      },
+      onCancel: () {},
+      textCancel: "Відмінити",
+      textConfirm: 'Ок');
 }

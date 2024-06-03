@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:agro/model/model_order/bids.dart';
 import 'package:agro/model/model_order/model_contact.dart';
 import 'model_order.dart';
 import 'package:intl/intl.dart';
@@ -39,6 +40,38 @@ ModelOrder structOrderData({required data}) {
     }
   } catch (e) {
     log("Parse contact error $e");
+  }
+
+  try {
+    if (data['contacts'] != null) {
+      var contact = ModelContact();
+      contact.userName = data['contacts']['name'];
+      contact.userRegion = data['contacts']['region'];
+      contact.userDistrict = data['contacts']['district'];
+      contact.userCity = data['contacts']['city'];
+      contact.userEmail = data['contacts']['email'];
+      contact.userPhone = data['contacts']['phone'];
+      modelOrder.contact = contact;
+    }
+  } catch (e) {
+    log("Parse contact error $e");
+  }
+
+  try {
+    if (data['bids'] != null) {
+      final Map<String, dynamic> map = data['bids'];
+      List<Bid> bids = [];
+      for (var element in map.values) {
+        final item = Bid();
+        item.created = int.tryParse(element['created'].toString());
+        item.priceList = element['pricelist'].toString();
+        bids.add(item);
+      }
+      modelOrder.bids = bids;
+      log(map.values.toString());
+    }
+  } catch (e) {
+    log("Parse bids error $e");
   }
 
   DateFormat format = DateFormat('dd.MM.yyyy HH:mm');

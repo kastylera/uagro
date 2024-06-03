@@ -33,7 +33,7 @@ class ProfileScreen extends GetView<ProfileController> {
                 statusBarBrightness: Brightness.dark),
             child: SafeArea(
                 bottom: false,
-                child: Column(
+                child: SingleChildScrollView(child: Column(
                   children: [
                     Stack(alignment: Alignment.topCenter, children: [
                       Container(color: AppColors.mainGreen, height: 170),
@@ -87,6 +87,6 @@ class ProfileScreen extends GetView<ProfileController> {
                           ),
                         ))
                   ],
-                ))));
+                )))));
   }
 }

@@ -10,7 +10,7 @@ class Traider extends Api {
     log('mode=trader&page=$page&limit=$limit&search=$search&sphere=15');
     var request = await dataRequestMultipart('order.list',
         parameter:
-            'mode=trader&page=$page&limit=$limit&search=$search&sphere=15');
+            'mode=trader&page=$page&limit=$limit&search=$search');
 
     apiAnswer.code = request.statusCode;
     apiAnswer.data = json.decode(await request.stream.bytesToString());
@@ -19,12 +19,10 @@ class Traider extends Api {
     return apiAnswer;
   }
 
-  Future<ApiAnswer> getOrder(
-      {required int? orderId}) async {
+  Future<ApiAnswer> getOrder({required int? orderId}) async {
     ApiAnswer apiAnswer = ApiAnswer();
     var request = await dataRequestMultipart('order.view',
-        parameter:
-            'order_id=$orderId');
+        parameter: 'order_id=$orderId');
 
     apiAnswer.code = request.statusCode;
     apiAnswer.data = json.decode(await request.stream.bytesToString());
@@ -35,8 +33,8 @@ class Traider extends Api {
 
   Future<ApiAnswer> getMessages() async {
     ApiAnswer apiAnswer = ApiAnswer();
-    var request = await dataRequestMultipart('push.getall',
-        parameter: 'type=MESSAGE');
+    var request =
+        await dataRequestMultipart('push.getall', parameter: 'type=MESSAGE');
 
     apiAnswer.code = request.statusCode;
     apiAnswer.data = json.decode(await request.stream.bytesToString());
@@ -47,8 +45,8 @@ class Traider extends Api {
 
   Future<ApiAnswer> readMessage(int? pushId) async {
     ApiAnswer apiAnswer = ApiAnswer();
-    var request =
-        await dataRequestMultipart('push.setreaded', parameter: 'push_id=$pushId');
+    var request = await dataRequestMultipart('push.setreaded',
+        parameter: 'push_id=$pushId');
 
     apiAnswer.code = request.statusCode;
     return apiAnswer;
@@ -123,6 +121,26 @@ class Traider extends Api {
     apiAnswer.data = json.decode(await request.stream.bytesToString());
     checkAuth(apiAnswer.data);
 
+    return apiAnswer;
+  }
+
+  Future<ApiAnswer> checkSendOffer({int? sphere = 12}) async {
+    ApiAnswer apiAnswer = ApiAnswer();
+    var request = await dataRequestMultipart('smssender.get',
+        parameter: 'sphere=$sphere');
+    apiAnswer.code = request.statusCode;
+    apiAnswer.data = json.decode(await request.stream.bytesToString());
+    checkAuth(apiAnswer.data);
+    return apiAnswer;
+  }
+
+  Future<ApiAnswer> sendOffer(String? asId, String? sms) async {
+    ApiAnswer apiAnswer = ApiAnswer();
+    var request = await dataRequestMultipart('smssender.send',
+        parameter: 'as_id=$asId&sms=$sms');
+    apiAnswer.code = request.statusCode;
+    apiAnswer.data = json.decode(await request.stream.bytesToString());
+    checkAuth(apiAnswer.data);
     return apiAnswer;
   }
 }

@@ -81,7 +81,7 @@ class HomeController extends BaseController {
       showCupertinoModalBottomSheet(
           topRadius: const Radius.circular(30),
           context: context,
-          builder: (c) => LaunchPhone(contact: contact));
+          builder: (c) => LaunchPhone(contact: contact.userPhone));
 
   void onSearch() {
     page = 1;

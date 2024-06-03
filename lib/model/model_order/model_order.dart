@@ -1,4 +1,5 @@
 import 'package:agro/model/message/created.dart';
+import 'package:agro/model/model_order/bids.dart';
 import 'package:agro/model/model_order/model_contact.dart';
 import 'package:intl/intl.dart';
 
@@ -18,6 +19,7 @@ class ModelOrder extends Created {
   DateTime? startDate, endDate;
   bool? request, priceAdded;
   ModelContact? contact;
+  List<Bid> bids;
 
   ModelOrder(
       {this.id,
@@ -37,7 +39,8 @@ class ModelOrder extends Created {
       this.sort,
       this.startDate,
       this.vidRabot,
-      this.contact});
+      this.contact,
+      this.bids = const []});
 }
 
 extension OrderX on ModelOrder {

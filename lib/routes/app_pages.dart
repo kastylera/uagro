@@ -1,5 +1,4 @@
 import 'package:agro/app/home/review/review_screen.dart';
-import 'package:agro/screens/splash_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:agro/auth/auth_register_ok/auth_register_ok_screen.dart';
@@ -25,6 +24,5 @@ abstract class AppPages {
         GetPage(name: Routes.authRegisterOk, page: () => const AuthRegisterOkScreen(), binding: AuthRegisterOkBinding()),
         GetPage(name: Routes.orderInfo, page: () => const OrderScreen(), binding: OrderBinding()),
         GetPage(name: Routes.review, page: () => const ReviewScreen(), binding: ReviewBinding()),
-        GetPage(name: Routes.splash, page: () => const SplashPage())
       ];
 }

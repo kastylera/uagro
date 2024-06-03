@@ -1,12 +1,16 @@
 import 'package:agro/app/home/order/components/call_result_info.dart';
+import 'package:agro/app/home/order/components/contact.dart';
 import 'package:agro/model/answer/answer.dart';
 import 'package:agro/model/model_user/model_user.dart';
+import 'package:agro/ui/buttons/b_style.dart';
+import 'package:agro/ui/local_notification/local_notification.dart';
 import 'package:agro/ui/theme/colors.dart';
 import 'package:agro/ui/theme/fonts.dart';
 import 'package:agro/ui/utils/date_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:agro/model/model_order/model_order.dart';
 import 'package:agro/ui/text/read_text.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -51,7 +55,7 @@ class BlockOrderUnknown extends StatelessWidget {
                           Expanded(
                             child: readText(
                               text:
-                                  'Заявка № ${modelOrder.id}\nвід: ${modelOrder.startDate?.formatDateShort()}',
+                                  'Заявка № ${modelOrder.id}\nвід: ${modelOrder.startDate?.formatDateTimeShort()}',
                               style: AppFonts.body1bold.black,
                             ),
                           ),
@@ -66,7 +70,24 @@ class BlockOrderUnknown extends StatelessWidget {
                             readText(
                                 text: '₴',
                                 style: AppFonts.title1.mainGreen,
-                                padding: const EdgeInsets.only(bottom: 15))
+                                padding: const EdgeInsets.only(bottom: 7)),
+                            if (controller.modelUser.role == 'distrib') ...[
+                              const SizedBox(width: 10),
+                              Padding(
+                                  padding: const EdgeInsets.only(bottom: 10),
+                                  child: BTransparentScalableButton(
+                                      onPressed: () {
+                                        Clipboard.setData(ClipboardData(
+                                            text: (modelOrder.toText())));
+                                        inAppNotification(
+                                            text:
+                                                "Дані про замовлення скопійовані в буфер обміну",
+                                            c: context);
+                                      },
+                                      scale: ScaleFormat.big,
+                                      child: const Icon(Icons.copy,
+                                          color: AppColors.yellow, size: 24)))
+                            ]
                           ],
                           if (controller.modelUser.role == 'distrib') ...[
                             const SizedBox(width: 10),
@@ -125,7 +146,61 @@ class BlockOrderUnknown extends StatelessWidget {
                                   horizontalPadding: 0,
                                   textColor: answer?.result?.color,
                                   onPressed: () {}))
-                          : const SizedBox()
+                          : const SizedBox(),
+                      if (controller.modelUser.role == 'distrib') ...[
+                        //контакти
+                        modelOrder.contact != null
+                            ? ContactScreen(
+                                isVip: modelOrder.contact != null,
+                                contact: modelOrder.contact!,
+                                onLauchPhone: () => controller.onLaunchPhone(
+                                    context, modelOrder.contact!))
+                            : const SizedBox(),
+
+                        Padding(
+                            padding: const EdgeInsets.only(top: 16),
+                            child: Row(
+                              children: [
+                                //кнопка контакти
+                                modelOrder.contact == null
+                                    ? Expanded(
+                                        child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 10),
+                                            child: bStyle(
+                                                text: 'Контакти',
+                                                c: context,
+                                                colorText: AppColors.darkGreen,
+                                                vertical: 15,
+                                                border: Border.all(
+                                                    color: AppColors.darkGreen,
+                                                    width: 1),
+                                                colorButt: Colors.transparent,
+                                                onPressed: () {
+                                                  controller.onContactClick(
+                                                      modelOrder);
+                                                })))
+                                    : const SizedBox(),
+
+                                //кнопка додатково
+                                Expanded(
+                                    child: bStyle(
+                                        text: 'Додатково',
+                                        c: context,
+                                        colorText: AppColors.additionalGreen,
+                                        vertical: 15,
+                                        border: Border.all(
+                                            color: AppColors.additionalGreen,
+                                            width: 1),
+                                        colorButt: Colors.transparent,
+                                        onPressed: () =>
+                                            onPressed(model: modelOrder))),
+
+                                //додаткові кнопки
+                                //TODO
+                              ],
+                            )),
+                      ]
                     ]),
               ))),
     );

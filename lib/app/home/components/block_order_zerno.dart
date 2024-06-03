@@ -65,7 +65,7 @@ class _BlockOrderZernoState extends State<BlockOrderZerno> {
                           Expanded(
                             child: readText(
                               text:
-                                  'Заявка № ${widget.modelOrder.id}\nвід: ${widget.modelOrder.startDate?.formatDateShort()}',
+                                  'Заявка № ${widget.modelOrder.id}\nвід: ${widget.modelOrder.startDate?.formatDateTimeShort()}',
                               style: AppFonts.body1bold.black,
                             ),
                           ),
