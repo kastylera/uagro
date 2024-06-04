@@ -10,6 +10,7 @@ import 'package:agro/model/model_order/model_contact.dart';
 import 'package:agro/model/model_user/model_user.dart';
 import 'package:agro/model/tariff/tariff.dart';
 import 'package:agro/repository/local_storage_repository.dart';
+import 'package:agro/ui/adds.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:agro/model/model_order/struct_order.dart';
@@ -33,6 +34,7 @@ class HomeController extends BaseController {
   String messHeader = 'Заявки';
   int total = 0;
   final _localStorageRepository = LocalStorageRepository();
+  final _interstitial = Interstitial();
 
   int page = 1;
   List<ModelOrder> modelOrder = [];
@@ -144,12 +146,26 @@ class HomeController extends BaseController {
   Future<void> onContactClick(ModelOrder order) async {
     if (order.contact == null) {
       try {
-        var contact = await onLoadInfoUser(order);
-        onContactOpened(order);
-        setState(() {
-          modelOrder.firstWhere((element) => element.id == order.id).contact =
-              contact;
-        });
+        if (tariff?.isExclusive == false || tariff?.isVip == false) {
+          await _interstitial.loadRewardedAd(
+            doAfter: () async {
+              var contact = await onLoadInfoUser(order);
+              onContactOpened(order);
+              setState(() {
+                modelOrder
+                    .firstWhere((element) => element.id == order.id)
+                    .contact = contact;
+              });
+            },
+          );
+        } else {
+          var contact = await onLoadInfoUser(order);
+          onContactOpened(order);
+          setState(() {
+            modelOrder.firstWhere((element) => element.id == order.id).contact =
+                contact;
+          });
+        }
       } catch (e) {
         notification(
             text:
@@ -199,7 +215,7 @@ class HomeController extends BaseController {
   }
 
   onPageOrderFermer({required ModelOrder model}) async {
-    //model.request = true;
+    model.request = true;
     var data = await Get.toNamed(Routes.orderInfo, arguments: [model.id]);
 
     if (data != null) {

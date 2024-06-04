@@ -66,5 +66,7 @@
 	</array>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<false/>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-7420686519903453~8243889621</string>
 </dict>
 </plist>
