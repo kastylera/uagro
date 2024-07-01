@@ -146,7 +146,7 @@ class HomeController extends BaseController {
   Future<void> onContactClick(ModelOrder order) async {
     if (order.contact == null) {
       try {
-        if (tariff?.isExclusive == false || tariff?.isVip == false) {
+        if (tariff?.isPremium == false || tariff?.isVip == false) {
           await _interstitial.loadRewardedAd(
             doAfter: () async {
               var contact = await onLoadInfoUser(order);

@@ -8,6 +8,7 @@ import 'package:agro/model/answer/answer.dart';
 import 'package:agro/model/message/created.dart';
 import 'package:agro/model/message/message.dart';
 import 'package:agro/model/model_user/model_user.dart';
+import 'package:agro/ui/text/read_text.dart';
 import 'package:agro/ui/theme/colors.dart';
 import 'package:agro/ui/theme/fonts.dart';
 import 'package:flutter/material.dart';
@@ -47,16 +48,23 @@ class _HomeScreenState extends State<HomeScreen> {
             left: controller.modelUser.isTraider ? 30 : 40,
             right: controller.modelUser.isTraider ? 30 : 0),
         header: controller.modelUser.isTraider ? null : 'Ваші заявки',
-        endWidget: controller.modelUser.isTraider
-            ? Expanded(
-                child: HomeHeader(
+        headerWidget: controller.modelUser.isTraider
+            ? Padding(padding: const EdgeInsets.symmetric(horizontal: 16), child:  HomeHeader(
                     tariff: controller.tariff, total: controller.total))
+            : null,
+        endWidget: controller.modelUser.isTraider
+            ? null
             : BTransparentScalableButton(
                 onPressed: controller.fermerCreateOrder,
                 scale: ScaleFormat.big,
-                child:
-                    const Icon(Icons.add, color: Color(0xffFCD300), size: 40)),
-        theme: SystemUiOverlayStyle.dark.copyWith(statusBarColor: AppColors.white),
+                child: Row(
+                  children: [
+                    const Icon(Icons.add, color: Color(0xffFCD300), size: 45),
+                    readText(text: "Додати", style: AppFonts.title2.withColor(AppColors.mainGreen)),
+                  ],
+                )),
+        theme:
+            SystemUiOverlayStyle.dark.copyWith(statusBarColor: AppColors.white),
         child: Column(
           children: [
             TextFieldWidget(

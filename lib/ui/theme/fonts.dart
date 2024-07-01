@@ -27,6 +27,9 @@ class AppFonts {
   static TextStyle body3medium = GoogleFonts.nunito(
       fontSize: 16, fontWeight: FontWeight.w500, color: AppColors.black);
 
+    static TextStyle body3bold= GoogleFonts.nunito(
+      fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.black);    
+
   static TextStyle caption = GoogleFonts.nunito(
       fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.black);
 }

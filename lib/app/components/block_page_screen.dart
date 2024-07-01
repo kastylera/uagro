@@ -11,7 +11,7 @@ import '../../vars/valid_themes.dart';
 class BlockPageScreen extends StatelessWidget {
   final String? header, endIcon;
   final Widget child;
-  final Widget? endWidget;
+  final Widget? endWidget, headerWidget;
   final bool isBack, isCancel, resizeToAvoidBottomInset;
   final Function()? onPressed, onPressedReturn;
   final EdgeInsetsGeometry? padding, allPadding;
@@ -28,6 +28,7 @@ class BlockPageScreen extends StatelessWidget {
       required this.child,
       this.onPressed,
       this.theme,
+      this.headerWidget,
       this.onPressedReturn,
       this.endIcon,
       this.endWidget,
@@ -52,16 +53,18 @@ class BlockPageScreen extends StatelessWidget {
           child: Column(
             children: [
               TopBar(
-                  isBack: isBack,
-                  endIcon: endIcon,
-                  endWidget: endWidget,
-                  header: header,
-                  padding: padding,
-                  onPressed: onPressed,
-                  headerColor: headerColor,
-                  background: topbarColor,
-                  onPressedReturn: onPressedReturn,
-                  dividerColor: dividerColor,),
+                isBack: isBack,
+                endIcon: endIcon,
+                endWidget: endWidget,
+                headerWidget: headerWidget,
+                header: header,
+                padding: padding,
+                onPressed: onPressed,
+                headerColor: headerColor,
+                background: topbarColor,
+                onPressedReturn: onPressedReturn,
+                dividerColor: dividerColor,
+              ),
               Expanded(
                   child: Padding(
                       padding: allPadding ??
@@ -79,7 +82,7 @@ class BlockPageScreen extends StatelessWidget {
 }
 
 class TopBar extends StatelessWidget {
-  final Widget? endWidget;
+  final Widget? endWidget, headerWidget;
   final bool isBack;
   final String? header, endIcon;
   final EdgeInsetsGeometry? padding;
@@ -89,6 +92,8 @@ class TopBar extends StatelessWidget {
   const TopBar(
       {super.key,
       this.endWidget,
+      this.headerWidget,
+
       required this.isBack,
       this.header,
       this.endIcon,
@@ -104,46 +109,50 @@ class TopBar extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(color: background),
       child: Column(children: [
-        Row(children: [
-          const SizedBox(width: 10),
-          if (isBack) ...[
-            BTransparentScalableButton(
-                onPressed: onPressedReturn ?? () => Navigator.pop(context),
-                scale: ScaleFormat.small,
-                child: Icon(
-                  Icons.arrow_back_ios_new_rounded,
-                  size: 24,
-                  color: headerColor,
-                )),
-          ] else if (endIcon != null) ...[
-            const SizedBox(width: 32)
+        Stack(
+          children: [
+headerWidget != null ? headerWidget! :
+            Row(children: [
+              const SizedBox(width: 10),
+              if (isBack) ...[
+                BTransparentScalableButton(
+                    onPressed: onPressedReturn ?? () => Navigator.pop(context),
+                    scale: ScaleFormat.small,
+                    child: Icon(
+                      Icons.arrow_back_ios_new_rounded,
+                      size: 24,
+                      color: headerColor,
+                    )),
+              ] else if (endIcon != null) ...[
+                const SizedBox(width: 32)
+              ],
+              ...[const Expanded(child: SizedBox())],
+              if (endIcon != null) ...[
+                BTransparentScalableButton(
+                    onPressed: onPressed ?? () {},
+                    scale: ScaleFormat.small,
+                    child: SvgPicture.asset(
+                      endIcon!,
+                      width: 32,
+                      colorFilter:
+                          ColorFilter.mode(headerColor, BlendMode.color),
+                    )),
+              ] else ...[
+                if (endWidget != null) ...[
+                  endWidget!
+                ] else if (isBack) ...[
+                  const SizedBox(width: 18)
+                ]
+              ],
+              const SizedBox(width: 10),
+            ]),
+            Center(
+                child: readText(
+                    text: header ?? "",
+                    style: AppFonts.body1bold.copyWith(color: headerColor),
+                    align: TextAlign.center))
           ],
-          if (header != null) ...[
-            Expanded(
-                child: Center(
-                    child: readText(
-                        text: header!,
-                        style: AppFonts.body1bold.copyWith(color: headerColor),
-                        align: TextAlign.center)))
-          ],
-          if (endIcon != null) ...[
-            BTransparentScalableButton(
-                onPressed: onPressed ?? () {},
-                scale: ScaleFormat.small,
-                child: SvgPicture.asset(
-                  endIcon!,
-                  width: 32,
-                  colorFilter: ColorFilter.mode(headerColor, BlendMode.color),
-                )),
-          ] else ...[
-            if (endWidget != null) ...[
-              endWidget!
-            ] else if (isBack) ...[
-              const SizedBox(width: 18)
-            ]
-          ],
-          const SizedBox(width: 10),
-        ]),
+        ),
         const SizedBox(height: 15),
         Divider(height: 2, color: dividerColor)
       ]),

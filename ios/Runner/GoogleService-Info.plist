@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyCJLchkPC5D8IwQBPwk3RJ_0Y3hHQGNWB4</string>
+	<string>AIzaSyCHHwRa2LFs8DOfVQqvJkUaBOl1kj0kk2U</string>
 	<key>GCM_SENDER_ID</key>
-	<string>720773202016</string>
+	<string>180463119032</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.uagro.app</string>
 	<key>PROJECT_ID</key>
-	<string>uagro-c55ef</string>
+	<string>uagrotrade-d02d8</string>
 	<key>STORAGE_BUCKET</key>
-	<string>uagro-c55ef.appspot.com</string>
+	<string>uagrotrade-d02d8.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:720773202016:ios:ffd8f5eee3ae4af4c2c305</string>
+	<string>1:180463119032:ios:b42703ef303734f903624d</string>
 </dict>
 </plist>

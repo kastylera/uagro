@@ -2,13 +2,13 @@ import 'package:agro/app/home/order/components/bids.dart';
 import 'package:agro/app/home/order/components/call_result_info.dart';
 import 'package:agro/app/home/order/components/orderInfo.dart';
 import 'package:agro/app/home/order/components/order_controller.dart';
-import 'package:agro/app/home/order/components/phone_number_item.dart';
+import 'package:agro/app/home/order/components/sphere/seeds.dart';
+import 'package:agro/app/home/order/components/traiders_contacts.dart';
 import 'package:agro/model/model_user/model_user.dart';
+import 'package:agro/model/tariff/tariff.dart';
 import 'package:agro/ui/buttons/b_style.dart';
-import 'package:agro/ui/local_notification/local_notification.dart';
 import 'package:agro/ui/text/read_text.dart';
 import 'package:agro/ui/theme/colors.dart';
-import 'package:agro/ui/theme/fonts.dart';
 import 'package:flutter/material.dart';
 
 class DobrivaOrder extends StatelessWidget {
@@ -56,7 +56,10 @@ class DobrivaOrder extends StatelessWidget {
         traidersButton(controller, context)
       ] else ...[
         fermersButton(controller, context)
-      ]
+      ],
+      controller.modelOrder?.quality != null
+          ? statisticWidget(controller.modelOrder!.quality!)
+          : const SizedBox()
     ]);
   }
 
@@ -73,36 +76,15 @@ class DobrivaOrder extends StatelessWidget {
   }
 
   Widget fermersButton(OrderController controller, BuildContext context) {
-    //TODO add actual data
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
       const SizedBox(height: 20),
       if ((controller.modelOrder?.bids ?? []).isNotEmpty)
         bids(controller.modelOrder?.bids ?? []),
-      // readText(
-      //   text: 'Відкривали номер 4 трейдери:',
-      //   style: AppFonts.body1bold.black,
-      // ),
-      // const SizedBox(height: 10),
-      // phoneNumberItem(
-      //     index: 1,
-      //     date: "15:00 06.03.2024",
-      //     number: "+380963965701",
-      //     onPhoneClick: () {
-      //       controller.onLaunchPhone(context, "+380963965701");
-      //     },
-      //     onPhoneOpen: () {}),
-      // phoneNumberItem(
-      //     index: 2,
-      //     date: "15:00 06.03.2024",
-      //     number: "",
-      //     onPhoneClick: () {},
-      //     onPhoneOpen: () {
-      //       notification(
-      //           text:
-      //               "Ця можливість для платних користувачів. Деталі в телеграм t.me/uagro_oper");
-      //     })
+      if ((controller.modelOrder?.traiderContacts ?? []).isNotEmpty)
+        traiderContacts(
+            controller.modelOrder?.traiderContacts ?? [],
+            controller.tariff!.isVip || controller.tariff!.isPremium,
+            (phone) => {controller.onLaunchPhone(context, phone)})
     ]);
   }
 }
-
-

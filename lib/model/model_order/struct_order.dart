@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:agro/model/model_order/bids.dart';
 import 'package:agro/model/model_order/model_contact.dart';
+import 'package:agro/model/model_order/quality.dart';
 import 'model_order.dart';
 import 'package:intl/intl.dart';
 
@@ -72,6 +73,20 @@ ModelOrder structOrderData({required data}) {
     }
   } catch (e) {
     log("Parse bids error $e");
+  }
+
+  try {
+    if (data['quality'] != null) {
+      final map = data['quality'];
+      var quality = Quality();
+      quality.open = int.tryParse(map['open'].toString());
+      quality.sent = int.tryParse(map['sent'].toString());
+      quality.qual = map['qual'];
+      modelOrder.quality = quality;
+      log(map.values.toString());
+    }
+  } catch (e) {
+    log("Parse quality error $e");
   }
 
   DateFormat format = DateFormat('dd.MM.yyyy HH:mm');

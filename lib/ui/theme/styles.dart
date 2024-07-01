@@ -16,21 +16,21 @@ const OutlineInputBorder textFieldBorder = OutlineInputBorder(
     borderSide: BorderSide(color: AppColors.grey2),
     borderRadius: BorderRadius.all(Radius.circular(8)));
 
-ButtonStyle greenButtonStyle = ButtonStyle(padding: MaterialStateProperty.all(const EdgeInsets.only(top: 6, bottom: 6, left: 20, right: 20)),
-  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+ButtonStyle greenButtonStyle = ButtonStyle(padding: WidgetStateProperty.all(const EdgeInsets.only(top: 6, bottom: 6, left: 20, right: 20)),
+  shape: WidgetStateProperty.all<RoundedRectangleBorder>(
       RoundedRectangleBorder(borderRadius: BorderRadius.circular(100.0))),
-  backgroundColor: MaterialStateProperty.resolveWith<Color>(
-    (Set<MaterialState> states) {
-      if (states.contains(MaterialState.pressed)) {
+  backgroundColor: WidgetStateProperty.resolveWith<Color>(
+    (Set<WidgetState> states) {
+      if (states.contains(WidgetState.pressed)) {
         return AppColors.mainGreen;
-      } else if (states.contains(MaterialState.disabled)) {
+      } else if (states.contains(WidgetState.disabled)) {
         return AppColors.mainGreen.withOpacity(0.3);
       }
       return AppColors.mainGreen;
     },
   ),
   textStyle:
-      MaterialStateProperty.resolveWith<TextStyle>((Set<MaterialState> states) {
+      WidgetStateProperty.resolveWith<TextStyle>((Set<WidgetState> states) {
     return AppFonts.body1bold.white;
   }),
 );

@@ -16,7 +16,7 @@ class Fermer extends Api {
 
   Future<ApiAnswer> createOrder() async {
     ApiAnswer apiAnswer = ApiAnswer();
-    var request = await dataRequestMultipart('order.list', parameter: 'mode=fermer.createorder');
+    var request = await dataRequestMultipart('order.plus');
 
     apiAnswer.code = request.statusCode;
     apiAnswer.data = json.decode(await request.stream.bytesToString());

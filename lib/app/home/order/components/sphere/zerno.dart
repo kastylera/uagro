@@ -3,6 +3,7 @@ import 'package:agro/app/home/order/components/call_result_info.dart';
 import 'package:agro/app/home/order/components/contact.dart';
 import 'package:agro/app/home/order/components/orderInfo.dart';
 import 'package:agro/app/home/order/components/order_controller.dart';
+import 'package:agro/app/home/order/components/sphere/seeds.dart';
 import 'package:agro/model/model_order_price/model_order_price.dart';
 import 'package:agro/model/model_user/model_user.dart';
 import 'package:agro/model/tariff/tariff.dart';
@@ -21,18 +22,14 @@ class ZernoOrder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       const SizedBox(height: 20),
-      orderInfo(
-          header: 'Область', text: controller.modelOrder?.region ?? ''),
-      orderInfo(
-          header: 'Культура', text: controller.modelOrder?.crop ?? ''),
-      orderInfo(
-          header: 'Об’єм', text: controller.modelOrder?.capacity ?? ""),
+      orderInfo(header: 'Область', text: controller.modelOrder?.region ?? ''),
+      orderInfo(header: 'Культура', text: controller.modelOrder?.crop ?? ''),
+      orderInfo(header: 'Об’єм', text: controller.modelOrder?.capacity ?? ""),
       orderInfo(
           header: 'Рік врожаю',
           text: controller.modelOrder?.harvestYear.toString() ?? ''),
       orderInfo(
-          header: 'Форма оплати',
-          text: controller.modelOrder?.payment ?? ''),
+          header: 'Форма оплати', text: controller.modelOrder?.payment ?? ''),
       orderInfo(
           header: 'Тип доставки',
           text: controller.modelOrder?.deliveryForm ?? ''),
@@ -47,11 +44,12 @@ class ZernoOrder extends StatelessWidget {
             padding: const EdgeInsets.only(top: 10))
       ],
       (controller.tariff?.isVip == true ||
-              controller.tariff?.isExclusive == true ||
+              controller.tariff?.isPremium == true ||
               controller.contactOpened)
           ? ContactScreen(
               contact: controller.contact,
-              onLauchPhone: () => controller.onLaunchPhone(context, controller.contact.userPhone))
+              onLauchPhone: () => controller.onLaunchPhone(
+                  context, controller.contact.userPhone))
           : const SizedBox(),
       const SizedBox(height: 10),
       controller.modelUser!.isTraider
@@ -62,77 +60,13 @@ class ZernoOrder extends StatelessWidget {
             )
           : const SizedBox(),
       if (controller.modelUser!.isTraider) ...[
-        Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: Row(children: [
-              controller.tariff?.isVip == true ||
-                      controller.tariff?.isExclusive == true
-                  ? const SizedBox()
-                  : Expanded(
-                      child: bStyle(
-                          text:
-                              controller.contactOpened ? "Сховати" : 'Контакти',
-                          c: context,
-                          colorText: AppColors.darkGreen,
-                          vertical: 15,
-                          border:
-                              Border.all(color: AppColors.darkGreen, width: 1),
-                          colorButt: Colors.transparent,
-                          onPressed: () {
-                            controller.onContactClick();
-                          })),
-              controller.tariff?.isVip == true
-                  ? Expanded(
-                      child: bStyle(
-                          text: 'Угода',
-                          c: context,
-                          colorText: AppColors.white,
-                          vertical: 15,
-                          onPressed: () {
-                            controller.onDeal();
-                          }))
-                  : const SizedBox(),
-              SizedBox(
-                  width: controller.tariff?.isExclusive == false ||
-                          controller.tariff?.isVip == true
-                      ? 25
-                      : 0),
-              Expanded(
-                  child: bStyle(
-                      text: 'Відгуки',
-                      c: context,
-                      colorText: AppColors.darkGreen,
-                      vertical: 15,
-                      border: Border.all(color: AppColors.darkGreen, width: 1),
-                      colorButt: Colors.transparent,
-                      onPressed: controller.onReview))
-            ])),
-        const SizedBox(height: 16),
-        bStyle(
-            key: UniqueKey(),
-            text: 'Додати ціну',
-            c: context,
-            vertical: 15,
-            colorButt: AppColors.yellow,
-            onPressed: () => controller.onAddPrice(context, controller.modelOrder!))
+        traidersButton(controller, context)
       ] else ...[
-        bStyle(
-            key: UniqueKey(),
-            padding: const EdgeInsets.only(top: 35),
-            text: DateTime.now().millisecondsSinceEpoch >
-                    (controller.modelOrder?.endDate?.millisecondsSinceEpoch ?? 0)
-                ? 'Продано'
-                : 'Продав',
-            size: 23,
-            c: context,
-            active: DateTime.now().millisecondsSinceEpoch <
-                (controller.modelOrder?.endDate!.millisecondsSinceEpoch ?? 0) ,
-            colorButt: DateTime.now().millisecondsSinceEpoch >
-                    (controller.modelOrder?.endDate?.millisecondsSinceEpoch ?? 0)
-                ? const Color(0xffF2F2F2)
-                : const Color(0xffFCD300),
-            onPressed: controller.onSell)
+        fermersButton(controller, context)
       ],
+      controller.modelOrder?.quality != null
+          ? statisticWidget(controller.modelOrder!.quality!)
+          : const SizedBox(),
       Row(children: [
         readText(
             text: 'Запропоновані ціни',
@@ -149,4 +83,85 @@ class ZernoOrder extends StatelessWidget {
       ]
     ]);
   }
+
+  Widget traidersButton(OrderController controller, BuildContext context) {
+    return Column(children: [
+      Padding(
+          padding: const EdgeInsets.only(top: 20),
+          child: Row(children: [
+            controller.tariff?.isVip == true ||
+                    controller.tariff?.isPremium == true
+                ? const SizedBox()
+                : Expanded(
+                    child: bStyle(
+                        text: controller.contactOpened ? "Сховати" : 'Контакти',
+                        c: context,
+                        colorText: AppColors.darkGreen,
+                        vertical: 15,
+                        border:
+                            Border.all(color: AppColors.darkGreen, width: 1),
+                        colorButt: Colors.transparent,
+                        onPressed: () {
+                          controller.onContactClick();
+                        })),
+            controller.tariff?.isVip == true
+                ? Expanded(
+                    child: bStyle(
+                        text: 'Угода',
+                        c: context,
+                        colorText: AppColors.white,
+                        vertical: 15,
+                        onPressed: () {
+                          controller.onDeal();
+                        }))
+                : const SizedBox(),
+            SizedBox(
+                width: controller.tariff?.isPremium == false ||
+                        controller.tariff?.isVip == true
+                    ? 25
+                    : 0),
+            Expanded(
+                child: bStyle(
+                    text: 'Відгуки',
+                    c: context,
+                    colorText: AppColors.darkGreen,
+                    vertical: 15,
+                    border: Border.all(color: AppColors.darkGreen, width: 1),
+                    colorButt: Colors.transparent,
+                    onPressed: controller.onReview))
+          ])),
+      const SizedBox(height: 16),
+      bStyle(
+          key: UniqueKey(),
+          text: 'Додати ціну',
+          c: context,
+          vertical: 15,
+          colorButt: AppColors.yellow,
+          onPressed: () =>
+              controller.onAddPrice(context, controller.modelOrder!))
+    ]);
+  }
+
+  Widget fermersButton(OrderController controller, BuildContext context) {
+    return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+      const SizedBox(height: 20),
+      bStyle(
+          key: UniqueKey(),
+          padding: const EdgeInsets.only(top: 35),
+          text: DateTime.now().millisecondsSinceEpoch >
+                  (controller.modelOrder?.endDate?.millisecondsSinceEpoch ?? 0)
+              ? 'Продано'
+              : 'Продав',
+          size: 23,
+          c: context,
+          active: DateTime.now().millisecondsSinceEpoch <
+              (controller.modelOrder?.endDate!.millisecondsSinceEpoch ?? 0),
+          colorButt: DateTime.now().millisecondsSinceEpoch >
+                  (controller.modelOrder?.endDate?.millisecondsSinceEpoch ?? 0)
+              ? const Color(0xffF2F2F2)
+              : const Color(0xffFCD300),
+          onPressed: controller.onSell),
+    ]);
+  }
+
 }

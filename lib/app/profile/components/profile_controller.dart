@@ -1,6 +1,7 @@
 import 'package:agro/controllers/abstract/base_controller.dart';
 import 'package:agro/model/model_user/model_user.dart';
 import 'package:agro/repository/local_storage_repository.dart';
+import 'package:agro/routes/app_pages.dart';
 import 'package:agro/vars/model_notifier/user_notifier/user_notifier.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ import '../../home/components/home_controller.dart';
 class ProfileController extends BaseController {
   late Function(VoidCallback fn) setState;
   final modelUser = Rx<ModelUser>(ModelUser());
+  final user = ModelUser();
   @override
   void onInit() {
     modelUser.value = Hive.box('data').get('modelUser');
@@ -30,6 +32,8 @@ class ProfileController extends BaseController {
 
   void onPrivacy() => launchUrl(Uri.parse(
       'https://www.freeprivacypolicy.com/live/3afe785c-8de8-4a5b-985b-353bfca6bd17'));
+
+  void onTariffs() => Get.toNamed(Routes.tariffs);
 
   void onDeleteAccount(BuildContext context) => showCupertinoModalPopup<void>(
       context: context,

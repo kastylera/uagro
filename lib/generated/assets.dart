@@ -22,6 +22,11 @@ class Assets {
   static const String accountQuestion = 'picture/app/account/question.svg';
   static const String accountSetting = 'picture/app/account/setting.svg';
   static const String accountSite = 'picture/app/account/site.svg';
+  static const String accountTariffs = 'picture/app/account/tariffs.svg';
+  static const String tariffBeslim = 'picture/app/account/beslim.png';
+  static const String tariffPremium = 'picture/app/account/premium.png';
+  static const String tariffPremiumSale = 'picture/app/account/premium_sale.png';
+  static const String tariffVip = 'picture/app/account/vip.png';
   static const String accountStatistics = 'picture/app/account/statistics.svg';
   static const String accountTelegram = 'picture/app/account/telegram.svg';
   static const String accountTerms = 'picture/app/account/terms.svg';

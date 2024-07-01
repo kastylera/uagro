@@ -8,10 +8,12 @@ import 'package:agro/controllers/abstract/base_controller.dart';
 import 'package:agro/model/call_result/call_result.dart';
 import 'package:agro/model/model_order/model_contact.dart';
 import 'package:agro/model/model_order/struct_order.dart';
+import 'package:agro/model/model_order/traider_contact.dart';
 import 'package:agro/model/model_order_price/struct_order_price.dart';
 import 'package:agro/model/model_user/model_user.dart';
 import 'package:agro/model/tariff/tariff.dart';
 import 'package:agro/repository/local_storage_repository.dart';
+import 'package:agro/ui/adds.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:agro/model/model_order/model_order.dart';
 import 'package:agro/server/api/api.dart';
@@ -38,6 +40,7 @@ class OrderController extends BaseController {
   List<ModelOrderPrice> modelOrderPrice = [];
   final _localStorageRepository = LocalStorageRepository();
   HomeController homeController = Get.find();
+  final _interstitial = Interstitial();
 
   String? sms;
   String? asId;
@@ -58,7 +61,7 @@ class OrderController extends BaseController {
       result =
           await _localStorageRepository.getResult(modelOrder!.id.toString());
       await Future.delayed(const Duration(milliseconds: 100));
-      if (tariff?.isVip == true || tariff?.isExclusive == true) {
+      if (tariff?.isVip == true || tariff?.isPremium == true) {
         onLoadInfoUser();
       }
       onLoadPrice();
@@ -118,10 +121,11 @@ class OrderController extends BaseController {
 
   void onBack(BuildContext context) => Navigator.pop(context, modelOrder);
 
-  void onLaunchPhone(BuildContext context, String? phone) => showCupertinoModalBottomSheet(
-      topRadius: const Radius.circular(30),
-      context: context,
-      builder: (c) => LaunchPhone(contact: phone));
+  void onLaunchPhone(BuildContext context, String? phone) =>
+      showCupertinoModalBottomSheet(
+          topRadius: const Radius.circular(30),
+          context: context,
+          builder: (c) => LaunchPhone(contact: phone));
 
   void onSetAnswer(BuildContext context) => showCupertinoModalBottomSheet(
       topRadius: const Radius.circular(30),
@@ -157,8 +161,17 @@ class OrderController extends BaseController {
   Future<void> onContactClick() async {
     if (contact.userName == null) {
       try {
-        await onLoadInfoUser();
-        homeController.onContactOpened(modelOrder!);
+        if (tariff?.isPremium == false || tariff?.isVip == false) {
+          await _interstitial.loadRewardedAd(
+            doAfter: () async {
+              await onLoadInfoUser();
+              homeController.onContactOpened(modelOrder!);
+            },
+          );
+        } else {
+          await onLoadInfoUser();
+          homeController.onContactOpened(modelOrder!);
+        }
       } catch (e) {
         log("contact doesn't opened");
       }
@@ -178,6 +191,19 @@ class OrderController extends BaseController {
     try {
       ApiAnswer apiAnswer = await Api().traider.getOrder(orderId: orderId);
       modelOrder = structOrderData(data: apiAnswer.data['payload']);
+
+      log("contacts ${apiAnswer.data['tradersopened']}");
+      if (apiAnswer.data['tradersopened'] != null) {
+        final list = apiAnswer.data['tradersopened'];
+        List<TraiderContact> tradersContacts = [];
+        for (var element in list) {
+          final item = TraiderContact();
+          item.date = element['date'].toString();
+          item.phone = element['phone'].toString();
+          tradersContacts.add(item);
+        }
+        modelOrder?.traiderContacts = tradersContacts;
+      }
     } catch (e) {
       log(e.toString(), error: e);
     }

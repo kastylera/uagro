@@ -1,3 +1,4 @@
+import 'package:agro/model/model_user/model_user.dart';
 import 'package:agro/ui/text/read_text.dart';
 import 'package:agro/ui/theme/colors.dart';
 import 'package:agro/ui/theme/fonts.dart';
@@ -33,7 +34,8 @@ class ProfileScreen extends GetView<ProfileController> {
                 statusBarBrightness: Brightness.dark),
             child: SafeArea(
                 bottom: false,
-                child: SingleChildScrollView(child: Column(
+                child: SingleChildScrollView(
+                    child: Column(
                   children: [
                     Stack(alignment: Alignment.topCenter, children: [
                       Container(color: AppColors.mainGreen, height: 170),
@@ -73,6 +75,10 @@ class ProfileScreen extends GetView<ProfileController> {
                                   header: context.l.privacyPolicy,
                                   icon: Assets.accountPrivacy,
                                   onPressed: controller.onPrivacy),
+                              BlockSetting(
+                                  header: "Тарифи",
+                                  icon: Assets.accountTariffs,
+                                  onPressed: controller.onTariffs),
                               BlockSetting(
                                   header: context.l.deleteProfile,
                                   icon: Assets.accountDelete,
