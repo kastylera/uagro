@@ -35,6 +35,8 @@ class BlockOrderZerno extends StatefulWidget {
 }
 
 class _BlockOrderZernoState extends State<BlockOrderZerno> {
+  var isProgressShow = false;
+
   @override
   Widget build(BuildContext context) {
     HomeController controller = Get.find();
@@ -57,8 +59,7 @@ class _BlockOrderZernoState extends State<BlockOrderZerno> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(bottom: 10),
-                        child: Row(
-                          children: [
+                        child: Row(children: [
                           Padding(
                               padding: const EdgeInsets.only(right: 10),
                               child: SvgPicture.asset(Assets.zerno, width: 32)),
@@ -162,19 +163,30 @@ class _BlockOrderZernoState extends State<BlockOrderZerno> {
                                 //кнопка контакти
                                 widget.modelOrder.contact == null
                                     ? Expanded(
-                                        child: Padding(padding: const EdgeInsets.only(right: 10), child: bStyle(
-                                            text: 'Контакти',
-                                            c: context,
-                                            colorText: AppColors.darkGreen,
-                                            vertical: 15,
-                                            border: Border.all(
-                                                color: AppColors.darkGreen,
-                                                width: 1),
-                                            colorButt: Colors.transparent,
-                                            onPressed: () {
-                                              controller.onContactClick(
-                                                  widget.modelOrder);
-                                            })))
+                                        child: isProgressShow
+                                            ? const Center(child: CircularProgressIndicator(color: AppColors.mainGreen,))
+                                            : Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 10),
+                                                child: bStyle(
+                                                    text: 'Контакти',
+                                                    c: context,
+                                                    colorText:
+                                                        AppColors.darkGreen,
+                                                    vertical: 15,
+                                                    border: Border.all(
+                                                        color:
+                                                            AppColors.darkGreen,
+                                                        width: 1),
+                                                    colorButt:
+                                                        Colors.transparent,
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        isProgressShow = true;
+                                                      });
+                                                      controller.onContactClick(
+                                                          widget.modelOrder);
+                                                    })))
                                     : const SizedBox(),
 
                                 //кнопка додатково
@@ -194,15 +206,18 @@ class _BlockOrderZernoState extends State<BlockOrderZerno> {
                                 //додаткові кнопки
                                 if (controller.tariff?.isVip == true) ...[
                                   Expanded(
-                                      child: Padding(padding: const EdgeInsets.only(left: 10), child: bStyle(
-                                          text: 'Угода',
-                                          c: context,
-                                          colorText: AppColors.white,
-                                          vertical: 15,
-                                          onPressed: () {
-                                            controller
-                                                .onDeal(widget.modelOrder);
-                                          }))),
+                                      child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 10),
+                                          child: bStyle(
+                                              text: 'Угода',
+                                              c: context,
+                                              colorText: AppColors.white,
+                                              vertical: 15,
+                                              onPressed: () {
+                                                controller
+                                                    .onDeal(widget.modelOrder);
+                                              }))),
                                 ]
                               ],
                             )),

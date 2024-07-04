@@ -162,8 +162,13 @@ class OrderController extends BaseController {
     if (contact.userName == null) {
       try {
         if (tariff?.isPremium == false || tariff?.isVip == false) {
-          await _interstitial.loadRewardedAd(
+          await _interstitial.loadInterstitialAd(
             doAfter: () async {
+              await onLoadInfoUser();
+              homeController.onContactOpened(modelOrder!);
+            },
+            onFailed: () async {
+              await Future.delayed(const Duration(milliseconds: 100));
               await onLoadInfoUser();
               homeController.onContactOpened(modelOrder!);
             },

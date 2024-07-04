@@ -18,7 +18,7 @@ import '../../../generated/assets.dart';
 import '../../../ui/buttons/b_transparent_scalable_button.dart';
 import 'home_controller.dart';
 
-class BlockOrderUnknown extends StatelessWidget {
+class BlockOrderUnknown extends StatefulWidget {
   final ModelOrder modelOrder;
   final Answer? answer;
   final Function({required ModelOrder model}) onPressed;
@@ -30,12 +30,18 @@ class BlockOrderUnknown extends StatelessWidget {
       this.answer});
 
   @override
+  State<BlockOrderUnknown> createState() => _BlockOrderUnknownState();
+}
+
+class _BlockOrderUnknownState extends State<BlockOrderUnknown> {
+  var isProgressShow = false;
+  @override
   Widget build(BuildContext context) {
     HomeController controller = Get.find();
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: BTransparentScalableButton(
-          onPressed: () => onPressed(model: modelOrder),
+          onPressed: () => widget.onPressed(model: widget.modelOrder),
           scale: ScaleFormat.small,
           child: Container(
               decoration: BoxDecoration(
@@ -55,18 +61,18 @@ class BlockOrderUnknown extends StatelessWidget {
                           Expanded(
                             child: readText(
                               text:
-                                  'Заявка № ${modelOrder.id}\nвід: ${modelOrder.startDate?.formatDateTimeShort()}',
+                                  'Заявка № ${widget.modelOrder.id}\nвід: ${widget.modelOrder.startDate?.formatDateTimeShort()}',
                               style: AppFonts.body1bold.black,
                             ),
                           ),
                           if (DateTime.now().millisecondsSinceEpoch >
-                              modelOrder.endDate!.millisecondsSinceEpoch) ...[
+                              widget.modelOrder.endDate!.millisecondsSinceEpoch) ...[
                             readText(
                               text: 'Термін дії закінчився',
                               style: AppFonts.body2semibold.red,
                             )
-                          ] else if (modelOrder.priceAdded != null &&
-                              modelOrder.priceAdded!) ...[
+                          ] else if (widget.modelOrder.priceAdded != null &&
+                              widget.modelOrder.priceAdded!) ...[
                             readText(
                                 text: '₴',
                                 style: AppFonts.title1.mainGreen,
@@ -78,7 +84,7 @@ class BlockOrderUnknown extends StatelessWidget {
                                   child: BTransparentScalableButton(
                                       onPressed: () {
                                         Clipboard.setData(ClipboardData(
-                                            text: (modelOrder.toText())));
+                                            text: (widget.modelOrder.toText())));
                                         inAppNotification(
                                             text:
                                                 "Дані про замовлення скопійовані в буфер обміну",
@@ -94,12 +100,12 @@ class BlockOrderUnknown extends StatelessWidget {
                             Padding(
                                 padding: const EdgeInsets.only(bottom: 10),
                                 child: SvgPicture.asset(
-                                    modelOrder.request != null &&
-                                            modelOrder.request!
+                                    widget.modelOrder.request != null &&
+                                            widget.modelOrder.request!
                                         ? Assets.appIsViewTrue
                                         : Assets.appIsViewFalse,
-                                    height: modelOrder.request != null &&
-                                            modelOrder.request!
+                                    height: widget.modelOrder.request != null &&
+                                            widget.modelOrder.request!
                                         ? 30
                                         : 28))
                           ]
@@ -107,54 +113,54 @@ class BlockOrderUnknown extends StatelessWidget {
                       ),
                       orderInfo(
                           header: 'Область',
-                          text: modelOrder.region.toString()),
+                          text: widget.modelOrder.region.toString()),
                       orderInfo(
-                          header: 'Культура', text: modelOrder.crop.toString()),
+                          header: 'Культура', text: widget.modelOrder.crop.toString()),
                       orderInfo(
                           header: 'Об’єм',
-                          text: modelOrder.capacity.toString()),
+                          text: widget.modelOrder.capacity.toString()),
                       orderInfo(
                           header: 'Рік врожаю',
-                          text: modelOrder.harvestYear.toString()),
+                          text: widget.modelOrder.harvestYear.toString()),
                       orderInfo(
                           header: 'Форма розрахунку',
-                          text: modelOrder.payForm == 'beznal'
+                          text: widget.modelOrder.payForm == 'beznal'
                               ? '1ф. (б/г)'
-                              : modelOrder.payForm == 'nal'
+                              : widget.modelOrder.payForm == 'nal'
                                   ? '2ф. (гот.)'
-                                  : modelOrder.payment.toString()),
+                                  : widget.modelOrder.payment.toString()),
                       orderInfo(
                           header: 'Тип доставки',
-                          text: modelOrder.deliveryForm.toString()),
-                      if (modelOrder.comment != null &&
-                          modelOrder.comment != '') ...[
+                          text: widget.modelOrder.deliveryForm.toString()),
+                      if (widget.modelOrder.comment != null &&
+                          widget.modelOrder.comment != '') ...[
                         readText(
                           text: 'Коментар',
                           style: AppFonts.body1medium.grey3,
                         ),
                         readText(
-                            text: modelOrder.comment!,
+                            text: widget.modelOrder.comment!,
                             style: AppFonts.body1medium.black,
                             padding: const EdgeInsets.only(top: 4)),
                       ],
-                      controller.modelUser.isTraider && answer != null
+                      controller.modelUser.isTraider && widget.answer != null
                           ? Padding(
                               padding: const EdgeInsets.only(top: 10),
                               child: CallResultInfo(
                                   text:
-                                      answer?.result?.label ?? "Не встановлено",
+                                      widget.answer?.result?.label ?? "Не встановлено",
                                   horizontalPadding: 0,
-                                  textColor: answer?.result?.color,
+                                  textColor: widget.answer?.result?.color,
                                   onPressed: () {}))
                           : const SizedBox(),
                       if (controller.modelUser.role == 'distrib') ...[
                         //контакти
-                        modelOrder.contact != null
+                        widget.modelOrder.contact != null
                             ? ContactScreen(
-                                isVip: modelOrder.contact != null,
-                                contact: modelOrder.contact!,
+                                isVip: widget.modelOrder.contact != null,
+                                contact: widget.modelOrder.contact!,
                                 onLauchPhone: () => controller.onLaunchPhone(
-                                    context, modelOrder.contact!))
+                                    context, widget.modelOrder.contact!))
                             : const SizedBox(),
 
                         Padding(
@@ -162,9 +168,15 @@ class BlockOrderUnknown extends StatelessWidget {
                             child: Row(
                               children: [
                                 //кнопка контакти
-                                modelOrder.contact == null
+                                widget.modelOrder.contact == null
                                     ? Expanded(
-                                        child: Padding(
+                                        child: isProgressShow
+                                            ? const Center(
+                                                child:
+                                                    CircularProgressIndicator(
+                                                color: AppColors.mainGreen,
+                                              ))
+                                            : Padding(
                                             padding: const EdgeInsets.only(
                                                 right: 10),
                                             child: bStyle(
@@ -177,8 +189,11 @@ class BlockOrderUnknown extends StatelessWidget {
                                                     width: 1),
                                                 colorButt: Colors.transparent,
                                                 onPressed: () {
+                                                  setState(() {
+                                                        isProgressShow = true;
+                                                      });
                                                   controller.onContactClick(
-                                                      modelOrder);
+                                                      widget.modelOrder);
                                                 })))
                                     : const SizedBox(),
 
@@ -194,7 +209,7 @@ class BlockOrderUnknown extends StatelessWidget {
                                             width: 1),
                                         colorButt: Colors.transparent,
                                         onPressed: () =>
-                                            onPressed(model: modelOrder))),
+                                            widget.onPressed(model: widget.modelOrder))),
 
                                 //додаткові кнопки
                                 //TODO

@@ -147,17 +147,24 @@ class HomeController extends BaseController {
     if (order.contact == null) {
       try {
         if (tariff?.isPremium == false || tariff?.isVip == false) {
-          await _interstitial.loadRewardedAd(
-            doAfter: () async {
-              var contact = await onLoadInfoUser(order);
-              onContactOpened(order);
-              setState(() {
-                modelOrder
-                    .firstWhere((element) => element.id == order.id)
-                    .contact = contact;
-              });
-            },
-          );
+          await _interstitial.loadRewardedAd(doAfter: () async {
+            var contact = await onLoadInfoUser(order);
+            onContactOpened(order);
+            setState(() {
+              modelOrder
+                  .firstWhere((element) => element.id == order.id)
+                  .contact = contact;
+            });
+          }, onFailed: () async {
+            await Future.delayed(const Duration(milliseconds: 100));
+            var contact = await onLoadInfoUser(order);
+            onContactOpened(order);
+            setState(() {
+              modelOrder
+                  .firstWhere((element) => element.id == order.id)
+                  .contact = contact;
+            });
+          });
         } else {
           var contact = await onLoadInfoUser(order);
           onContactOpened(order);
